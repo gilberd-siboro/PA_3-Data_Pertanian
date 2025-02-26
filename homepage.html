@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pertanian</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        /* Dashboard Card */
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .card-title {
+            font-size: 22px;
+            margin: 0;
+            color: #2e7d32;
+        }
+        
+        /* Button Styles */
+        .btn-add {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-add:hover {
+            background-color: #1b5e20;
+        }
+        .btn-add span {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+        
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .data-table th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+        }
+        .data-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: #777;
+        }
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: modalopen 0.3s;
+        }
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .modal-title {
+            font-size: 22px;
+            margin: 0;
+            color: #2e7d32;
+        }
+        .close-modal {
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: #aaa;
+        }
+        .close-modal:hover {
+            color: #555;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-footer {
+            text-align: right;
+            margin-top: 30px;
+        }
+        .btn-cancel {
+            background-color: #f5f5f5;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .btn-submit {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .btn-submit:hover {
+            background-color: #1b5e20;
+        }
+        
+        /* Success Modal */
+        .success-modal {
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 60px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+        .btn-ok {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Portal Petani</div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2 class="card-title">Data Petani</h2>
+                <button id="btnTambah" class="btn-add"><span>+</span> Tambah Petani</button>
+            </div>
+            
+            <div id="dataContainer">
+                <!-- Empty state will show when no data -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">📁</div>
+                    <h3>Belum ada data petani</h3>
+                    <p>Klik tombol "Tambah Petani" untuk menambahkan data baru</p>
+                </div>
+                
+                <!-- Table will be hidden initially and shown when data exists -->
+                <table class="data-table" id="dataTable" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Kelompok Tani</th>
+                            <th>Jenis Komoditas</th>
+                            <th>Nama Komoditas</th>
+                            <th>Kecamatan</th>
+                            <th>Desa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data rows will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Form Modal -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Tambah Data Petani</h2>
+                <span class="close-modal" id="closeModal">&times;</span>
+            </div>
+            
+            <form id="pendaftaranForm">
+                <div class="form-group">
+                    <label for="nama">Nama:</label>
+                    <input type="text" id="nama" name="nama" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="kelompokTani">Kelompok Tani:</label>
+                    <select id="kelompokTani" name="kelompokTani" required>
+                        <option value="">Pilih Kelompok Tani</option>
+                        <option value="Makmur Jaya">Makmur Jaya</option>
+                        <option value="Tani Subur">Tani Subur</option>
+                        <option value="Maju Bersama">Maju Bersama</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jenisKomoditas">Jenis Komoditas:</label>
+                    <select id="jenisKomoditas" name="jenisKomoditas" required>
+                        <option value="">Pilih Komoditas</option>
+                        <option value="pangan">Pangan</option>
+                        <option value="polikultural">Polikultural</option>
+                        <option value="perkebunan">Perkebunan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="namaKomoditas">Nama Komoditas:</label>
+                    <input type="text" id="namaKomoditas" name="namaKomoditas" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="kecamatan">Kecamatan:</label>
+                    <select id="kecamatan" name="kecamatan" required onchange="updateDesaOptions()">
+                        <option value="">Pilih Kecamatan</option>
+                        <option value="Balige">Balige</option>
+                        <option value="Laguboti">Laguboti</option>
+                        <option value="Porsea">Porsea</option>
+                        <option value="Sigumpar">Sigumpar</option>
+                        <option value="Lumbanjulu">Lumbanjulu</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="desa">Desa:</label>
+                    <select id="desa" name="desa" required>
+                        <option value="">Pilih Desa</option>
+                        <option value="Balige">Lumban Pea</option>
+                        <option value="Silaen">Silaen</option>
+                        <option value="Sitoluama">Sitoluama</option>
+                        <option value="Simaremare">Simaremare</option>
+                        <option value="Tambunan">Tambunan</option>
+                        
+                    </select>
+                </div>
+                
+                <div class="form-footer">
+                    <button type="button" class="btn-cancel" id="btnCancel">Batal</button>
+                    <button type="submit" class="btn-submit">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success-modal">
+            <div class="success-icon">✓</div>
+            <h2>Data berhasil ditambahkan!</h2>
+            <p>Data pertanian telah berhasil disimpan.</p>
+            <button class="btn-ok" id="btnOk">OK</button>
+        </div>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const btnTambah = document.getElementById('btnTambah');
+        const formModal = document.getElementById('formModal');
+        const successModal = document.getElementById('successModal');
+        const closeModal = document.getElementById('closeModal');
+        const btnCancel = document.getElementById('btnCancel');
+        const btnOk = document.getElementById('btnOk');
+        const form = document.getElementById('pendaftaranForm');
+        const emptyState = document.getElementById('emptyState');
+        const dataTable = document.getElementById('dataTable');
+        const tableBody = document.getElementById('tableBody');
+        
+        // Data array to store entries
+        let petaniData = [];
+        
+        // Event Listeners
+        btnTambah.addEventListener('click', openFormModal);
+        closeModal.addEventListener('click', closeFormModal);
+        btnCancel.addEventListener('click', closeFormModal);
+        btnOk.addEventListener('click', closeSuccessModal);
+        form.addEventListener('submit', handleFormSubmit);
+        
+        // Functions
+        function openFormModal() {
+            formModal.style.display = 'block';
+        }
+        
+        function closeFormModal() {
+            formModal.style.display = 'none';
+            form.reset();
+        }
+        
+        function openSuccessModal() {
+            successModal.style.display = 'block';
+        }
+        
+        function closeSuccessModal() {
+            successModal.style.display = 'none';
+            updateTable();
+        }
+        
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            if (validateForm()) {
+                // Collect form data
+                const newPetani = {
+                    nama: document.getElementById('nama').value,
+                    kelompokTani: document.getElementById('kelompokTani').value,
+                    jenisKomoditas: document.getElementById('jenisKomoditas').value,
+                    namaKomoditas: document.getElementById('namaKomoditas').value,
+                    kecamatan: document.getElementById('kecamatan').value,
+                    desa: document.getElementById('desa').value
+                };
+                
+                // Add to data array
+                petaniData.push(newPetani);
+                
+                // Close form modal and show success
+                closeFormModal();
+                openSuccessModal();
+            }
+        }
+        
+        function validateForm() {
+            const fields = ['nama', 'kelompokTani', 'jenisKomoditas', 'namaKomoditas', 'kecamatan', 'desa'];
+            
+            for (const field of fields) {
+                const value = document.getElementById(field).value.trim();
+                if (!value) {
+                    alert('Semua field harus diisi!');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        function updateTable() {
+            if (petaniData.length > 0) {
+                // Hide empty state and show table
+                emptyState.style.display = 'none';
+                dataTable.style.display = 'table';
+                
+                // Clear existing rows
+                tableBody.innerHTML = '';
+                
+                // Add data rows
+                petaniData.forEach(petani => {
+                    const row = document.createElement('tr');
+                    
+                    // Create cells
+                    const fields = ['nama', 'kelompokTani', 'jenisKomoditas','namaKomoditas', 'kecamatan', 'desa'];
+                    fields.forEach(field => {
+                        const cell = document.createElement('td');
+                        
+                        // Format komoditas for display
+                        if (field === 'jenisKomoditas') {
+                            const formatted = petani[field].charAt(0).toUpperCase() + petani[field].slice(1);
+                            cell.textContent = formatted;
+                        } else {
+                            cell.textContent = petani[field];
+                        }
+                        
+                        row.appendChild(cell);
+                    });
+                    
+                    tableBody.appendChild(row);
+                });
+            } else {
+                // Show empty state if no data
+                emptyState.style.display = 'block';
+                dataTable.style.display = 'none';
+            }
+        }
+        
+        // Close modal if clicked outside
+        window.addEventListener('click', function(event) {
+            if (event.target === formModal) {
+                closeFormModal();
+            }
+            if (event.target === successModal) {
+                closeSuccessModal();
+            }
+        });
+    </script>
+</body>
+</html>
