@@ -1,80 +1,74 @@
 @extends('layout.admin.dash')
 @section('content')
 
+<div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
+    <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
+        <li
+            class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
+            <a href="/jenis-status" class="text-slate-500 dark:text-zink-200">Provinsi</a>
+        </li>
+        <li class="text-slate-700 dark:text-zink-100">
+            Edit Provinsi
+        </li>
+    </ul>
+</div>
 
-<div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-    <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
-        <div class="grow">
-            <h5 class="text-16">Dinas Pertanian Tapanuli Utara</h5>
+<div style="height: 600px">
+
+</div>
+
+<div id="Tambah" modal-center=""
+    class="fixed flex flex-col  transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4  ">
+    <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+        <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
+            <h5 class="text-16" id="addEmployeeLabel">Edit Provinsi</h5>
+            <button data-modal-close="Tambah" id="addEmployee"
+                class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x"
+                    class="size-5"></i></button>
         </div>
-        <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
-            <li
-                class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                <a href="#" class="text-slate-400 dark:text-zink-200">Dashboard</a>
-            </li>
-        </ul>
+        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
+
+            <form class="create-form" id="create-form" action="#"
+                method="POST">
+                @csrf
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="provinsi" class="inline-block mb-2 text-base font-medium">Provinsi</label>
+                        <input type="text" value="#" id="prov_name" name="prov_name"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="id_location" class="inline-block mb-2 text-base font-medium">ID Lokasi</label>
+                        <input type="text" value="#" id="locationid" name="locationid"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="status" class="inline-block mb-2 text-base font-medium">Status</label>
+                        <input type="text" value="#" id="status" name="status"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 mt-4">
+                    <a href="#"
+                        class="text-red-500  btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zinc-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">
+                        Cancel
+                    </a>
+                    <button type="submit" id="addNew"
+                        class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 ">Edit
+                        Provinsi</button>
+                </div>
+            </form>
+
+        </div>
     </div>
-
-    <div class="relative card-body" style="background-color: black;padding: 20px">
-        <div class="grid items-center grid-cols-12">
-            <div class="col-span-12 lg:col-span-8 2xl:col-span-7">
-                <h5 class="mb-3 font-normal tracking-wide text-slate-200">Selamat datang di Dinas Pertanian Tapanuli Utara
-                </h5>
-                <p class="mb-5 text-slate-400">Lihat pemberitahuan terbaru dan statistik ringkas di bawah untuk wawasan cepat. Gunakan data ini untuk bantu Anda membuat keputusan tepat dan selesaikan masalah dengan efisien.
-                </p>
-            </div>
-            <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
-                <img style="border-radius: 10px" src="" alt="" class="h-40 ltr:2xl:ml-auto rtl:2xl:mr-auto">
-            </div>
-        </div>
-    </div>
-
-</div><!--end col-->
-<div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5" style="margin-top: 50px; margin-bottom: 50px">
-    <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <div class="text-center card-body">
-            <div
-                class="flex items-center justify-center mx-auto rounded-full size-14 bg-custom-100 text-custom-500 dark:bg-custom-500/20">
-                <i data-lucide="vegan"></i>
-            </div>
-            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="">0</span></h5>
-            <p class="text-slate-500 dark:text-zink-200">Komoditas</p>
-        </div>
-    </div><!--end col-->
-    <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <div class="text-center card-body">
-            <div
-                class="flex items-center justify-center mx-auto text-purple-500 bg-purple-100 rounded-full size-14 dark:bg-purple-500/20">
-                <i data-lucide="users-round"></i>
-            </div>
-            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="">0</span></h5>
-            <p class="text-slate-500 dark:text-zink-200">Kelompok Tani</p>
-        </div>
-    </div><!--end col-->
-    <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <div class="text-center card-body">
-            <div
-                class="flex items-center justify-center mx-auto text-green-500 bg-green-100 rounded-full size-14 dark:bg-green-500/20">
-                <i data-lucide="user-round"></i>
-            </div>
-            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="">0</span></h5>
-            <p class="text-slate-500 dark:text-zink-200">Petani</p>
-        </div>
-    </div><!--end col-->
-    <!-- <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <div class="text-center card-body">
-            <div
-                class="flex items-center justify-center mx-auto text-red-500 bg-red-100 rounded-full size-14 dark:bg-red-500/20">
-                <i data-lucide="user"></i>
-            </div>
-            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="">0</span></h5>
-            <p class="text-slate-500 dark:text-zink-200">Pasar</p>
-        </div>
-    </div>end col -->
-</div><!--end grid-->
+</div>
 
 
-
+<!-- SETINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG -->
 <div class="fixed items-center hidden bottom-6 right-12 h-header group-data-[navbar=hidden]:flex">
     <button data-drawer-target="customizerButton" type="button"
         class="inline-flex items-center justify-center w-12 h-12 p-0 transition-all duration-200 ease-linear rounded-md shadow-lg text-sky-50 bg-sky-500">
@@ -332,17 +326,6 @@
     <div class="flex items-center justify-beSTEen gap-3 p-4 border-t border-slate-200 dark:border-zink-500">
         <button type="button" id="reset-layout"
             class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
-        <a href="#!"
-            class="w-full text-white transition-all duration-200 ease-linear bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100">Buy
-            Now</a>
     </div>
 </div>
-
-
-
-
-
 @endsection
-
-
-
