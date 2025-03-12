@@ -3,7 +3,7 @@
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
         <li class="text-slate-700 dark:text-zink-100">
-            Kabupaten
+            Kelompok Tani
         </li>
     </ul>
 </div>
@@ -13,7 +13,11 @@
 <div class="card" id="employeeTable">
     <div class="card-body">
         <div class="flex items-center gap-3 mb-4">
-            <h6 class="text-15 grow">Kabupaten(<b class="total-Employs">#</b>)</h6>
+            <h6 class="text-15 grow">Kelompok Tani(<b class="total-Employs">#</b>)</h6>
+            <div class="shrink-0">
+                <a href="#!" data-modal-target="Tambah" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-employee"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Tambah
+                        Kelompok Tani</span></a>
+            </div>
         </div>
 
         <table id="rowBorder" style="width:100%">
@@ -22,7 +26,9 @@
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 ID">
                         NO</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
-                        Nama Kabupaten</th>
+                        Nama Kelompok Tani</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Tanggal Berdiri</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-8 font-semibold border-b border-slate-200 dark:border-zink-500 Name" style="width: 0px">
                         Action</th>
                 </tr>
@@ -34,6 +40,11 @@
                         <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
                             <!-- loop->iteration --> #
                         </h6>
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
+                        <a href="#!" class="flex items-center gap-3">
+                            <h6 class="grow ">#</h6>
+                        </a>
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
                         <a href="#!" class="flex items-center gap-3">
@@ -52,6 +63,38 @@
     </div>
 </div>
 
+{{-- Tambah --}}
+<div id="Tambah" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
+    <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+        <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
+            <h5 class="text-16" id="addEmployeeLabel">Tambah Kelompok Tani</h5>
+            <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+        </div>
+        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
+
+            <form class="create-form" id="create-form" action="/tambah-jenis-status" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="kelompok_tani" class="inline-block mb-2 text-base font-medium">Nama Kelompok Tani</label>
+                        <input type="text" id="nama_kelompok" name="nama_kelompok" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Kelompok Tani">
+                    </div>
+                </div>
+                <div class="xl:col-span-6">
+                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal
+                        Berdiri</label>
+                    <input type="text" id="joiningDateInput" name="tanggal_berdiri" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
+                </div>
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="reset" id="close-modal" data-modal-close="Tambah" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Cancel</button>
+                    <button type="submit" id="addNew" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 ">Tambah
+                        Kelompok Tani</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 
 <!-- SETINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG -->
 <div class="fixed items-center hidden bottom-6 right-12 h-header group-data-[navbar=hidden]:flex">

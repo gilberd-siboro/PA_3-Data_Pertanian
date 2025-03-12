@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PenyuluhController;
 
-
-Route::get('/admin-dashboard', [AdminController::class, 'admin'])->name('admin');
+//  ------------------- Admin Utama ------------------------------------
+Route::get('/admin-dashboard', [AdminController::class, 'admin']);
+Route::get('/admin-pengguna', [AdminController::class, 'pengguna']);
 Route::get('/jenis-komoditas', [AdminController::class, 'jenis_komoditas']);
 Route::get('/komoditas', [AdminController::class, 'komoditas']);
 Route::get('/jenis-lahan', [AdminController::class, 'jenis_lahan']);
@@ -25,3 +27,10 @@ Route::get('/kecamatan', [AdminController::class, 'kecamatan']);
 Route::get('/desa', [AdminController::class, 'desa']);
 Route::get('/kelompok-tani', [AdminController::class, 'kelompok_tani']);
 Route::get('/petani', [AdminController::class, 'petani']);
+
+
+// -------------- PENYULUH ----------------
+
+
+Route::get('/penyuluh-dashboard', [PenyuluhController::class, 'penyuluh']);
+Route::get('/data-pertanian', [PenyuluhController::class, 'data_pertanian']);

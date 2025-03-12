@@ -1,54 +1,68 @@
 @extends('layout.admin.dash')
 @section('content')
+
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
+        <li class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
+            <a href="/jenis-status" class="text-slate-500 dark:text-zink-200">Petani</a>
+        </li>
         <li class="text-slate-700 dark:text-zink-100">
-            Kabupaten
+            Edit Petani
         </li>
     </ul>
 </div>
 
+<div style="height: 600px">
 
-{{-- lisss --}}
-<div class="card" id="employeeTable">
-    <div class="card-body">
-        <div class="flex items-center gap-3 mb-4">
-            <h6 class="text-15 grow">Kabupaten(<b class="total-Employs">#</b>)</h6>
+</div>
+
+<div id="Tambah" modal-center="" class="fixed flex flex-col  transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4  ">
+    <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+        <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
+            <h5 class="text-16" id="addEmployeeLabel">Edit Petani</h5>
+            <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
         </div>
+        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-        <table id="rowBorder" style="width:100%">
-            <thead>
-                <tr>
-                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 ID">
-                        NO</th>
-                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
-                        Nama Kabupaten</th>
-                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-8 font-semibold border-b border-slate-200 dark:border-zink-500 Name" style="width: 0px">
-                        Action</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-                <!-- foreach -->
-                <tr>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
-                        <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
-                            <!-- loop->iteration --> #
-                        </h6>
-                    </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
-                    </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
-                        <div class="flex gap-3">
-                            <a href="#" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"><i data-lucide="pencil" class="size-4"></i></a>
-                        </div>
-                    </td>
-                </tr>
-                <!-- endforeach -->
-            </tbody>
-        </table>
+            <form class="create-form" id="create-form" action="#" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="nama_depan" class="inline-block mb-2 text-base font-medium">Nama Depan</label>
+                        <input type="text" value="#" id="nama_depan" name="nama_depan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="nama_belakang" class="inline-block mb-2 text-base font-medium">Nama Belakang</label>
+                        <input type="text" value="#" id="nama_belakang" name="nama_belakang" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="alamat_rumah" class="inline-block mb-2 text-base font-medium">Alamat Rumah</label>
+                        <input type="text" value="#" id="alamat_rumah" name="alamat_rumah" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                    </div>
+                </div>
+                <div class="xl:col-span-12">
+                    <label for="kelompok_tani" class="inline-block mb-2 text-base font-medium">Kelompok Tani</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_kelompok_tani" id="id_kelompok_tani">
+                        <option value="">Pilih Kelompok Tani</option>
+                        <option value="">Kelompok Tani</option>
+                        <option value="">Kelompok Tani</option>
+                        <option value="">Kelompok Tani</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 mt-4">
+                    <a href="#" class="text-red-500  btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zinc-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">
+                        Cancel
+                    </a>
+                    <button type="submit" id="addNew" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 ">Edit
+                        Kelompok Tani</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 

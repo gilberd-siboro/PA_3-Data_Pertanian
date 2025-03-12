@@ -32,6 +32,15 @@
                         <input type="text" value="#" id="subdis_name" name="subdis_name" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                     </div>
                 </div>
+                <div class="xl:col-span-12">
+                    <label for="kecamatan" class="inline-block mb-2 text-base font-medium">Kecamatan</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_kelompok_tani" id="id_kelompok_tani">
+                        <option value="">Pilih Kecamatan</option>
+                        <option value="">Kecamatan</option>
+                        <option value="">Kecamatan</option>
+                        <option value="">Kecamatan</option>
+                    </select>
+                </div>
                 <div class="flex justify-end gap-2 mt-4">
                     <a href="#" class="text-red-500  btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zinc-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">
                         Cancel
