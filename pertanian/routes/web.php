@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenyuluhController;
+
+
+Route::get('/login-halaman', [AuthController::class, 'showLoginForm'])->name('login.form');
+
 
 //  ------------------- Admin Utama ------------------------------------
 Route::get('/admin-dashboard', [AdminController::class, 'admin']);
