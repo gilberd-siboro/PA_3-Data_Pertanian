@@ -23,9 +23,15 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::get('/jenis-komoditas', [AdminController::class, 'jenis_komoditas'])->name('jenisKomoditas.index');
     Route::post('/tambah-jenis-komoditas', [AdminController::class, 'create_jenisKomoditas']);
     
-    Route::get('/komoditas', [AdminController::class, 'komoditas']);
-    Route::get('/jenis-lahan', [AdminController::class, 'jenis_lahan']);
-    Route::get('/lahan', [AdminController::class, 'lahan']);
+    Route::get('/komoditas', [AdminController::class, 'komoditas'])->name('komoditas.index');
+    Route::post('/tambah-komoditas', [AdminController::class, 'create_komoditas']);
+   
+    Route::get('/jenis-lahan', [AdminController::class, 'jenis_lahan'])->name('jenisLahan.index');
+    Route::post('/tambah-jenis-lahan', [AdminController::class, 'create_jenisLahan']);
+    
+    Route::get('/lahan', [AdminController::class, 'lahan'])->name('lahan.index');
+    Route::post('/tambah-lahan', [AdminController::class, 'create_lahan']);
+    
     Route::get('/departemen', [AdminController::class, 'departemen']);
     Route::get('/bidang', [AdminController::class, 'bidang']);
     Route::get('/jabatan', [AdminController::class, 'jabatan']);
@@ -40,14 +46,20 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::get('/kabupaten', [AdminController::class, 'kabupaten']);
     Route::get('/kecamatan', [AdminController::class, 'kecamatan']);
     Route::get('/desa', [AdminController::class, 'desa']);
-    Route::get('/kelompok-tani', [AdminController::class, 'kelompok_tani']);
-    Route::get('/petani', [AdminController::class, 'petani']);
+    
+    Route::get('/kelompok-tani', [AdminController::class, 'kelompok_tani'])->name('kelompokTani.index');
+    Route::post('/tambah-kelompok-tani', [AdminController::class, 'create_kelompok_tani']);
+    
+    Route::get('/petani', [AdminController::class, 'petani'])->name('petani.index');
+    Route::post('/tambah-petani', [AdminController::class, 'create_petani']);
 });
 // -------------- PENYULUH ----------------
 Route::middleware(['Role:Penyuluh'])->group(function () {
 
     Route::get('/penyuluh-dashboard', [PenyuluhController::class, 'penyuluh'])->name('penyuluh.dashboard');
-    Route::get('/data-pertanian', [PenyuluhController::class, 'data_pertanian']);
+    Route::get('/data-pertanian', [PenyuluhController::class, 'data_pertanian'])->name('dataPertanian.index');
+    Route::post('/tambah-data-pertanian', [PenyuluhController::class, 'create_data_pertanian']);
+    Route::get('/data-pertanian/edit/{id}', [PenyuluhController::class, 'edit'])->name('dataPertanian.edit');
 });
 
 

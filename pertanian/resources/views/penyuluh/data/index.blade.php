@@ -32,7 +32,7 @@
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Komoditas</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
-                        Luas Lahan</th>
+                        Luas Lahan (m<sup>2</sup>)</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Desa</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
@@ -50,66 +50,47 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-                <!-- foreach -->
+                @foreach ($dataPertanian as $dp)
+
                 <tr>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
                         <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
-                            <!-- loop->iteration --> #
+                            {{ $loop->iteration }}
                         </h6>
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->nama_depan }} {{ $dp->nama_belakang }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->nama_lahan }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->nama_komoditas }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->luas_lahan }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->subdis_name }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->alamat_lengkap }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->tanggal_tanam }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ \Carbon\Carbon::parse($dp->estimasi_panen_final)->translatedFormat('d M, Y') }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->tanggal_pencatatan }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->namaPegawai }}
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
                         <div class="flex gap-3">
-                            <a href="#" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"><i data-lucide="pencil" class="size-4"></i></a>
+                            <a href="{{ route('dataPertanian.edit', $dp->id_data_pertanian) }}" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"><i data-lucide="pencil" class="size-4"></i></a>
                             <form id="deleteForm_#" action="#" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
@@ -123,7 +104,7 @@
                         </div>
                     </td>
                 </tr>
-                <!-- endforeach -->
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -138,38 +119,38 @@
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-            <form class="create-form" id="create-form" action="/tambah-data" method="POST">
+            <form class="create-form" id="create-form" action="/tambah-data-pertanian" method="POST">
                 @csrf
                 <div class="xl:col-span-12">
-                    <label for="petani" class="inline-block mb-2 text-base font-medium">Nama Petani</label>
+                    <label for="petani" class="inline-block mb-2 text-base font-medium">Petani</label>
                     <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_petani" id="id_petani">
                         <option value="">Pilih Petani</option>
-                        <option value="">Petani</option>
-                        <option value="">Petani</option>
-                        <option value="">Petani</option>
+                        @foreach($petani as $p)
+                        <option value="{{ $p->id_petani }}">{{ $p->nama_depan }} {{ $p->nama_belakang }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="xl:col-span-12">
                     <label for="lahan" class="inline-block mb-2 text-base font-medium">Lahan</label>
                     <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_lahan" id="id_lahan">
                         <option value="">Pilih Lahan</option>
-                        <option value="">Lahan</option>
-                        <option value="">Lahan</option>
-                        <option value="">Lahan</option>
+                        @foreach($lahan as $l)
+                        <option value="{{ $l->id_lahan }}">{{ $l->nama_lahan }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="xl:col-span-12">
                     <label for="komoditas" class="inline-block mb-2 text-base font-medium">Komoditas</label>
                     <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_komoditas" id="id_komoditas">
                         <option value="">Pilih Komoditas</option>
-                        <option value="">Komoditas</option>
-                        <option value="">Komoditas</option>
-                        <option value="">Komoditas</option>
+                        @foreach($komoditas as $k)
+                        <option value="{{ $k->id_komoditas }}">{{ $k->nama_komoditas }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
-                        <label for="luas_lahan" class="inline-block mb-2 text-base font-medium">Luas Lahan</label>
+                        <label for="luas_lahan" class="inline-block mb-2 text-base font-medium">Luas Lahan (m<sup>2</sup>)</label>
                         <input type="text" id="luas_lahan" name="luas_lahan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Luas Lahan">
                     </div>
                 </div>
@@ -177,9 +158,9 @@
                     <label for="desa" class="inline-block mb-2 text-base font-medium">Desa</label>
                     <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="subdis_id" id="subdis_id">
                         <option value="">Pilih Desa</option>
-                        <option value="">Desa</option>
-                        <option value="">Desa</option>
-                        <option value="">Desa</option>
+                        @foreach($desa as $d)
+                        <option value="{{ $d->subdis_id }}">{{ $d->subdis_name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">

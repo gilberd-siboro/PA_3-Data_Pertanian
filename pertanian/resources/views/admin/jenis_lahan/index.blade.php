@@ -76,7 +76,7 @@
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-            <form class="create-form" id="create-form" action="#" method="POST">
+            <form class="create-form" id="create-form" action="/tambah-jenis-lahan" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
