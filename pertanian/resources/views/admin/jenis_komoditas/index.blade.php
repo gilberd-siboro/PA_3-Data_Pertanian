@@ -32,17 +32,15 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-                <!-- foreach -->
+                @foreach ($jenisKomoditas as $jk)
                 <tr>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
                         <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
-                            <!-- loop->iteration --> #
+                            {{ $loop->iteration }}
                         </h6>
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $jk->nama_jenis_komoditas }}
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
                         <div class="flex gap-3">
@@ -51,16 +49,16 @@
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
                                                     bg-green-500 ">
-                                    
+
                                     <i data-lucide="eye" class="size-4"></i>
-                                    
+
                                 </button>
                             </form>
 
                         </div>
                     </td>
                 </tr>
-                <!-- endforeach -->
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -71,12 +69,12 @@
 <div id="Tambah" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
     <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
         <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
-            <h5 class="text-16" id="addEmployeeLabel">Tambah Jenis Status</h5>
+            <h5 class="text-16" id="addEmployeeLabel">Tambah Jenis Komoditas</h5>
             <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-            <form class="create-form" id="create-form" action="/tambah-jenis-status" method="POST">
+            <form class="create-form" id="create-form" action="/tambah-jenis-komoditas" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">

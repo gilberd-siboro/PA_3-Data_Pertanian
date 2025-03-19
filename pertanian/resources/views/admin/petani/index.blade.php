@@ -36,27 +36,26 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-                <!-- foreach -->
+                @foreach ($petani as $p)
+
                 <tr>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
                         <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
-                            <!-- loop->iteration --> #
+                            {{ $loop->iteration }}
                         </h6>
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $p->nama_depan }} {{ $p->nama_belakang }}
+
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $p->alamat_rumah }}
+
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $p->nama_kelompok_tani }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
                         <div class="flex gap-3">
@@ -64,7 +63,7 @@
                             <form id="deleteForm_#" action="#" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
-                                                    bg-green-500 ">
+                                        bg-green-500 ">
 
                                     <i data-lucide="eye" class="size-4"></i>
 
@@ -74,7 +73,7 @@
                         </div>
                     </td>
                 </tr>
-                <!-- endforeach -->
+                @endforeach
             </tbody>
         </table>
     </div>

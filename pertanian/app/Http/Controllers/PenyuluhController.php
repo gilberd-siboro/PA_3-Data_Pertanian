@@ -8,7 +8,8 @@ class PenyuluhController extends Controller
 {
     public function penyuluh()
     {
-        return view('penyuluh/index');
+        $userData = session('userData');
+        return view('penyuluh/index', compact('userData'));
     }
     public function data_pertanian()
     {

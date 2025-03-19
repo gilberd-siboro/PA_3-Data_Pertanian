@@ -79,7 +79,7 @@
                     <div class="lg:w-[25rem] mx-auto">
                         <div class="mt-5 tab-content">
                             <div class="block tab-pane" id="emailLogin">
-                                <form action="/login" method="POST" class="mt-10" id="signInForm">
+                                <form action="/proses-login" method="POST" class="mt-10" id="signInForm">
                                     @csrf
                                     <!-- <div class="flex justify-center">
                                         <img style="height: 200px;width: 380px" src="#"
@@ -133,6 +133,7 @@
     <script src="assets/libs/prismjs/prism.js"></script>
     <script src="assets/libs/lucide/umd/lucide.js"></script>
     <script src="assets/js/starcode.bundle.js"></script>
+    @include('sweetalert::alert')
 </body>
 
 </html>

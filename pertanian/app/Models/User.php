@@ -17,10 +17,16 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
     protected $fillable = [
-        'name',
-        'email',
+        'username',
+        'personal_id',
+        'userType_id',
         'password',
+        'email',
+        'role_id',
     ];
 
     /**
@@ -44,5 +50,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

@@ -32,27 +32,22 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-                <!-- foreach -->
+            @foreach ($provinsi as $p)
+
                 <tr>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
                         <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
-                            <!-- loop->iteration --> #
+                            {{ $loop->iteration }} 
                         </h6>
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $p->prov_name }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $p->location_id }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Name">
-                        <a href="#!" class="flex items-center gap-3">
-                            <h6 class="grow ">#</h6>
-                        </a>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $p->status }}
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
                         <div class="flex gap-3">
@@ -60,7 +55,7 @@
                         </div>
                     </td>
                 </tr>
-                <!-- endforeach -->
+                @endforeach
             </tbody>
         </table>
     </div>
