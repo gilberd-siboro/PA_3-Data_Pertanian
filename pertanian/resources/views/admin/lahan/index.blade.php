@@ -34,12 +34,12 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-            @foreach ($lahan as $l)
+                @foreach ($lahan as $l)
 
                 <tr>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
                         <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
-                        {{ $loop->iteration }}
+                            {{ $loop->iteration }}
 
                         </h6>
                     </td>
@@ -55,10 +55,9 @@
                             <form id="deleteForm_#" action="#" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
-                                                    bg-green-500 ">
-
-                                    <i data-lucide="eye" class="size-4"></i>
-
+                                                    bg-red-500 ">
+                                    <i data-lucide="trash-2" class="size-4"></i>
+                                    
                                 </button>
                             </form>
 

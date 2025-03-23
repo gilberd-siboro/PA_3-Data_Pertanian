@@ -36,12 +36,12 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-            @foreach ($bidang as $b)
+                @foreach ($bidang as $b)
 
                 <tr>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
                         <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
-                        {{ $loop->iteration }}
+                            {{ $loop->iteration }}
 
                         </h6>
                     </td>
@@ -60,10 +60,9 @@
                             <form id="deleteForm_#" action="#" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
-                                                    bg-green-500 ">
-                                    
-                                    <i data-lucide="eye" class="size-4"></i>
-                                    
+                                                    bg-red-500 ">
+                                    <i data-lucide="trash-2" class="size-4"></i>
+
                                 </button>
                             </form>
 
@@ -86,20 +85,23 @@
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-            <form class="create-form" id="create-form" action="#" method="POST">
+            <form class="create-form" id="create-form" action="/tambah-bidang" method="POST">
                 @csrf
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="bidang" class="inline-block mb-2 text-base font-medium">Departemen</label>
-                        <input type="text" id="departemen" name="departemen" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Departemen">
-                    </div>
+                <div class="xl:col-span-12">
+                    <label for="role" class="inline-block mb-2 text-base font-medium">Jenis Komoditas</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="idDepartemen" id="idDepartemen">
+                        <option value="">Pilih Departemen</option>
+                        @foreach($departemen as $d)
+                        <option value="{{ $d->idDepartemen }}">{{ $d->namaDepartmen }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                <!-- <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="bidang" class="inline-block mb-2 text-base font-medium">Parent Bidang</label>
                         <input type="text" id="parent_bidang" name="parent_bidang" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Parent Bidang">
                     </div>
-                </div>
+                </div> -->
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="bidang" class="inline-block mb-2 text-base font-medium">Bidang</label>

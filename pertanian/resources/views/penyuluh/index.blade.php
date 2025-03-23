@@ -37,7 +37,7 @@
                 class="flex items-center justify-center mx-auto rounded-full size-14 bg-custom-100 text-custom-500 dark:bg-custom-500/20">
                 <i data-lucide="vegan"></i>
             </div>
-            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="">0</span></h5>
+            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $totalKom }}">0</span></h5>
             <p class="text-slate-500 dark:text-zink-200">Komoditas</p>
         </div>
     </div><!--end col-->
@@ -47,7 +47,7 @@
                 class="flex items-center justify-center mx-auto text-purple-500 bg-purple-100 rounded-full size-14 dark:bg-purple-500/20">
                 <i data-lucide="users-round"></i>
             </div>
-            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="">0</span></h5>
+            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $totalKel }}">0</span></h5>
             <p class="text-slate-500 dark:text-zink-200">Kelompok Tani</p>
         </div>
     </div><!--end col-->
@@ -57,7 +57,7 @@
                 class="flex items-center justify-center mx-auto text-green-500 bg-green-100 rounded-full size-14 dark:bg-green-500/20">
                 <i data-lucide="user-round"></i>
             </div>
-            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="">0</span></h5>
+            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $totalPetani }}">0</span></h5>
             <p class="text-slate-500 dark:text-zink-200">Petani</p>
         </div>
     </div><!--end col-->

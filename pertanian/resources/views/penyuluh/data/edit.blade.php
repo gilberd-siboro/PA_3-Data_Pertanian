@@ -23,7 +23,7 @@
             <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-            <form class="create-form" id="create-form" action="#" method="POST">
+            <form class="create-form" id="create-form" action="{{ route('dataPertanian.update', $dataPertanian -> id_data_pertanian)}}" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-12">
 
@@ -60,7 +60,7 @@
                     </div>
                     <div class="xl:col-span-6">
                         <label for="desa" class="inline-block mb-2 text-base font-medium">Desa</label>
-                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_komoditas" id="id_komoditas">
+                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="subdis_id" id="subdis_id">
                             <option value="">Pilih Desa</option>
                             @foreach($desa as $d)
                             <option value="{{ $d->subdis_id }}" {{ $d->subdis_id == $dataPertanian->subdis_id ? 'selected' : '' }}>{{ $d->subdis_name }} </option>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="xl:col-span-6">
                         <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal Pencatatan</label>
-                        <input type="text" id="joiningDateInput" name="tanggal_tanam" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y" value="{{ $dataPertanian->tanggal_pencatatan }}">
+                        <input type="text" id="joiningDateInput" name="tanggal_pencatatan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y" value="{{ $dataPertanian->tanggal_pencatatan }}">
                     </div>
                     <div class="xl:col-span-6">
                         <label for="luasLahan" class="inline-block mb-2 text-base font-medium">Alamat Lengkap</label>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end gap-2 mt-4">
-                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Bidang</button>
+                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Data</button>
                 </div>
             </form>
 

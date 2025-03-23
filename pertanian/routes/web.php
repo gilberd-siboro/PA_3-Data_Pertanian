@@ -18,48 +18,87 @@ Route::middleware(['Role:Admin'])->group(function () {
     // -- Pengguna --
     Route::get('/admin-pengguna', [AdminController::class, 'pengguna'])->name('pengguna.index');
     Route::post('/tambah-pengguna', [AdminController::class, 'create_pengguna']);
+    Route::get('/admin-pengguna/edit/{id}', [AdminController::class, 'edit_pengguna'])->name('pengguna.edit');
+    Route::post('/admin-pengguna/update/{id}', [AdminController::class, 'update_pengguna'])->name('pengguna.update');
+    Route::post('/admin-pengguna/delete/{id}', [AdminController::class, 'delete_pengguna'])->name('pengguna.delete');
 
-    // -- Jenis Komoditas ---
+    // -- Jenis Komoditas --
     Route::get('/jenis-komoditas', [AdminController::class, 'jenis_komoditas'])->name('jenisKomoditas.index');
     Route::post('/tambah-jenis-komoditas', [AdminController::class, 'create_jenisKomoditas']);
     
+    // -- Komoditas --
     Route::get('/komoditas', [AdminController::class, 'komoditas'])->name('komoditas.index');
     Route::post('/tambah-komoditas', [AdminController::class, 'create_komoditas']);
    
+    // -- Jenis Lahan--
     Route::get('/jenis-lahan', [AdminController::class, 'jenis_lahan'])->name('jenisLahan.index');
     Route::post('/tambah-jenis-lahan', [AdminController::class, 'create_jenisLahan']);
     
+    // -- Lahan --
     Route::get('/lahan', [AdminController::class, 'lahan'])->name('lahan.index');
     Route::post('/tambah-lahan', [AdminController::class, 'create_lahan']);
     
-    Route::get('/departemen', [AdminController::class, 'departemen']);
-    Route::get('/bidang', [AdminController::class, 'bidang']);
-    Route::get('/jabatan', [AdminController::class, 'jabatan']);
-    Route::get('/jabatan-bidang', [AdminController::class, 'jabatan_bidang']);
-    Route::get('/golongan-pangkat', [AdminController::class, 'golongan_pangkat']);
-    Route::get('/pegawai', [AdminController::class, 'pegawai']);
-    Route::get('/jabatan-petani', [AdminController::class, 'jabatan_petani']);
+    // -- Departemen --
+    Route::get('/departemen', [AdminController::class, 'departemen'])->name('departemen.index');
+    Route::post('/tambah-departemen', [AdminController::class, 'create_departemen']);
+    
+    // -- Bidang --
+    Route::get('/bidang', [AdminController::class, 'bidang'])->name('bidang.index');
+    Route::post('/tambah-bidang', [AdminController::class, 'create_bidang']);
+    
+    // -- Jabatan --
+    Route::get('/jabatan', [AdminController::class, 'jabatan'])->name('jabatan.index');
+    Route::post('/tambah-jabatan', [AdminController::class, 'create_jabatan']);
+    
+    // -- Jabatan Bidang --
+    Route::get('/jabatan-bidang', [AdminController::class, 'jabatan_bidang'])->name('jabatanBidang.index');
+    Route::post('/tambah-jabatan-bidang', [AdminController::class, 'create_jabatanBidang']);
+    
+    // -- Golongan Pangkat --
+    Route::get('/golongan-pangkat', [AdminController::class, 'golongan_pangkat'])->name('golonganPangkat.index');
+    Route::post('/tambah-golongan-pangkat', [AdminController::class, 'create_golonganPangkat']);
+    
+    // -- Pegawai --
+    Route::get('/pegawai', [AdminController::class, 'pegawai'])->name('pegawai.index');
+    Route::post('/tambah-pegawai', [AdminController::class, 'create_pegawai']);
+    
+    // -- Jabatan Petani --
+    Route::get('/jabatan-petani', [AdminController::class, 'jabatan_petani'])->name('jabatanPetani.index');
+    Route::post('/tambah-jabatan-petani', [AdminController::class, 'create_jabatanPetani']);
 
-
-
+    // -- Provinsi --
     Route::get('/provinsi', [AdminController::class, 'provinsi']);
     Route::get('/kabupaten', [AdminController::class, 'kabupaten']);
-    Route::get('/kecamatan', [AdminController::class, 'kecamatan']);
-    Route::get('/desa', [AdminController::class, 'desa']);
     
+    // -- Kecamatan --
+    Route::get('/kecamatan', [AdminController::class, 'kecamatan'])->name('kecamatan.index');
+    Route::post('/tambah-kecamatan', [AdminController::class, 'create_kecamatan']);
+
+    // -- Desa --
+    Route::get('/desa', [AdminController::class, 'desa'])->name('desa.index');
+    Route::post('/tambah-desa', [AdminController::class, 'create_desa']);
+    
+    // -- Kelompok Tani --
     Route::get('/kelompok-tani', [AdminController::class, 'kelompok_tani'])->name('kelompokTani.index');
     Route::post('/tambah-kelompok-tani', [AdminController::class, 'create_kelompok_tani']);
     
+    // -- Petani --
     Route::get('/petani', [AdminController::class, 'petani'])->name('petani.index');
     Route::post('/tambah-petani', [AdminController::class, 'create_petani']);
 });
+
+
 // -------------- PENYULUH ----------------
 Route::middleware(['Role:Penyuluh'])->group(function () {
 
     Route::get('/penyuluh-dashboard', [PenyuluhController::class, 'penyuluh'])->name('penyuluh.dashboard');
+    
+    // -- Data Pertanian --
     Route::get('/data-pertanian', [PenyuluhController::class, 'data_pertanian'])->name('dataPertanian.index');
     Route::post('/tambah-data-pertanian', [PenyuluhController::class, 'create_data_pertanian']);
     Route::get('/data-pertanian/edit/{id}', [PenyuluhController::class, 'edit'])->name('dataPertanian.edit');
+    Route::post('/data-pertanian/update/{id}', [PenyuluhController::class, 'update'])->name('dataPertanian.update');
+    Route::post('/data-pertanian/delete/{id}', [PenyuluhController::class, 'delete'])->name('dataPertanian.delete');
 });
 
 

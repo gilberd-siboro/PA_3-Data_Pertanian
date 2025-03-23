@@ -28,6 +28,8 @@
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Nama Kelompok Tani</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Kepala Kelompok Tani</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Alamat Sekretariat</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-8 font-semibold border-b border-slate-200 dark:border-zink-500 Name" style="width: 0px">
                         Action</th>
@@ -45,6 +47,9 @@
                     {{ $kt->nama_kelompok_tani }}
                 </td>
                 <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                    {{ $kt->nama_depan }} {{ $kt->nama_belakang }}
+                </td>
+                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
                     {{ $kt->alamat_sekretariat }}
                 </td>
                 <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
@@ -53,9 +58,8 @@
                         <form id="deleteForm_#" action="#" method="POST">
                             @csrf
                             <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
-                                                    bg-green-500 ">
-
-                                <i data-lucide="eye" class="size-4"></i>
+                                                    bg-red-500 ">
+                                <i data-lucide="trash-2" class="size-4"></i>
 
                             </button>
                         </form>

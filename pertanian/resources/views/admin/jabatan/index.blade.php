@@ -55,10 +55,9 @@
                             <form id="deleteForm_#" action="#" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
-                                                    bg-green-500 ">
-
-                                    <i data-lucide="eye" class="size-4"></i>
-
+                                                    bg-red-500 ">
+                                    <i data-lucide="trash-2" class="size-4"></i>
+                                    
                                 </button>
                             </form>
 
@@ -81,7 +80,7 @@
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-            <form class="create-form" id="create-form" action="#" method="POST">
+            <form class="create-form" id="create-form" action="/tambah-jabatan" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">

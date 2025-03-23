@@ -3,7 +3,7 @@
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
         <li class="text-slate-700 dark:text-zink-100">
-             Pegawai
+            Pegawai
         </li>
     </ul>
 </div>
@@ -16,7 +16,7 @@
             <h6 class="text-15 grow"> Pegawai(<b class="total-Employs">#</b>)</h6>
             <div class="shrink-0">
                 <a href="#!" data-modal-target="Tambah" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-employee"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Tambah
-                         Pegawai</span></a>
+                        Pegawai</span></a>
             </div>
         </div>
 
@@ -34,21 +34,19 @@
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Jabatan Bidang</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
-                        SubDis</th>
+                        Desa</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Alamat</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         No Ponsel</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         No WA</th>
-                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
-                        Foto</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-8 font-semibold border-b border-slate-200 dark:border-zink-500 Name" style="width: 0px">
                         Action</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
-            @foreach ($pegawai as $p)
+                @foreach ($pegawai as $p)
 
                 <tr>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
@@ -60,7 +58,12 @@
                         {{ $p->nip }}
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
-                        {{ $p->namaPegawai }}
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center justify-center font-medium rounded-full size-10 shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
+                                <img src="{{ asset('assets/images/' . $p->fileFoto) }}" alt="" class="h-10 w-10 rounded-full">
+                            </div>
+                            <span>{{ $p->namaPegawai }}</span>
+                        </div>
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
                         {{ $p->golongan }} {{ $p->pangkat }}
@@ -80,9 +83,6 @@
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
                         {{ $p->noWA }}
                     </td>
-                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
-                        {{ $p->fileFoto }}
-                    </td>
 
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
                         <div class="flex gap-3">
@@ -90,9 +90,8 @@
                             <form id="deleteForm_#" action="#" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
-                                                    bg-green-500 ">
-
-                                    <i data-lucide="eye" class="size-4"></i>
+                                                    bg-red-500 ">
+                                    <i data-lucide="trash-2" class="size-4"></i>
 
                                 </button>
                             </form>
@@ -116,7 +115,7 @@
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-            <form class="create-form" id="create-form" action="#" method="POST">
+            <form class="create-form" id="create-form" action="/tambah-pegawai" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
@@ -134,25 +133,28 @@
                     <label for="golongan_pangkat" class="inline-block mb-2 text-base font-medium">Golongan Pangkat</label>
                     <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_golongan_pangkat" id="id_golongan_pangkat">
                         <option value="">Pilih Golongan Pangkat</option>
-                        <option value="">Golongan Pangkat</option>
-                        <option value="">Golongan Pangkat</option>
-                        <option value="">Golongan Pangkat</option>
+                        @foreach($golonganPangkat as $gp)
+                        <option value="{{ $gp->idGolonganPangkat}}">{{ $gp->golongan }} {{ $gp->pangkat }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="xl:col-span-12">
                     <label for="jabatan_bidang" class="inline-block mb-2 text-base font-medium">Jabatan Bidang</label>
                     <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_jabatan_bidang" id="id_jabatan_bidang">
                         <option value="">Pilih Jabatan Bidang</option>
-                        <option value="">Jabatan Bidang</option>
-                        <option value="">Jabatan Bidang</option>
-                        <option value="">Jabatan Bidang</option>
+                        @foreach($jabatanBidang as $jb)
+                        <option value="{{ $jb->idJabatanBidang}}">{{ $jb->namaJabatanBidang }}</option>
+                        @endforeach
                     </select>
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="subdis" class="inline-block mb-2 text-base font-medium">SubDis</label>
-                        <input type="text" id="subdis" name="subdis" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Status">
-                    </div>
+                <div class="xl:col-span-12">
+                    <label for="desa" class="inline-block mb-2 text-base font-medium">Desa</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="subdis_id" id="subdis_id">
+                        <option value="">Pilih Desa</option>
+                        @foreach($desa as $d)
+                        <option value="{{ $d->subdis_id}}">{{ $d->subdis_name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
@@ -163,19 +165,21 @@
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="ponsel" class="inline-block mb-2 text-base font-medium">No Ponsel</label>
-                        <input type="text" id="ponsel" name="ponsel" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Status">
+                        <input type="number" id="ponsel" min=0 name="ponsel" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="+62xxx-xxxx-xxxx">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="wa" class="inline-block mb-2 text-base font-medium">No WA</label>
-                        <input type="text" id="wa" name="wa" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Status">
+                        <input type="number" id="wa" min=0 name="wa" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="+62xxx-xxxx-xxxx">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="foto" class="inline-block mb-2 text-base font-medium">Foto</label>
-                        <input type="text" id="foto" name="foto" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Status">
+                        <div>
+                            <input type="file" name="foto" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter your name">
+                        </div>
                     </div>
                 </div>
                 <div class="flex justify-end gap-2 mt-4">
