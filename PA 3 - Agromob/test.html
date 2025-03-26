@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown dengan Pencarian</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+    <div class="ui container" style="margin-top: 50px;">
+        <h2>Pilih Negara</h2>
+        <div class="ui fluid search selection dropdown">
+            <input type="hidden" name="country">
+            <i class="dropdown icon"></i>
+            <div class="default text">Pilih Negara</div>
+            <div class="menu">
+                <div class="item" data-value="us"><i class="us flag"></i>Amerika Serikat</div>
+                <div class="item" data-value="gb"><i class="gb flag"></i>Inggris</div>
+                <div class="item" data-value="fr"><i class="fr flag"></i>Prancis</div>
+                <div class="item" data-value="de"><i class="de flag"></i>Jerman</div>
+                <div class="item" data-value="id"><i class="id flag"></i>Indonesia</div>
+                <div class="item" data-value="jp"><i class="jp flag"></i>Jepang</div>
+                <div class="item" data-value="cn"><i class="cn flag"></i>Tiongkok</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.ui.dropdown').dropdown({
+                fullTextSearch: true
+            });
+        });
+    </script>
+</body>
+</html>
