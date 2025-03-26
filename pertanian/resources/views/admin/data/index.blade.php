@@ -1,45 +1,194 @@
 @extends('layout.admin.dash')
 @section('content')
-
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
-        <li class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
-            <a href="/jenis-komoditas" class="text-slate-500 dark:text-zink-200">Jenis Komoditas</a>
-        </li>
         <li class="text-slate-700 dark:text-zink-100">
-            Edit Jenis Komoditas
+            Petani
         </li>
     </ul>
 </div>
 
-<div style="height: 600px">
 
+{{-- lisss --}}
+<div class="card" id="employeeTable">
+    <div class="card-body">
+        <div class="flex items-center gap-3 mb-4">
+            <h6 class="text-15 grow">Data Pertanian(<b class="total-Employs">{{ $totalData }}</b>)</h6>
+            <div class="shrink-0">
+                <a href="#!" data-modal-target="Tambah" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-employee"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Tambah
+                        Data</span></a>
+            </div>
+        </div>
+
+        <table id="rowBorder" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="px-3.5 py-2.5 first:p    l-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 ID">
+                        NO</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Nama Petani</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Lahan</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Komoditas</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Luas Lahan (m<sup>2</sup>)</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Desa</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Alamat Lengkap</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Tanggal Tanam</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Estimasi Panen</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Tanggal Pencatatan</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
+                        Penyuluh</th>
+                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-8 font-semibold border-b border-slate-200 dark:border-zink-500 Name" style="width: 0px">
+                        Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-zink-500">
+                @foreach ($dataPertanian as $dp)
+
+                <tr>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 ID">
+                        <h6 class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">
+                            {{ $loop->iteration }}
+                        </h6>
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->nama_depan }} {{ $dp->nama_belakang }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->nama_lahan }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->nama_komoditas }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->luas_lahan }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->subdis_name }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->alamat_lengkap }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->tanggal_tanam }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ \Carbon\Carbon::parse($dp->estimasi_panen_final)->translatedFormat('d M, Y') }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->tanggal_pencatatan }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
+                        {{ $dp->namaPegawai }}
+                    </td>
+                    <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
+                        <div class="flex gap-3">
+                            <a href="{{ route('AdmindataPertanian.edit', $dp->id_data_pertanian) }}" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"><i data-lucide="pencil" class="size-4"></i></a>
+                            <form id="deleteForm_{{ $dp->id_data_pertanian }}" action="{{ route('AdmindataPertanian.delete', $dp -> id_data_pertanian)}}" method="POST">
+                                @csrf
+                                <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
+                                                    bg-red-500 ">
+
+                                    <i data-lucide="trash-2" class="size-4"></i>
+
+                                </button>
+                            </form>
+
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<div id="edit" modal-center="" class="fixed flex flex-col transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4">
-    <div class="w-screen lg:w-[40rem] bg-white shadow rounded-md dark:bg-zink-600 flex flex-col h-full">
+{{-- Tambah --}}
+<div id="Tambah" modal-center="" class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show ">
+    <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
         <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
-            <h5 class="text-16" id="addEmployeeLabel">Edit Data</h5>
+            <h5 class="text-16" id="addEmployeeLabel">Tambah Data Pertanian</h5>
             <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-            <form class="create-form" id="create-form" action="{{ route('jenisKomoditas.update', $jenisKomoditas -> id_jenis_komoditas)}}" method="POST">
+
+            <form class="create-form" id="create-form" action="/admin-tambah-data-pertanian" method="POST">
                 @csrf
-                <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-12">
+                <div class="xl:col-span-12">
+                    <label for="petani" class="inline-block mb-2 text-base font-medium">Petani</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_petani" id="id_petani">
+                        <option value="">Pilih Petani</option>
+                        @foreach($petani as $p)
+                        <option value="{{ $p->id_petani }}">{{ $p->nama_depan }} {{ $p->nama_belakang }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="xl:col-span-12">
+                    <label for="lahan" class="inline-block mb-2 text-base font-medium">Lahan</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_lahan" id="id_lahan">
+                        <option value="">Pilih Lahan</option>
+                        @foreach($lahan as $l)
+                        <option value="{{ $l->id_lahan }}">{{ $l->nama_lahan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="xl:col-span-12">
+                    <label for="komoditas" class="inline-block mb-2 text-base font-medium">Komoditas</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_komoditas" id="id_komoditas">
+                        <option value="">Pilih Komoditas</option>
+                        @foreach($komoditas as $k)
+                        <option value="{{ $k->id_komoditas }}">{{ $k->nama_komoditas }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
-                        <label for="jenisKomoditas" class="inline-block mb-2 text-base font-medium">Jenis Komoditas</label>
-                        <input type="text" id="jenisKomoditas" name="jenisKomoditas" value="{{ old('jenisKomoditas', $jenisKomoditas->nama_jenis_komoditas) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                        <label for="luas_lahan" class="inline-block mb-2 text-base font-medium">Luas Lahan (m<sup>2</sup>)</label>
+                        <input type="text" id="luas_lahan" name="luas_lahan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Luas Lahan">
                     </div>
                 </div>
+                <div class="xl:col-span-12">
+                    <label for="desa" class="inline-block mb-2 text-base font-medium">Desa</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="subdis_id" id="subdis_id">
+                        <option value="">Pilih Desa</option>
+                        @foreach($desa as $d)
+                        <option value="{{ $d->subdis_id }}">{{ $d->subdis_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <label for="alamat_lengkap" class="inline-block mb-2 text-base font-medium">Alamat Lengkap</label>
+                        <input type="text" id="alamat_lengkap" name="alamat_lengkap" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Alamat Lengkap">
+                    </div>
+                </div>
+                <div class="xl:col-span-6">
+                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal
+                        Tanam</label>
+                    <input type="text" id="joiningDateInput" name="tanggal_tanam" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
+                </div>
+                <div class="xl:col-span-6">
+                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal
+                        Pencatatan</label>
+                    <input type="text" id="joiningDateInput" name="tanggal_pencatatan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
+                </div>
                 <div class="flex justify-end gap-2 mt-4">
-                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Data</button>
+                    <button type="reset" id="close-modal" data-modal-close="Tambah" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Cancel</button>
+                    <button type="submit" id="addNew" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 ">Tambah
+                        Data</button>
                 </div>
             </form>
 
         </div>
     </div>
 </div>
-
 
 <!-- SETINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG -->
 <div class="fixed items-center hidden bottom-6 right-12 h-header group-data-[navbar=hidden]:flex">

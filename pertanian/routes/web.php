@@ -22,13 +22,24 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::post('/admin-pengguna/update/{id}', [AdminController::class, 'update_pengguna'])->name('pengguna.update');
     Route::post('/admin-pengguna/delete/{id}', [AdminController::class, 'delete_pengguna'])->name('pengguna.delete');
 
+    // -- Data Pertanian
+    Route::get('/admin-data-pertanian', [AdminController::class, 'data_pertanian'])->name('AdmindataPertanian.index');
+    Route::post('/admin-tambah-data-pertanian', [AdminController::class, 'create_data_pertanian']);
+    Route::get('/admin-data-pertanian/edit/{id}', [AdminController::class, 'edit'])->name('AdmindataPertanian.edit');
+    Route::post('/admin-data-pertanian/update/{id}', [AdminController::class, 'update'])->name('AdmindataPertanian.update');
+    Route::post('/admin-data-pertanian/delete/{id}', [AdminController::class, 'delete'])->name('AdmindataPertanian.delete');
+
     // -- Jenis Komoditas --
     Route::get('/jenis-komoditas', [AdminController::class, 'jenis_komoditas'])->name('jenisKomoditas.index');
     Route::post('/tambah-jenis-komoditas', [AdminController::class, 'create_jenisKomoditas']);
-    
+    Route::get('/jenis-komoditas/edit/{id}', [AdminController::class, 'edit_jenisKomoditas'])->name('jenisKomoditas.edit');
+    Route::post('/jenis-komoditas/update/{id}', [AdminController::class, 'update_jenisKomoditas'])->name('jenisKomoditas.update');
+
     // -- Komoditas --
     Route::get('/komoditas', [AdminController::class, 'komoditas'])->name('komoditas.index');
     Route::post('/tambah-komoditas', [AdminController::class, 'create_komoditas']);
+    Route::get('/komoditas/edit/{id}', [AdminController::class, 'edit_komoditas'])->name('komoditas.edit');
+    Route::post('/komoditas/update/{id}', [AdminController::class, 'update_komoditas'])->name('komoditas.update');
    
     // -- Jenis Lahan--
     Route::get('/jenis-lahan', [AdminController::class, 'jenis_lahan'])->name('jenisLahan.index');

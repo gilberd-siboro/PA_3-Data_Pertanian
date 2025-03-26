@@ -13,7 +13,7 @@
 <div class="card" id="employeeTable">
     <div class="card-body">
         <div class="flex items-center gap-3 mb-4">
-            <h6 class="text-15 grow">Pengguna(<b class="total-Employs">#</b>)</h6>
+            <h6 class="text-15 grow">Pengguna(<b class="total-Employs">{{ $totalData }}</b>)</h6>
             <div class="shrink-0">
                 <a href="#!" data-modal-target="Tambah" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-employee"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Tambah
                         Pengguna</span></a>
@@ -60,19 +60,19 @@
                         {{ $user->role_name }}
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
-                    <div class="flex items-center justify-center font-medium rounded-full size-10 shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
-                                <img src="{{ asset('assets/images/' . $user->fileFoto) }}" alt="" class="h-10 w-10 rounded-full">
-                            </div>
+                        <div class="flex items-center justify-center font-medium rounded-full size-10 shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
+                            <img src="{{ asset('assets/images/' . $user->fileFoto) }}" alt="" class="h-10 w-10 rounded-full">
+                        </div>
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
                         <div class="flex gap-3">
                             <a href="{{ route('pengguna.edit', $user->user_id) }}" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"><i data-lucide="pencil" class="size-4"></i></a>
-                            <form id="deleteForm_#" action="#" method="POST">
+                            <form id="deleteForm_{{ $user->user_id }}" action="{{ route('pengguna.delete', $user -> user_id)}}" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
                                                     bg-red-500 ">
                                     <i data-lucide="trash-2" class="size-4"></i>
-                                    
+
                                 </button>
                             </form>
 
@@ -109,11 +109,10 @@
                         <input type="email" id="email" name="email" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="abcdefg@gmail.com">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" name="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="password">
-                    </div>
+                <div class="xl:col-span-12">
+                    <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
+                    <input type="password" id="password" name="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="password">
+                    <small id="passwordError" class="text-red-500"></small>
                 </div>
                 <div class="xl:col-span-12">
                     <label for="role" class="inline-block mb-2 text-base font-medium">Role</label>
@@ -349,4 +348,19 @@
         <button type="button" id="reset-layout" class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
     </div>
 </div>
+<script>
+    document.getElementById('password').addEventListener('input', function() {
+        let password = this.value;
+        let errorText = '';
+
+        if (password.length < 8) {
+            errorText = 'Password harus minimal 8 karakter.';
+        } else if (!/\d/.test(password)) {
+            errorText = 'Password harus mengandung setidaknya satu angka.';
+        }
+
+        document.getElementById('passwordError').textContent = errorText;
+    });
+</script>
+
 @endsection

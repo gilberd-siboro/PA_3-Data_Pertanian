@@ -4,10 +4,10 @@
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
         <li class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
-            <a href="/data-pertanian" class="text-slate-500 dark:text-zink-200">Data Pertanian</a>
+            <a href="/admin-pengguna" class="text-slate-500 dark:text-zink-200">Pengguna</a>
         </li>
         <li class="text-slate-700 dark:text-zink-100">
-            Edit Data Pertanian
+            Edit Pengguna
         </li>
     </ul>
 </div>
@@ -37,10 +37,11 @@
                     <div class="xl:col-span-6">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password (Biarkan kosong jika tidak ingin mengubah)</label>
                         <input type="password" id="password" name="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Masukkan password baru">
+                        <small id="passwordError" class="text-red-500"></small>
                     </div>
                     <div class="xl:col-span-6">
-                        <label for="role" class="inline-block mb-2 text-base font-medium">Desa</label>
-                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="subdis_id" id="subdis_id">
+                        <label for="role" class="inline-block mb-2 text-base font-medium">Role</label>
+                        <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="role" id="role">
                             <option value="">Pilih Role</option>
                             @foreach($role as $r)
                             <option value="{{ $r->role_id }}" {{ $r->role_id == $pengguna->role_id ? 'selected' : '' }}>{{ $r->role_name }} </option>
@@ -262,4 +263,19 @@
         <button type="button" id="reset-layout" class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
     </div>
 </div>
+<script>
+document.getElementById('password').addEventListener('input', function() {
+    let password = this.value;
+    let errorText = '';
+    
+    if (password.length < 8) {
+        errorText = 'Password harus minimal 8 karakter.';
+    } else if (!/\d/.test(password)) {
+        errorText = 'Password harus mengandung setidaknya satu angka.';
+    }
+
+    document.getElementById('passwordError').textContent = errorText;
+});
+</script>
+
 @endsection

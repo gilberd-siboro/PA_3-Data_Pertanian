@@ -33,12 +33,13 @@ class AdminController extends Controller
         $pengguna = DB::select('CALL viewAll_Pengguna()');
         $pegawai = DB::select('CALL viewAll_pegawai()');
         $role = DB::select('CALL viewAll_role()');
-
-        return view('admin/pengguna/index', compact('userData', 'pengguna', 'pegawai', 'role'));
+        $totalData = count($pengguna);
+        return view('admin/pengguna/index', compact('totalData','userData', 'pengguna', 'pegawai', 'role'));
     }
 
     public function edit_pengguna($id)
     {
+
         $userData = session('userData');
         $penggunaData = DB::select('CALL view_penggunaById(' . $id . ')');
         $pengguna = $penggunaData[0];
@@ -46,27 +47,93 @@ class AdminController extends Controller
 
         return view('admin/pengguna/edit', compact('userData', 'pengguna', 'role'));
     }
-    // public function update_pengguna(Request $request, $id)
-    // {
-    //     $DataPengguna
-    //     return view('admin/pengguna/edit', compact('userData', 'pengguna', 'role'));
-    // }
+
+    public function update_pengguna(Request $request, $id)
+{
+    // Ambil data pengguna berdasarkan ID
+    $penggunaData = DB::select('CALL view_penggunaById(' . $id . ')');
+    if (empty($penggunaData)) {
+        toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+        return redirect()->route('pengguna.index');
+    }
+
+    $pengguna = $penggunaData[0];
+
+    // Validasi input termasuk password jika diisi
+    $rules = [
+        'username' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'role' => 'required|string',
+    ];
+
+    if ($request->filled('password')) {
+        $rules['password'] = [
+            'string',
+            'min:8',           // Minimal 8 karakter
+            'regex:/[0-9]/',   // Harus mengandung setidaknya satu angka
+        ];
+    }
+
+    $customMessages = [
+        'password.min' => 'Password harus memiliki minimal 8 karakter.',
+        'password.regex' => 'Password harus mengandung setidaknya satu angka.',
+    ];
+
+    $request->validate($rules, $customMessages);
+
+    // Cek apakah password diisi atau tidak
+    $password = $request->filled('password') ? bcrypt($request->get('password')) : $pengguna->password;
+
+    // Buat JSON untuk dikirim ke stored procedure
+    $Pengguna = json_encode([
+        'IdPengguna' => $id,
+        'Username' => $request->get('username'),
+        'Email' => $request->get('email'),
+        'Password' => $password, // Password hanya diubah jika diisi
+        'Role' => $request->get('role'),
+    ]);
+
+    // Panggil stored procedure update_pengguna
+    $response = DB::statement('CALL update_pengguna(:dataPengguna)', ['dataPengguna' => $Pengguna]);
+
+    if ($response) {
+        toast('Data berhasil diperbarui!', 'success')->autoClose(3000);
+    } else {
+        toast('Data gagal disimpan!', 'error')->autoClose(3000);
+    }
+
+    return redirect()->route('pengguna.index');
+}
 
 
     public function create_pengguna(Request $request)
     {
+        $request->validate([
+            'username' => 'required|string|max:16',
+            'password' => [
+                'required',
+                'string',
+                'min:8',            // Minimal 8 karakter
+                'regex:/[0-9]/',    // Harus mengandung setidaknya satu angka
+            ],
+        ], [
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password harus memiliki minimal 8 karakter.',
+            'password.regex' => 'Password harus mengandung setidaknya satu angka.',
+        ]);
+
         $Pengguna = json_encode([
             'Username' => $request->get('username'),
             'Email' => $request->get('email'),
-            'Password'  => bcrypt($request->get('password')),
-            'Role'  => $request->get('role'),
-            'Pegawai'  => $request->get('pegawai')
+            'Password' => bcrypt($request->get('password')),
+            'Role' => $request->get('role'),
+            'Pegawai' => $request->get('pegawai')
         ]);
 
         $response = DB::statement('CALL insert_pengguna(:dataPengguna)', ['dataPengguna' => $Pengguna]);
 
         if ($response) {
-            toast('Pengguna berhasil ditambahkan!', 'success')->autoClose(3000); // Auto close dalam 3 detik
+            toast('Pengguna berhasil ditambahkan!', 'success')->autoClose(3000);
             return redirect()->route('pengguna.index');
         } else {
             toast('Pengguna gagal disimpan!', 'error')->autoClose(3000);
@@ -74,13 +141,132 @@ class AdminController extends Controller
         }
     }
 
+
+
+    public function delete_pengguna(Request $request, $id)
+    {
+        $response = DB::statement('CALL delete_pengguna(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('pengguna.index');
+    }
+
+    // ------ Data Pertanian --------
+
+    public function data_pertanian()
+    {
+        $userData = session('userData');
+        $petani = DB::select('CALL viewAll_petani()');
+        $lahan = DB::select('CALL viewAll_lahan()');
+        $desa = DB::select('CALL viewAll_desa()');
+        $komoditas = DB::select('CALL viewAll_Komoditas()');
+        $dataPertanian = DB::select('CALL viewAll_dataPertanian()');
+        $totalData = count($dataPertanian); // Menghitung jumlah data
+
+        return view('admin/data/index', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian','totalData'));
+    }
+
+    public function edit($id)
+    {
+        $userData = session('userData');
+        $petani = DB::select('CALL viewAll_petani()');
+        $lahan = DB::select('CALL viewAll_lahan()');
+        $desa = DB::select('CALL viewAll_desa()');
+        $komoditas = DB::select('CALL viewAll_Komoditas()');
+        $dataPertanianData = DB::select('CALL view_dataPertanianById(' . $id . ')');
+        $dataPertanian = $dataPertanianData[0];
+
+        return view('admin/data/edit', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian'));
+    }
+    public function update(Request $request, $id)
+    {
+        $DataPertanian = json_encode([
+            'IdDataPertanian' => $id,
+            'Petani' => $request->get('id_petani'),
+            'Lahan' => $request->get('id_lahan'),
+            'Komoditas' => $request->get('id_komoditas'),
+            'LuasLahan' => $request->get('luasLahan'),
+            'Desa' => $request->get('subdis_id'),
+            'Alamat' => $request->get('alamatLengkap'),
+            'TanggalTanam' => $request->get('tanggal_tanam'),
+            'TanggalCatat' => $request->get('tanggal_pencatatan'),
+        ]);
+
+
+
+        $dataPertanianData = DB::select('CALL view_dataPertanianById(' . $id . ')');
+        $dataPertanian = $dataPertanianData[0];
+
+        if ($dataPertanian) {
+            $response = DB::statement('CALL update_DataPertanian(:dataPertanian)', ['dataPertanian' => $DataPertanian]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('AdmindataPertanian.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('AdmindataPertanian.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('AdmindataPertanian.index');
+        }
+    }
+
+    public function create_data_pertanian(Request $request)
+    {
+        $DataPertanian = json_encode([
+            'Petani' => $request->get('id_petani'),
+            'Lahan' => $request->get('id_lahan'),
+            'Komoditas' => $request->get('id_komoditas'),
+            'LuasLahan' => $request->get('luas_lahan'),
+            'Desa' => $request->get('subdis_id'),
+            'Alamat' => $request->get('alamat_lengkap'),
+            'TanggalTanam' => $request->get('tanggal_tanam'),
+            'TanggalCatat' => $request->get('tanggal_pencatatan'),
+            'Pencatat' => session('userData')->user_id
+        ]);
+
+        $response = DB::statement('CALL insert_dataPertanian(:dataPertanian)', ['dataPertanian' => $DataPertanian]);
+
+        if ($response) {
+            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            return redirect()->route('AdmindataPertanian.index');
+        } else {
+            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('AdmindataPertanian.index');
+        }
+    }
+
+
+    public function delete(Request $request, $id)
+    {
+        $response = DB::statement('CALL delete_dataPertanian(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+    
+        return redirect()->route('AdmindataPertanian.index');
+    }
+
+
+
     // ------ JENIS KOMODITAS -------
 
     public function jenis_komoditas()
     {
         $userData = session('userData');
         $jenisKomoditas = DB::select('CALL viewAll_jenisKomoditas()');
-        return view('admin/jenis_komoditas/index', compact('userData', 'jenisKomoditas'));
+        $totalData = count($jenisKomoditas);
+        return view('admin/jenis_komoditas/index', compact('totalData','userData', 'jenisKomoditas'));
     }
 
     public function create_jenisKomoditas(Request $request)
@@ -100,6 +286,16 @@ class AdminController extends Controller
         }
     }
 
+    public function edit_jenisKomoditas($id)
+    {
+        $userData = session('userData');
+        $jenisKomoditasData = DB::select('CALL view_jenisKomoditasById(' . $id . ')');
+        $jenisKomoditas = $jenisKomoditasData[0];
+
+        return view('admin/jenis_komoditas/edit', compact('userData', 'jenisKomoditas'));
+    }
+
+
     // ------ KOMODITAS -------
 
     public function komoditas()
@@ -107,8 +303,9 @@ class AdminController extends Controller
         $userData = session('userData');
         $komoditas = DB::select('CALL viewAll_Komoditas()');
         $jenisKomoditas = DB::select('CALL viewAll_jenisKomoditas()');
+        $totalData = count($komoditas);
 
-        return view('admin/komoditas/index', compact('userData', 'komoditas', 'jenisKomoditas'));
+        return view('admin/komoditas/index', compact('totalData','userData', 'komoditas', 'jenisKomoditas'));
     }
 
     public function create_komoditas(Request $request)
@@ -130,14 +327,25 @@ class AdminController extends Controller
         }
     }
 
+    public function edit_komoditas($id)
+    {
+        $userData = session('userData');
+        $komoditasData = DB::select('CALL view_komoditasById(' . $id . ')');
+        $komoditas = $komoditasData[0];
+        $jenisKomoditas = DB::select('CALL viewAll_jenisKomoditas()');
+
+        return view('admin/komoditas/edit', compact('userData', 'komoditas', 'jenisKomoditas'));
+    }
+
     // ------ JENIS LAHAN -------
 
     public function jenis_lahan()
     {
         $userData = session('userData');
         $jenisLahan = DB::select('CALL viewAll_jenisLahan()');
+        $totalData = count($jenisLahan);
 
-        return view('admin/jenis_lahan/index', compact('userData', 'jenisLahan'));
+        return view('admin/jenis_lahan/index', compact('totalData','userData', 'jenisLahan'));
     }
 
     public function create_jenisLahan(Request $request)
@@ -164,8 +372,9 @@ class AdminController extends Controller
         $userData = session('userData');
         $lahan = DB::select('CALL viewAll_lahan()');
         $jenisLahan = DB::select('CALL viewAll_jenisLahan()');
+        $totalData = count($lahan);
 
-        return view('admin/lahan/index', compact('userData', 'lahan', 'jenisLahan'));
+        return view('admin/lahan/index', compact('totalData','userData', 'lahan', 'jenisLahan'));
     }
 
     public function create_lahan(Request $request)
@@ -194,8 +403,9 @@ class AdminController extends Controller
     {
         $userData = session('userData');
         $departemen = DB::select('CALL viewAll_departemen()');
+        $totalData = count($departemen);
 
-        return view('admin/departemen/index', compact('userData', 'departemen'));
+        return view('admin/departemen/index', compact('totalData','userData', 'departemen'));
     }
 
     public function create_departemen(Request $request)
@@ -224,9 +434,9 @@ class AdminController extends Controller
         $userData = session('userData');
         $bidang = DB::select('CALL viewAll_bidang()');
         $departemen = DB::select('CALL viewAll_departemen()');
+        $totalData = count($bidang);
 
-
-        return view('admin/bidang/index', compact('userData', 'bidang', 'departemen'));
+        return view('admin/bidang/index', compact('totalData','userData', 'bidang', 'departemen'));
     }
 
 
@@ -256,8 +466,9 @@ class AdminController extends Controller
     {
         $userData = session('userData');
         $jabatan = DB::select('CALL viewAll_jabatan()');
+        $totalData = count($jabatan);
 
-        return view('admin/jabatan/index', compact('userData', 'jabatan'));
+        return view('admin/jabatan/index', compact('totalData','userData', 'jabatan'));
     }
 
     public function create_jabatan(Request $request)
@@ -288,8 +499,9 @@ class AdminController extends Controller
         $jabatanBidang = DB::select('CALL viewAll_jabatanBidang()');
         $jabatan = DB::select('CALL viewAll_jabatan()');
         $bidang = DB::select('CALL viewAll_bidang()');
+        $totalData = count($jabatanBidang);
 
-        return view('admin/jabatan_bidang/index', compact('userData', 'jabatanBidang', 'jabatan', 'bidang'));
+        return view('admin/jabatan_bidang/index', compact('totalData','userData', 'jabatanBidang', 'jabatan', 'bidang'));
     }
 
     public function create_jabatanBidang(Request $request)
@@ -319,8 +531,9 @@ class AdminController extends Controller
     {
         $userData = session('userData');
         $golonganPangkat = DB::select('CALL viewAll_golonganPangkat()');
+        $totalData = count($golonganPangkat);
 
-        return view('admin/golongan_pangkat/index', compact('userData', 'golonganPangkat'));
+        return view('admin/golongan_pangkat/index', compact('totalData','userData', 'golonganPangkat'));
     }
 
     public function create_golonganPangkat(Request $request)
@@ -352,14 +565,15 @@ class AdminController extends Controller
         $pegawai = DB::select('CALL viewAll_pegawaiFull()');
         $jabatanBidang = DB::select('CALL viewAll_jabatanBidang()');
         $desa = DB::select('CALL viewAll_desa()');
+        $totalData = count($pegawai);
 
-        return view('admin/pegawai/index', compact('userData', 'pegawai', 'golonganPangkat', 'jabatanBidang', 'desa'));
+        return view('admin/pegawai/index', compact('totalData','userData', 'pegawai', 'golonganPangkat', 'jabatanBidang', 'desa'));
     }
 
     public function create_pegawai(Request $request)
     {
         // Validasi file foto
-       $request->validate([
+        $request->validate([
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         // dd($validated);
@@ -405,8 +619,9 @@ class AdminController extends Controller
         $jabatanPokTan = DB::select('CALL viewAll_jabatanBidangPokTan()');
         $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
         $petani = DB::select('CALL viewAll_petani()');
-        
-        return view('admin/jabatan_petani/index', compact('userData', 'jabatanPetani','jabatanPokTan','kelompokTani','petani'));
+        $totalData = count($jabatanPetani);
+
+        return view('admin/jabatan_petani/index', compact('totalData','userData', 'jabatanPetani', 'jabatanPokTan', 'kelompokTani', 'petani'));
     }
 
     public function create_jabatanPetani(Request $request)
@@ -432,13 +647,14 @@ class AdminController extends Controller
     //  -------------------------- HALAMAN --------------------------------
 
     // ------ PROVINSI -------
-    
+
     public function provinsi()
     {
         $userData = session('userData');
         $provinsi = DB::select('CALL viewAll_provinsi()');
+        $totalData = count($provinsi);
 
-        return view('admin/provinsi/index', compact('userData', 'provinsi'));
+        return view('admin/provinsi/index', compact('totalData','userData', 'provinsi'));
     }
 
     // ------ KABUPATEN -------
@@ -447,8 +663,9 @@ class AdminController extends Controller
     {
         $userData = session('userData');
         $kabupaten = DB::select('CALL viewAll_kabupaten()');
+        $totalData = count($kabupaten);
 
-        return view('admin/kabupaten/index', compact('userData', 'kabupaten'));
+        return view('admin/kabupaten/index', compact('totalData','userData', 'kabupaten'));
     }
 
     // ------ KECAMATAN -------
@@ -457,8 +674,9 @@ class AdminController extends Controller
     {
         $userData = session('userData');
         $kecamatan = DB::select('CALL viewAll_kecamatan()');
-
-        return view('admin/kecamatan/index', compact('userData', 'kecamatan'));
+        $totalData = count($kecamatan);
+        
+        return view('admin/kecamatan/index', compact('totalData','userData', 'kecamatan'));
     }
 
 
@@ -487,6 +705,7 @@ class AdminController extends Controller
         $userData = session('userData');
         $desa = DB::select('CALL viewAll_desa()');
         $kecamatan = DB::select('CALL viewAll_kecamatan()');
+        $totalData = count($desa);
 
         return view('admin/desa/index', compact('userData', 'desa', 'kecamatan'));
     }

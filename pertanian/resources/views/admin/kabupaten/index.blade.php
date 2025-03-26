@@ -13,7 +13,7 @@
 <div class="card" id="employeeTable">
     <div class="card-body">
         <div class="flex items-center gap-3 mb-4">
-            <h6 class="text-15 grow">Kabupaten(<b class="total-Employs">#</b>)</h6>
+            <h6 class="text-15 grow">Kabupaten(<b class="total-Employs">{{ $totalData }}</b>)</h6>
         </div>
 
         <table id="rowBorder" style="width:100%">
