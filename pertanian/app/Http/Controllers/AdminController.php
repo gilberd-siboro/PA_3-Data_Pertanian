@@ -646,28 +646,6 @@ class AdminController extends Controller
 
     //  -------------------------- HALAMAN --------------------------------
 
-    // ------ PROVINSI -------
-
-    public function provinsi()
-    {
-        $userData = session('userData');
-        $provinsi = DB::select('CALL viewAll_provinsi()');
-        $totalData = count($provinsi);
-
-        return view('admin/provinsi/index', compact('totalData','userData', 'provinsi'));
-    }
-
-    // ------ KABUPATEN -------
-
-    public function kabupaten()
-    {
-        $userData = session('userData');
-        $kabupaten = DB::select('CALL viewAll_kabupaten()');
-        $totalData = count($kabupaten);
-
-        return view('admin/kabupaten/index', compact('totalData','userData', 'kabupaten'));
-    }
-
     // ------ KECAMATAN -------
 
     public function kecamatan()
@@ -707,7 +685,7 @@ class AdminController extends Controller
         $kecamatan = DB::select('CALL viewAll_kecamatan()');
         $totalData = count($desa);
 
-        return view('admin/desa/index', compact('userData', 'desa', 'kecamatan'));
+        return view('admin/desa/index', compact('totalData','userData', 'desa', 'kecamatan'));
     }
 
     public function create_desa(Request $request)
@@ -735,8 +713,9 @@ class AdminController extends Controller
     {
         $userData = session('userData');
         $kelompokTani = DB::select('CALL viewAll_kelompokTani()');
+        $totalData = count($kelompokTani);
 
-        return view('admin/kelompok_tani/index', compact('userData', 'kelompokTani'));
+        return view('admin/kelompok_tani/index', compact('totalData','userData', 'kelompokTani'));
     }
 
     public function create_kelompok_tani(Request $request)
@@ -765,8 +744,9 @@ class AdminController extends Controller
         $userData = session('userData');
         $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
         $petani = DB::select('CALL viewAll_petani()');
+        $totalData = count($petani);
 
-        return view('admin/petani/index', compact('userData', 'petani', 'kelompokTani'));
+        return view('admin/petani/index', compact('totalData','userData', 'petani', 'kelompokTani'));
     }
 
     public function create_petani(Request $request)

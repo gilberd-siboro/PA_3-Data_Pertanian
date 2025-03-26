@@ -4,11 +4,21 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PenyuluhController;
+use App\Http\Controllers\UserController;
+
+
+// ----------- USER -----------
+
+Route::get('/', [UserController::class, 'index']);
+Route::get('/tentang', [UserController::class, 'tentang']);
+Route::get('/komoditas-kecamatan', [UserController::class, 'komoditas_kecamatan']);
+Route::get('/persebaran-komoditas', [UserController::class, 'persebaran_komoditas']);
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/proses-login', [AuthController::class, 'proses_login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 
 Route::middleware(['Role:Admin'])->group(function () {
@@ -77,10 +87,6 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::get('/jabatan-petani', [AdminController::class, 'jabatan_petani'])->name('jabatanPetani.index');
     Route::post('/tambah-jabatan-petani', [AdminController::class, 'create_jabatanPetani']);
 
-    // -- Provinsi --
-    Route::get('/provinsi', [AdminController::class, 'provinsi']);
-    Route::get('/kabupaten', [AdminController::class, 'kabupaten']);
-    
     // -- Kecamatan --
     Route::get('/kecamatan', [AdminController::class, 'kecamatan'])->name('kecamatan.index');
     Route::post('/tambah-kecamatan', [AdminController::class, 'create_kecamatan']);
@@ -116,6 +122,4 @@ Route::middleware(['Role:Penyuluh'])->group(function () {
 
 
 
-Route::get('/', function () {
-    return redirect('/admin-dashboard'); // Ganti dengan route tujuan
-});
+
