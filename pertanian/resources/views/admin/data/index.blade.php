@@ -3,7 +3,7 @@
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
         <li class="text-slate-700 dark:text-zink-100">
-            Petani
+            Data Pertanian
         </li>
     </ul>
 </div>

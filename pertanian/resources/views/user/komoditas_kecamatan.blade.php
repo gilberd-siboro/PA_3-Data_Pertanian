@@ -21,11 +21,11 @@
       <div class="col-md-4 ftco-animate">
           <div class="project-wrap" data-kecamatan="Kecamatan1">
               <a href="#" class="img" style="background-image: url(images/cabemerah.jpg);">
-                  <span class="price">Rp.550/Kg</span>
+ 
               </a>
               <div class="text p-4">
                   <h3><a href="#">Cabai Merah</a></h3>
-                  <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                  <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
               </div>
           </div>
       </div>
@@ -36,7 +36,7 @@
         </a>
         <div class="text p-4">
             <h3><a href="#">Cabai Hijau</a></h3>
-            <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+            <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
        </div>
    </div>
 </div>
@@ -47,7 +47,7 @@
     </a>
     <div class="text p-4">
         <h3><a href="#">Kentang</a></h3>
-        <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+        <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
    </div>
 </div>
 </div>
@@ -59,7 +59,7 @@
     </a>
     <div class="text p-4">
         <h3><a href="#">Tomat</a></h3>
-        <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+        <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
    </div>
 </div>
 </div>
@@ -70,7 +70,7 @@
     </a>
     <div class="text p-4">
         <h3><a href="#">Wortel</a></h3>
-        <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+        <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
    </div>
 </div>
 </div>
@@ -81,7 +81,7 @@
     </a>
     <div class="text p-4">
         <h3><a href="#">Bawang Merah</a></h3>
-        <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+        <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
    </div>
 </div>
 </div>
@@ -92,7 +92,7 @@
     </a>
     <div class="text p-4">
         <h3><a href="#">Bawang Putih</a></h3>
-        <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+        <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
    </div>
 </div>
 </div>
@@ -103,7 +103,7 @@
     </a>
     <div class="text p-4">
         <h3><a href="#">Andaliman</a></h3>
-        <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+        <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
    </div>
 </div>
 </div>
@@ -114,7 +114,7 @@
     </a>
     <div class="text p-4">
         <h3><a href="#">Bawang Bombay</a></h3>
-        <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+        <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
    </div>
 </div>
 </div>
@@ -169,11 +169,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan1">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/cabemerah.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+                 <!-- <span class="price">Rp.550/Kg</span> -->
              </a>
              <div class="text p-4">
                  <h3><a href="#">Cabai Merah</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -181,11 +181,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan2">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/cabehijau.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+
              </a>
              <div class="text p-4">
                  <h3><a href="#">Cabai Hijau</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -193,11 +193,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan3">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/kentang.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+
              </a>
              <div class="text p-4">
                  <h3><a href="#">Kentang</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -205,11 +205,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan1">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/tomat.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+
              </a>
              <div class="text p-4">
                  <h3><a href="#">Tomat</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -217,11 +217,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan2">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/wortel.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+
              </a>
              <div class="text p-4">
                  <h3><a href="#">Wortel</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -229,11 +229,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan3">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/bawangmerah.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+
              </a>
              <div class="text p-4">
                  <h3><a href="#">Bawang Merah</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -241,11 +241,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan1">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/bawangputih.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+
              </a>
              <div class="text p-4">
                  <h3><a href="#">Bawang Putih</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -253,11 +253,11 @@
      <div class="col-md-4 ftco-animate" data-kecamatan="Kecamatan2">
          <div class="project-wrap">
              <a href="#" class="img" style="background-image: url(images/andaliman.jpg);">
-                 <span class="price">Rp.550/Kg</span>
+
              </a>
              <div class="text p-4">
                  <h3><a href="#">Andaliman</a></h3>
-                 <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+                 <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
              </div>
          </div>
      </div>
@@ -269,7 +269,7 @@
           </a>
           <div class="text p-4">
               <h3><a href="#">bawangbombay</a></h3>
-              <p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
+              <p class="location"><span class="fa fa-map-marker"></span> Desa</p>
           </div>
       </div>
   </div>

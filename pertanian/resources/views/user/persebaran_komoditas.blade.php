@@ -19,13 +19,13 @@
         <body>
             <div class="row mb-4">
                 <div class="col-md-4">
-                    <input type="text" id="searchDesa" class="form-control mb-2" placeholder="Cari Desa...">
+                    <input type="text" id="searchDesa" class="form-control mb-2" placeholder="Cari Komoditas...">
                     <select id="filterDesa" class="form-control">
-                        <option value="all">Semua Desa</option>
-                        <option value="Desa1">Desa Adian Koting</option>
-                        <option value="Desa2">Desa Garoga</option>
-                        <option value="Desa3">Desa Muara</option>
-                        <option value="Desa4">Desa Pagaran</option>
+                        <option value="all">Semua Komoditas</option>
+                        <option value="Desa1">Cabe Merah</option>
+                        <option value="Desa2">Cabe Hijau</option>
+                        <option value="Desa3">Kentang</option>
+                        <!-- <option value="Desa4">Desa Pagaran</option>
                         <option value="Desa5">Desa Pahae Jae</option>
                         <option value="Desa6">Desa Pahae Julu</option>
                         <option value="Desa7">Desa Pangaribuan</option>
@@ -36,7 +36,7 @@
                         <option value="Desa12">Desa Simangumban</option>
                         <option value="Desa13">Desa Sipahutar</option>
                         <option value="Desa14">Desa Sipoholon</option>
-                        <option value="Desa15">Desa Tarutung</option>
+                        <option value="Desa15">Desa Tarutung</option> -->
                     </select>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 <div class="col-md-4 ftco-animate" data-desa="Desa1">
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/cabemerah.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Cabai Merah</a></h3>
@@ -56,7 +56,7 @@
                 <div class="col-md-4 ftco-animate" data-desa="Desa2">
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/cabehijau.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Cabai Hijau</a></h3>
@@ -67,7 +67,7 @@
                 <div class="col-md-4 ftco-animate" data-desa="Desa3">
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/kentang.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Kentang</a></h3>
@@ -75,10 +75,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 ftco-animate" data-desa="Desa1">
+                <div class="col-md-4 ftco-animate" >
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/tomat.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Tomat</a></h3>
@@ -86,10 +86,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 ftco-animate" data-desa="Desa2">
+                <div class="col-md-4 ftco-animate">
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/wortel.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Wortel</a></h3>
@@ -97,10 +97,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 ftco-animate" data-desa="Desa3">
+                <div class="col-md-4 ftco-animate">
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/bawangmerah.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Bawang Merah</a></h3>
@@ -108,10 +108,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 ftco-animate" data-desa="Desa1">
+                <div class="col-md-4 ftco-animate" >
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/bawangputih.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Bawang Putih</a></h3>
@@ -119,10 +119,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 ftco-animate" data-desa="Desa2">
+                <div class="col-md-4 ftco-animate">
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/andaliman.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Andaliman</a></h3>
@@ -130,10 +130,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 ftco-animate" data-desa="Desa1, Desa10">
+                <div class="col-md-4 ftco-animate" >
                     <div class="project-wrap">
                         <a href="#" class="img" style="background-image: url(images/bawangbombay.jpg);">
-                            <span class="price">Rp.550/Kg</span>
+
                         </a>
                         <div class="text p-4">
                             <h3><a href="#">Bawang Bombay</a></h3>

@@ -12,34 +12,25 @@
     </ul>
 </div>
 
-<div style="height: 600px">
-
-</div>
-
-<div id="edit" modal-center="" class="fixed flex flex-col transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4">
-    <div class="w-screen lg:w-[55rem] bg-white shadow rounded-md dark:bg-zink-600 flex flex-col h-full">
-        <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
-            <h5 class="text-16" id="addEmployeeLabel">Edit Data</h5>
-            <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
-        </div>
-        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-            <form class="create-form" id="create-form" action="{{ route('pengguna.update', $pengguna -> user_id)}}" method="POST">
+<div class="card mx-auto lg:w-2/3">
+    <div class="card-body">
+            <form action="{{ route('pengguna.update', $pengguna -> user_id)}}" method="POST">
                 @csrf
-                <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-12">
-                    <div class="xl:col-span-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-x-5 gap-y-4">
+                    <div class="mb-3">
                         <label for="username" class="inline-block mb-2 text-base font-medium">Username</label>
                         <input type="text" id="username" name="username" value="{{ old('username', $pengguna->username) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                     </div>
-                    <div class="xl:col-span-6">
+                    <div class="mb-3">
                         <label for="email" class="inline-block mb-2 text-base font-medium">Email</label>
                         <input type="text" id="email" name="email" value="{{ old('email', $pengguna->email) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                     </div>
-                    <div class="xl:col-span-6">
+                    <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password (Biarkan kosong jika tidak ingin mengubah)</label>
                         <input type="password" id="password" name="password" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Masukkan password baru">
                         <small id="passwordError" class="text-red-500"></small>
                     </div>
-                    <div class="xl:col-span-6">
+                    <div class="mb-3">
                         <label for="role" class="inline-block mb-2 text-base font-medium">Role</label>
                         <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="role" id="role">
                             <option value="">Pilih Role</option>
@@ -47,16 +38,14 @@
                             <option value="{{ $r->role_id }}" {{ $r->role_id == $pengguna->role_id ? 'selected' : '' }}>{{ $r->role_name }} </option>
                             @endforeach
                         </select>
+
                     </div>
                 </div>
-                <div class="flex justify-end gap-2 mt-4">
-                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Data</button>
-                </div>
+                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Data</button>
             </form>
-
-        </div>
     </div>
 </div>
+
 
 
 <!-- SETINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG -->
@@ -264,18 +253,18 @@
     </div>
 </div>
 <script>
-document.getElementById('password').addEventListener('input', function() {
-    let password = this.value;
-    let errorText = '';
-    
-    if (password.length < 8) {
-        errorText = 'Password harus minimal 8 karakter.';
-    } else if (!/\d/.test(password)) {
-        errorText = 'Password harus mengandung setidaknya satu angka.';
-    }
+    document.getElementById('password').addEventListener('input', function() {
+        let password = this.value;
+        let errorText = '';
 
-    document.getElementById('passwordError').textContent = errorText;
-});
+        if (password.length < 8) {
+            errorText = 'Password harus minimal 8 karakter.';
+        } else if (!/\d/.test(password)) {
+            errorText = 'Password harus mengandung setidaknya satu angka.';
+        }
+
+        document.getElementById('passwordError').textContent = errorText;
+    });
 </script>
 
 @endsection

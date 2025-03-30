@@ -4,7 +4,7 @@
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
         <li class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
-            <a href="#" class="text-slate-500 dark:text-zink-200">Bidang</a>
+            <a href="/bidang" class="text-slate-500 dark:text-zink-200">Bidang</a>
         </li>
         <li class="text-slate-700 dark:text-zink-100">
             Edit Bidang
@@ -12,54 +12,33 @@
     </ul>
 </div>
 
-<div style="height: 600px">
+<div class="card mx-auto lg:w-2/3">
+    <div class="card-body">
+        <form class="create-form" id="create-form" action="{{ route('bidang.update', $bidang -> id_bidang)}}" method="POST">
+            @csrf
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
+                <div class="mb-3 md:col-span-2">
+                    <label for="role" class="inline-block mb-2 text-base font-medium">Departemen</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="departemen" id="departemen">
+                        <option value="">Pilih Departemen</option>
+                        @foreach($departemen as $dep)
+                        <option value="{{ $dep->idDepartemen }}" {{ $dep->idDepartemen == $bidang->idDepartemen ? 'selected' : '' }}>{{ $dep->namaDepartmen }} </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="namaBidang" class="inline-block mb-2 text-base font-medium">Nama Bidang</label>
+                    <input type="text" id="namaBidang" name="namaBidang" value="{{ old('namaBidang', $bidang->nama_bidang) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
 
-</div>
+                </div>
+                <div class="mb-3">
+                    <label for="keterangan" class="inline-block mb-2 text-base font-medium">Keterangan</label>
+                    <input type="text" id="keterangan" name="keterangan" value="{{ old('keterangan', $bidang->keterangan) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
 
-<div id="Tambah" modal-center="" class="fixed flex flex-col  transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4  ">
-    <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
-        <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
-            <h5 class="text-16" id="addEmployeeLabel">Edit Bidang</h5>
-            <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
-        </div>
-        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-
-            <form class="create-form" id="create-form" action="#" method="POST">
-                @csrf
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="jenis_komoditas" class="inline-block mb-2 text-base font-medium">Departemen</label>
-                        <input type="text" value="#" id="departemen" name="departemen" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Departemen">
-                    </div>
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="parent_bidang" class="inline-block mb-2 text-base font-medium">Parent Bidang</label>
-                        <input type="text" value="#" id="parent_bidang" name="parent_bidang" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Parent Bidang">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="bidang" class="inline-block mb-2 text-base font-medium">Nama Bidang</label>
-                        <input type="text" value="#" id="nama_bidang" name="nama_bidang" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Bidang">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="keterangan" class="inline-block mb-2 text-base font-medium">Keterangan</label>
-                        <input type="text" value="#" id="keterangan" name="keterangan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Keterangan">
-                    </div>
-                </div>
-                <div class="flex justify-end gap-2 mt-4">
-                    <a href="#" class="text-red-500  btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zinc-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">
-                        Cancel
-                    </a>
-                    <button type="submit" id="addNew" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 ">Edit
-                        Bidang</button>
-                </div>
-            </form>
-
-        </div>
+            </div>
+            <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Data</button>
+        </form>
     </div>
 </div>
 

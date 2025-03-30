@@ -54,26 +54,38 @@ Route::middleware(['Role:Admin'])->group(function () {
     // -- Jenis Lahan--
     Route::get('/jenis-lahan', [AdminController::class, 'jenis_lahan'])->name('jenisLahan.index');
     Route::post('/tambah-jenis-lahan', [AdminController::class, 'create_jenisLahan']);
+    Route::get('/jenis-lahan/edit/{id}', [AdminController::class, 'edit_jenisLahan'])->name('jenisLahan.edit');
+    Route::post('/jenis-lahan/update/{id}', [AdminController::class, 'update_jenisLahan'])->name('jenisLahan.update');
     
     // -- Lahan --
     Route::get('/lahan', [AdminController::class, 'lahan'])->name('lahan.index');
     Route::post('/tambah-lahan', [AdminController::class, 'create_lahan']);
+    Route::get('/lahan/edit/{id}', [AdminController::class, 'edit_lahan'])->name('lahan.edit');
+    Route::post('/lahan/update/{id}', [AdminController::class, 'update_lahan'])->name('lahan.update');
     
     // -- Departemen --
     Route::get('/departemen', [AdminController::class, 'departemen'])->name('departemen.index');
     Route::post('/tambah-departemen', [AdminController::class, 'create_departemen']);
+    Route::get('/departemen/edit/{id}', [AdminController::class, 'edit_departemen'])->name('departemen.edit');
+    Route::post('/departemen/update/{id}', [AdminController::class, 'update_departemen'])->name('departemen.update');
     
     // -- Bidang --
     Route::get('/bidang', [AdminController::class, 'bidang'])->name('bidang.index');
     Route::post('/tambah-bidang', [AdminController::class, 'create_bidang']);
+    Route::get('/bidang/edit/{id}', [AdminController::class, 'edit_bidang'])->name('bidang.edit');
+    Route::post('/bidang/update/{id}', [AdminController::class, 'update_bidang'])->name('bidang.update');
     
     // -- Jabatan --
     Route::get('/jabatan', [AdminController::class, 'jabatan'])->name('jabatan.index');
     Route::post('/tambah-jabatan', [AdminController::class, 'create_jabatan']);
+    Route::get('/jabatan/edit/{id}', [AdminController::class, 'edit_jabatan'])->name('jabatan.edit');
+    Route::post('/jabatan/update/{id}', [AdminController::class, 'update_jabatan'])->name('jabatan.update');
     
     // -- Jabatan Bidang --
     Route::get('/jabatan-bidang', [AdminController::class, 'jabatan_bidang'])->name('jabatanBidang.index');
     Route::post('/tambah-jabatan-bidang', [AdminController::class, 'create_jabatanBidang']);
+    Route::get('/jabatan-bidang/edit/{id}', [AdminController::class, 'edit_jabatanBidang'])->name('jabatanBidang.edit');
+    Route::post('/jabatan-bidang/update/{id}', [AdminController::class, 'update_jabatanBidang'])->name('jabatanBidang.update');
     
     // -- Golongan Pangkat --
     Route::get('/golongan-pangkat', [AdminController::class, 'golongan_pangkat'])->name('golonganPangkat.index');
