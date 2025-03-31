@@ -782,6 +782,35 @@ class AdminController extends Controller
         return view('admin/jabatan_bidang/edit', compact('userData','jabatanBidang' ,'bidang', 'jabatan'));
     }
 
+    public function update_jabatanBidang(Request $request, $id)
+    {
+        $JabatanBidang = json_encode([
+            'IdJabatanBidang' => $id,
+            'Jabatan' => $request->get('jabatan'),
+            'Bidang' => $request->get('bidang'),
+            'JabatanBidang' => $request->get('namaJabatanBidang'),
+            'Keterangan' => $request->get('keterangan'),
+        ]);
+
+        $jabatanBidangData = DB::select('CALL view_jabatanBidangById(' . $id . ')');
+        $jabatanBidang = $jabatanBidangData[0];
+
+        if ($jabatanBidang) {
+            $response = DB::statement('CALL update_jabatanBidang(:dataJabatanBidang)', ['dataJabatanBidang' => $JabatanBidang]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('jabatanBidang.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('jabatanBidang.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('jabatanBidang.index');
+        }
+    }
+
     // ------ GOLONGAN PANGKAT -------
 
     public function golongan_pangkat()
@@ -811,6 +840,45 @@ class AdminController extends Controller
             toast('Data gagal disimpan!', 'error')->autoClose(3000);
             return redirect()->route('golonganPangkat.index');
         }
+    }
+
+    public function edit_golonganPangkat($id)
+    {
+        $userData = session('userData');
+        $golonganPangkatData = DB::select('CALL view_golonganPangkatById(' . $id . ')');
+        $golonganPangkat = $golonganPangkatData[0];
+
+
+        return view('admin/golongan_pangkat/edit', compact('userData', 'golonganPangkat'));
+    }
+
+    public function update_golonganPangkat(Request $request, $id)
+    {
+        $GolonganPangkat = json_encode([
+            'IdGolonganPangkat' => $id,
+            'Golongan' => $request->get('golongan'),
+            'Pangkat' => $request->get('pangkat'),
+            'Keterangan' => $request->get('keterangan'),
+        ]);
+
+        $golonganPangkatData = DB::select('CALL view_golonganPangkatById(' . $id . ')');
+        $golonganPangkat = $golonganPangkatData[0];
+
+        if ($golonganPangkat) {
+            $response = DB::statement('CALL update_golonganPangkat(:dataGolonganPangkat)', ['dataGolonganPangkat' => $GolonganPangkat]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('golonganPangkat.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('golonganPangkat.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('golonganPangkat.index');
+        }
+
     }
 
     // ------ PEGAWAI -------
@@ -933,6 +1001,43 @@ class AdminController extends Controller
         }
     }
 
+    public function edit_kecamatan($id)
+    {
+        $userData = session('userData');
+        $kecamatanData = DB::select('CALL view_kecamatanById(' . $id . ')');
+        $kecamatan = $kecamatanData[0];
+
+        return view('admin/kecamatan/edit', compact('userData', 'kecamatan'));
+    }
+
+    public function update_kecamatan(Request $request, $id)
+    {
+        $Kecamatan = json_encode([
+            'IdKecamatan' => $id,
+            'Kecamatan' => $request->get('kecamatan'),
+        ]);
+
+
+
+        $kecamatanData = DB::select('CALL view_kecamatanById(' . $id . ')');
+        $kecamatan = $kecamatanData[0];
+
+        if ($kecamatan) {
+            $response = DB::statement('CALL update_kecamatan(:dataKecamatan)', ['dataKecamatan' => $Kecamatan]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('kecamatan.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('kecamatan.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('kecamatan.index');
+        }
+    }
+
     // ------ DESA -------
 
     public function desa()
@@ -960,6 +1065,43 @@ class AdminController extends Controller
             return redirect()->route('desa.index');
         } else {
             toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('desa.index');
+        }
+    }
+
+    public function edit_desa($id)
+    {
+        $userData = session('userData');
+        $desaData = DB::select('CALL view_desaById(' . $id . ')');
+        $desa = $desaData[0];
+        $kecamatan = DB::select('CALL viewAll_kecamatan()');
+
+        return view('admin/desa/edit', compact('userData', 'desa', 'kecamatan'));
+    }
+
+    public function update_desa(Request $request, $id)
+    {
+        $Desa = json_encode([
+            'IdDesa' => $id,
+            'NamaDesa' => $request->get('namaDesa'),
+            'Kecamatan' => $request->get('kecamatan'),
+        ]);
+
+        $desaData = DB::select('CALL view_desaById(' . $id . ')');
+        $desa = $desaData[0];
+
+        if ($desa) {
+            $response = DB::statement('CALL update_desa(:dataDesa)', ['dataDesa' => $Desa]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('desa.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('desa.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
             return redirect()->route('desa.index');
         }
     }

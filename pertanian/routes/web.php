@@ -90,6 +90,8 @@ Route::middleware(['Role:Admin'])->group(function () {
     // -- Golongan Pangkat --
     Route::get('/golongan-pangkat', [AdminController::class, 'golongan_pangkat'])->name('golonganPangkat.index');
     Route::post('/tambah-golongan-pangkat', [AdminController::class, 'create_golonganPangkat']);
+    Route::get('/golongan-pangkat/edit/{id}', [AdminController::class, 'edit_golonganPangkat'])->name('golonganPangkat.edit');
+    Route::post('/golongan-pangkat/update/{id}', [AdminController::class, 'update_golonganPangkat'])->name('golonganPangkat.update');
     
     // -- Pegawai --
     Route::get('/pegawai', [AdminController::class, 'pegawai'])->name('pegawai.index');
@@ -102,14 +104,20 @@ Route::middleware(['Role:Admin'])->group(function () {
     // -- Kecamatan --
     Route::get('/kecamatan', [AdminController::class, 'kecamatan'])->name('kecamatan.index');
     Route::post('/tambah-kecamatan', [AdminController::class, 'create_kecamatan']);
+    Route::get('/kecamatan/edit/{id}', [AdminController::class, 'edit_kecamatan'])->name('kecamatan.edit');
+    Route::post('/kecamatan/update/{id}', [AdminController::class, 'update_kecamatan'])->name('kecamatan.update');
 
     // -- Desa --
     Route::get('/desa', [AdminController::class, 'desa'])->name('desa.index');
     Route::post('/tambah-desa', [AdminController::class, 'create_desa']);
+    Route::get('/desa/edit/{id}', [AdminController::class, 'edit_desa'])->name('desa.edit');
+    Route::post('/desa/update/{id}', [AdminController::class, 'update_desa'])->name('desa.update');
     
     // -- Kelompok Tani --
     Route::get('/kelompok-tani', [AdminController::class, 'kelompok_tani'])->name('kelompokTani.index');
     Route::post('/tambah-kelompok-tani', [AdminController::class, 'create_kelompok_tani']);
+    Route::get('/kelompok-tani/edit/{id}', [AdminController::class, 'edit_kelompok_tani']);
+    Route::post('/kelompok-tani/update/{id}', [AdminController::class, 'update_kelompok_tani']);
     
     // -- Petani --
     Route::get('/petani', [AdminController::class, 'petani'])->name('petani.index');
