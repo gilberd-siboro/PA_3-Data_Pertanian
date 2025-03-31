@@ -96,10 +96,14 @@ Route::middleware(['Role:Admin'])->group(function () {
     // -- Pegawai --
     Route::get('/pegawai', [AdminController::class, 'pegawai'])->name('pegawai.index');
     Route::post('/tambah-pegawai', [AdminController::class, 'create_pegawai']);
+    Route::get('/pegawai/edit/{id}', [AdminController::class, 'edit_pegawai'])->name('pegawai.edit');
+    Route::post('/pegawai/update/{id}', [AdminController::class, 'update_pegawai'])->name('pegawai.update');
     
     // -- Jabatan Petani --
     Route::get('/jabatan-petani', [AdminController::class, 'jabatan_petani'])->name('jabatanPetani.index');
     Route::post('/tambah-jabatan-petani', [AdminController::class, 'create_jabatanPetani']);
+    Route::get('/jabatan-petani/edit/{id}', [AdminController::class, 'edit_jabatanPetani'])->name('jabatanPetani.edit');
+    Route::post('/jabatan-petani/update/{id}', [AdminController::class, 'update_jabatanPetani'])->name('jabatanPetani.update');
 
     // -- Kecamatan --
     Route::get('/kecamatan', [AdminController::class, 'kecamatan'])->name('kecamatan.index');
@@ -116,12 +120,14 @@ Route::middleware(['Role:Admin'])->group(function () {
     // -- Kelompok Tani --
     Route::get('/kelompok-tani', [AdminController::class, 'kelompok_tani'])->name('kelompokTani.index');
     Route::post('/tambah-kelompok-tani', [AdminController::class, 'create_kelompok_tani']);
-    Route::get('/kelompok-tani/edit/{id}', [AdminController::class, 'edit_kelompok_tani']);
-    Route::post('/kelompok-tani/update/{id}', [AdminController::class, 'update_kelompok_tani']);
+    Route::get('/kelompok-tani/edit/{id}', [AdminController::class, 'edit_kelompok_tani'])->name('kelompokTani.edit');
+    Route::post('/kelompok-tani/update/{id}', [AdminController::class, 'update_kelompok_tani'])->name('kelompokTani.update');
     
     // -- Petani --
     Route::get('/petani', [AdminController::class, 'petani'])->name('petani.index');
     Route::post('/tambah-petani', [AdminController::class, 'create_petani']);
+    Route::get('/petani/edit/{id}', [AdminController::class, 'edit_petani'])->name('petani.edit');
+    Route::post('/petani/update/{id}', [AdminController::class, 'update_petani'])->name('petani.update');
 });
 
 

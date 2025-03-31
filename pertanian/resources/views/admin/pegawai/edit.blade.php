@@ -4,7 +4,7 @@
 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
     <ul class="flex flex-wrap items-center gap-2 mb-3 font-normal text-15">
         <li class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
-            <a href="#" class="text-slate-500 dark:text-zink-200"> Pegawai</a>
+            <a href="/pegawai" class="text-slate-500 dark:text-zink-200">Pegawai</a>
         </li>
         <li class="text-slate-700 dark:text-zink-100">
             Edit Pegawai
@@ -12,90 +12,73 @@
     </ul>
 </div>
 
-<div style="height: 600px">
-
-</div>
-
-<div id="Tambah" modal-center="" class="fixed flex flex-col  transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4  ">
-    <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
-        <div class="flex items-center justify-beSTEen p-4 border-b dark:border-zink-500">
-            <h5 class="text-16" id="addEmployeeLabel">Edit Pegawai</h5>
-            <button data-modal-close="Tambah" id="addEmployee" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
-        </div>
-        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-
-            <form class="create-form" id="create-form" action="#" method="POST">
-                @csrf
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="nip" class="inline-block mb-2 text-base font-medium"> NIP</label>
-                        <input type="text" value="#" id="nip" name="nip" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Komoditas">
+<div class="card mx-auto lg:w-2/3">
+    <div class="card-body">
+        <form action="{{ route('pegawai.update', $pegawai -> idPegawai)}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-4">
+                <div class="mb-3">
+                    <div class="relative inline-block rounded-full shadow-md size-20 bg-slate-100 profile-user xl:size-28">
+                        <img id="profile-preview" src="{{ asset('assets/images/' . $pegawai->fileFoto) }}" alt="" class="w-full h-full rounded-full object-cover">
+                        <div class="absolute bottom-0 flex items-center justify-center rounded-full size-8 ltr:right-0 rtl:left-0 profile-photo-edit">
+                            <input id="profile-img-file-input" type="file" class="hidden profile-img-file-input" name="fileFoto" accept="image/*">
+                            <label for="profile-img-file-input" class="flex items-center justify-center bg-white rounded-full shadow-lg cursor-pointer size-8 dark:bg-zink-600 profile-photo-edit">
+                                <i data-lucide="image-plus" class="size-4 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-500"></i>
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="nama_pegawai" class="inline-block mb-2 text-base font-medium">Nama Pegawai</label>
-                        <input type="text" value="#" id="nama_pegawai" name="nama_pegawai" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Komoditas">
-                    </div>
+                <div class="mb-3">
+                    <label for="nip" class="inline-block mb-2 text-base font-medium">NIP</label>
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="nip" name="nip" value="{{ old('nip', $pegawai->nip) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                 </div>
-                <div class="xl:col-span-12">
-                    <label for="golongan_pangkat" class="inline-block mb-2 text-base font-medium">Golongan Pangkat</label>
-                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_golongan_pangkat" id="id_golongan_pangkat">
+                <div class="mb-3">
+                    <label for="namaPegawai" class="inline-block mb-2 text-base font-medium">Nama Pegawai</label>
+                    <input type="text" id="namaPegawai" name="namaPegawai" value="{{ old('namaPegawai', $pegawai->namaPegawai) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                </div>
+                <div class="mb-3">
+                    <label for="golonganPangkat" class="inline-block mb-2 text-base font-medium">Golongan Pangkat</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="golonganPangkat" id="golonganPangkat">
                         <option value="">Pilih Golongan Pangkat</option>
-                        <option value="">Golongan Pangkat</option>
-                        <option value="">Golongan Pangkat</option>
-                        <option value="">Golongan Pangkat</option>
+                        @foreach($golonganPangkat as $gp)
+                        <option value="{{ $gp->idGolonganPangkat }}" {{ $gp->idGolonganPangkat == $pegawai->idGolonganPangkat ? 'selected' : '' }}>{{ $gp->golongan }} {{ $gp->pangkat }} </option>
+                        @endforeach
                     </select>
                 </div>
-                <div class="xl:col-span-12">
-                    <label for="jabatan_bidang" class="inline-block mb-2 text-base font-medium">Jabatan Bidang</label>
-                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="id_jabatan_bidang" id="id_jabatan_bidang">
+                <div class="mb-3 md:col-span-2">
+                    <label for="jabatanBidang" class="inline-block mb-2 text-base font-medium">Jabatan Bidang</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="jabatanBidang" id="jabatanBidang">
                         <option value="">Pilih Jabatan Bidang</option>
-                        <option value="">Jabatan Bidang</option>
-                        <option value="">Jabatan Bidang</option>
-                        <option value="">Jabatan Bidang</option>
+                        @foreach($jabatanBidang as $jb)
+                        <option value="{{ $jb->idJabatanBidang }}" {{ $jb->idJabatanBidang == $pegawai->idJabatanBidang ? 'selected' : '' }}>{{ $jb->namaJabatanBidang }} </option>
+                        @endforeach
                     </select>
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="subdis" class="inline-block mb-2 text-base font-medium">SubDis</label>
-                        <input type="text" value="#" id="subdis" name="subdis" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Komoditas">
-                    </div>
+                <div class="mb-3">
+                    <label for="alamat" class="inline-block mb-2 text-base font-medium">Alamat</label>
+                    <input type="text" id="alamat" name="alamat" value="{{ old('alamat', $pegawai->alamat) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="alamat" class="inline-block mb-2 text-base font-medium">Alamat</label>
-                        <input type="text" value="#" id="alamat" name="alamat" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Komoditas">
-                    </div>
+                <div class="mb-3">
+                    <label for="ponsel" class="inline-block mb-2 text-base font-medium">No Ponsel</label>
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="ponsel" name="ponsel" value="{{ old('ponsel', $pegawai->noPonsel) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="ponsel" class="inline-block mb-2 text-base font-medium">No Ponsel</label>
-                        <input type="text" value="#" id="ponsel" name="ponsel" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Komoditas">
-                    </div>
+                <div class="mb-3">
+                    <label for="wa" class="inline-block mb-2 text-base font-medium">No WA</label>
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="wa" name="wa" value="{{ old('wa', $pegawai->noWA) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="wa" class="inline-block mb-2 text-base font-medium">No WA</label>
-                        <input type="text" value="#" id="wa" name="wa" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Komoditas">
-                    </div>
+                <div class="mb-3 md:col-span-3">
+                    <label for="desa" class="inline-block mb-2 text-base font-medium">Desa</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="desa" id="desa">
+                        <option value="">Pilih Desa</option>
+                        @foreach($desa as $d)
+                        <option value="{{ $d->subdis_id }}" {{ $d->subdis_id == $pegawai->subdis_id ? 'selected' : '' }}>{{ $d->subdis_name }} </option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                    <div class="xl:col-span-12">
-                        <label for="foto" class="inline-block mb-2 text-base font-medium">Foto</label>
-                        <input type="text" value="#" id="foto" name="foto" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Komoditas">
-                    </div>
-                </div>
-                <div class="flex justify-end gap-2 mt-4">
-                    <a href="#" class="text-red-500  btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zinc-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">
-                        Cancel
-                    </a>
-                    <button type="submit" id="addNew" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 ">Edit
-                        Pegawai</button>
-                </div>
-            </form>
+            </div>
+            <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Data</button>
 
-        </div>
+        </form>
     </div>
 </div>
 
@@ -304,4 +287,17 @@
         <button type="button" id="reset-layout" class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
     </div>
 </div>
+
+<script>
+    document.getElementById('profile-img-file-input').addEventListener('change', function(event) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let img = document.getElementById('profile-preview');
+            img.src = e.target.result;
+            img.classList.add("object-cover"); // Pastikan tetap dalam object-cover
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+
 @endsection

@@ -934,6 +934,63 @@ class AdminController extends Controller
             return redirect()->route('pegawai.index');
         }
     }
+    public function edit_pegawai($id)
+    {
+        $userData = session('userData');
+        $golonganPangkat = DB::select('CALL viewAll_golonganPangkat()');
+        $pegawaiData = DB::select('CALL view_pegawaiById(' . $id . ')');
+        $pegawai = $pegawaiData[0];
+        $jabatanBidang = DB::select('CALL viewAll_jabatanBidang()');
+        $desa = DB::select('CALL viewAll_desa()');
+
+        return view('admin/pegawai/edit', compact('userData', 'golonganPangkat', 'pegawai','jabatanBidang','desa'));
+    }
+
+    public function update_pegawai(Request $request, $id)
+{
+    $pegawaiData = DB::select('CALL view_pegawaiById(' . $id . ')');
+    $pegawai = $pegawaiData[0];
+
+    if (!$pegawai) {
+        toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+        return redirect()->route('pegawai.index');
+    }
+
+    $fileName = $pegawai->fileFoto; // Gunakan nama file lama jika tidak ada file baru
+    
+    $request->validate([
+        'fileFoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+    if ($request->hasFile('fileFoto')) {
+        $file = $request->file('fileFoto');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('assets/images/'), $fileName);
+    }
+
+    $Pegawai = json_encode([
+        'IdPegawai' => $id,
+        'Nip' => $request->get('nip'),
+        'NamaPegawai' => $request->get('namaPegawai'),
+        'GolonganPangkat' => $request->get('golonganPangkat'),
+        'JabatanBidang' => $request->get('jabatanBidang'),
+        'Alamat' => $request->get('alamat'),
+        'Ponsel' => $request->get('ponsel'),
+        'WA' => $request->get('wa'),
+        'Desa' => $request->get('desa'),
+        'Foto' => $fileName, // Tambahkan ke JSON untuk update di database
+    ]);
+
+    $response = DB::statement('CALL update_pegawai(:dataPegawai)', ['dataPegawai' => $Pegawai]);
+
+    if ($response) {
+        toast('Data berhasil Di update!', 'success')->autoClose(3000);
+        return redirect()->route('pegawai.index');
+    } else {
+        toast('Data gagal disimpan!', 'error')->autoClose(3000);
+        return redirect()->route('pegawai.index');
+    }
+}
+
 
     // ------ JABATAN PETANI -------
 
@@ -967,6 +1024,47 @@ class AdminController extends Controller
             toast('Data gagal disimpan!', 'error')->autoClose(3000);
             return redirect()->route('jabatanPetani.index');
         }
+    }
+
+    public function edit_jabatanPetani($id)
+    {
+        $userData = session('userData');
+        $jabatanPetaniData = DB::select('CALL view_jabatanPetaniById(' . $id . ')');
+        $jabatanPetani = $jabatanPetaniData[0];
+        $jabatanPokTan = DB::select('CALL viewAll_jabatanBidangPokTan()');
+        $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
+        $petani = DB::select('CALL viewAll_petani()');
+
+        return view('admin/jabatan_petani/edit', compact('userData', 'jabatanPetani', 'jabatanPokTan','kelompokTani','petani'));
+    }
+
+    public function update_jabatanPetani(Request $request, $id)
+    {
+        $JabatanPetani = json_encode([
+            'IdJabatanPetani' => $id,
+            'JabatanBidang' => $request->get('jabatanBidang'),
+            'KelompokTani' => $request->get('kelompokTani'),
+            'Petani' => $request->get('petani'),
+        ]);
+
+        $jabatanPetaniData = DB::select('CALL view_jabatanPetaniById(' . $id . ')');
+        $jabatanPetani = $jabatanPetaniData[0];
+
+        if ($jabatanPetani) {
+            $response = DB::statement('CALL update_jabatanPetani(:dataJabatanPetani)', ['dataJabatanPetani' => $JabatanPetani]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('jabatanPetani.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('jabatanPetani.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('jabatanPetani.index');
+        }
+
     }
 
     //  -------------------------- HALAMAN --------------------------------
@@ -1136,6 +1234,44 @@ class AdminController extends Controller
         }
     }
 
+    public function edit_kelompok_tani($id)
+    {
+        $userData = session('userData');
+        $kelompokTaniData = DB::select('CALL view_kelompokTaniById(' . $id . ')');
+        $kelompokTani = $kelompokTaniData[0];
+
+        return view('admin/kelompok_tani/edit', compact('userData', 'kelompokTani'));
+    }
+
+    public function update_kelompok_tani(Request $request, $id)
+    {
+        $KelompokTani = json_encode([
+            'IdKelompokTani' => $id,
+            'KelompokTani' => $request->get('kelompokTani'),
+            'Alamat' => $request->get('alamat'),
+        ]);
+
+
+
+        $kelompokTaniData = DB::select('CALL view_kelompokTaniById(' . $id . ')');
+        $kelompokTani = $kelompokTaniData[0];
+
+        if ($kelompokTani) {
+            $response = DB::statement('CALL update_kelompokTani(:dataKelompokTani)', ['dataKelompokTani' => $KelompokTani]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('kelompokTani.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('kelompokTani.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('kelompokTani.index');
+        }
+    }
+
     // ------ PETANI -------
 
     public function petani()
@@ -1165,6 +1301,45 @@ class AdminController extends Controller
             return redirect()->route('petani.index');
         } else {
             toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('petani.index');
+        }
+    }
+
+    public function edit_petani($id)
+    {
+        $userData = session('userData');
+        $petaniData = DB::select('CALL view_petaniById(' . $id . ')');
+        $petani = $petaniData[0];
+        $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
+
+        return view('admin/petani/edit', compact('userData', 'petani', 'kelompokTani'));
+    }
+
+    public function update_petani(Request $request, $id)
+    {
+        $Petani = json_encode([
+            'IdPetani' => $id,
+            'NamaDepan' => $request->get('namaDepan'),
+            'NamaBelakang' => $request->get('namaBelakang'),
+            'Alamat' => $request->get('alamat'),
+            'KelompokTani' => $request->get('kelompokTani'),
+        ]);
+
+        $petaniData = DB::select('CALL view_petaniById(' . $id . ')');
+        $petani = $petaniData[0];
+
+        if ($petani) {
+            $response = DB::statement('CALL update_petani(:dataPetani)', ['dataPetani' => $Petani]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('petani.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('petani.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
             return redirect()->route('petani.index');
         }
     }
