@@ -49,7 +49,7 @@
                     <label for="luasLahan" class="inline-block mb-2 text-base font-medium">Luas Lahan (m<sup>2</sup>)</label>
                     <input type="text" id="luasLahan" name="luasLahan" value="{{ old('luasLahan', $dataPertanian->luas_lahan) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                 </div>
-                <div class="mb-3 ">
+                <div class="mb-3  md:col-span-2">
                     <label for="desa" class="inline-block mb-2 text-base font-medium">Desa</label>
                     <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="subdis_id" id="subdis_id">
                         <option value="">Pilih Desa</option>
@@ -58,20 +58,30 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-3 ">
-                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal Tanam</label>
-                    <input type="text" id="joiningDateInput" name="tanggal_tanam" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y" value="{{ $dataPertanian->tanggal_tanam }}">
+                <div class="mb-3">
+                    <label class="inline-block mb-2 text-base font-medium">Tanggal Tanam</label>
+                    <input type="date" class="date-input form-input border-slate-200 dark:border-zink-500" value="{{ \Carbon\Carbon::parse($dataPertanian->tanggal_tanam)->format('Y-m-d') }}">
+                    <input type="hidden" name="tanggal_tanam" class="formatted-date-input">
                 </div>
-                <div class="mb-3 ">
-                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal Pencatatan</label>
-                    <input type="text" id="joiningDateInput" name="tanggal_pencatatan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y" value="{{ $dataPertanian->tanggal_pencatatan }}">
+                <div class="mb-3">
+                    <p class="formatted-date-display">Tanggal Tanam: {{ $dataPertanian->tanggal_tanam }}</p>
+                </div>
+
+                <!-- Tanggal Pencatatan -->
+                <div class="mb-3">
+                    <label class="inline-block mb-2 text-base font-medium">Tanggal Pencatatan</label>
+                    <input type="date" class="date-input form-input border-slate-200 dark:border-zink-500" value="{{ \Carbon\Carbon::parse($dataPertanian->tanggal_pencatatan)->format('Y-m-d') }}">
+                    <input type="hidden" name="tanggal_pencatatan" class="formatted-date-input">
+                </div>
+                <div class="mb-3">
+                    <p class="formatted-date-display">Tanggal Pencatatan: {{ $dataPertanian->tanggal_pencatatan }}</p>
                 </div>
                 <div class="mb-3 ">
                     <label for="luasLahan" class="inline-block mb-2 text-base font-medium">Alamat Lengkap</label>
                     <input type="text" id="alamatLengkap" name="alamatLengkap" value="{{ old('alamatLengkap', $dataPertanian->alamat_lengkap) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                 </div>
             </div>
-                <button type="submit" class="mt-4 text-white btn bg-custom-500 border-custom-500 hover:bg-custom-600">Edit Data</button>
+            <button type="submit" class="mt-4 text-white btn bg-custom-500 border-custom-500 hover:bg-custom-600">Edit Data</button>
         </form>
     </div>
 </div>

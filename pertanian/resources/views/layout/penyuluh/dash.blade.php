@@ -19,7 +19,8 @@
 
     <script src="{{ asset('assets/libs/%40popperjs/core/umd/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/common.js') }}"></script>
-
+    
+    <link rel="stylesheet" href="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/starcode2.css') }}">
 
 </head>

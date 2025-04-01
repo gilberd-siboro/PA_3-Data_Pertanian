@@ -10,13 +10,13 @@ File: Common Plugins Js File
 
 (function () {
     ("use strict");
-    
+
     function loadScriptIfElementsExist(selector, scriptSrc) {
         var elements = document.querySelectorAll(selector);
         if (elements.length > 0) {
-          var scriptElement = document.createElement('script');
-          scriptElement.src = scriptSrc;
-          document.head.appendChild(scriptElement);
+            var scriptElement = document.createElement('script');
+            scriptElement.src = scriptSrc;
+            document.head.appendChild(scriptElement);
         }
     }
 
@@ -233,7 +233,7 @@ File: Common Plugins Js File
         }
     }
 
-// // input spinner value ++ or --
+    // // input spinner value ++ or --
 
     function inputSpinComponents() {
         isData();
@@ -315,7 +315,7 @@ File: Common Plugins Js File
             var shipping = (subtotal > 0 ? shippingRate : 0);
             var newTotal = subtotal + tax + shipping - discount;
             const cartSubtitle = elm.parentElement.querySelector(".table-total .cart-subtotal")
-           if (cartSubtitle) {
+            if (cartSubtitle) {
                 cartSubtitle.innerHTML = currencySign + subtotal.toFixed(2);
             }
             const cartTex = elm.parentElement.querySelector(".table-total .cart-tax")
@@ -355,11 +355,11 @@ File: Common Plugins Js File
         const allDrawerCloseButtons = document.querySelectorAll('[data-drawer-close]');
         const allModalButtons = document.querySelectorAll('[data-modal-target]');
         const allModalCloseButtons = document.querySelectorAll('[data-modal-close]');
-        const bodyElement = document.body;       
-        
+        const bodyElement = document.body;
+
         let openDrawerId = null;
         let openModalId = null;
-        if(document.getElementById("backDropDiv")) {
+        if (document.getElementById("backDropDiv")) {
             var backDropOverlay = document.getElementById("backDropDiv");
         } else {
             var backDropOverlay = document.createElement('div');
@@ -651,3 +651,33 @@ toggleButtons.forEach(button => {
         button.classList.toggle("inactive");
     });
 });
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    if (isNaN(date)) return ''; // Jika bukan tanggal valid, kosongkan
+
+    const options = { year: 'numeric', month: 'short', day: '2-digit' };
+    const formattedDate = date.toLocaleDateString('en-GB', options);
+    return formattedDate.replace(/(\d{2}) (\w{3}) (\d{4})/, '$1 $2, $3'); // "14 Mar, 2025"
+}
+
+function updateFormattedDates() {
+    const dateInputs = document.querySelectorAll('.date-input');
+    const formattedDateInputs = document.querySelectorAll('.formatted-date-input');
+    const formattedDateDisplays = document.querySelectorAll('.formatted-date-display');
+
+    dateInputs.forEach((input, index) => {
+        function update() {
+            if (input.value) {
+                const formatted = formatDate(input.value);
+                formattedDateDisplays[index].textContent = formattedDateDisplays[index].textContent.split(":")[0] + ": " + formatted;
+                formattedDateInputs[index].value = formatted;
+            }
+        }
+
+        input.addEventListener('input', update);
+        update(); // Set default saat halaman pertama kali dimuat
+    });
+}
+
+document.addEventListener("DOMContentLoaded", updateFormattedDates);

@@ -94,9 +94,9 @@
                             <form id="deleteForm_{{ $dp->id_data_pertanian }}" action="{{ route('dataPertanian.delete', $dp -> id_data_pertanian)}}" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
-                                                    bg-green-500 ">
+                                                    bg-red-500 ">
 
-                                    <i data-lucide="eye" class="size-4"></i>
+                                    <i data-lucide="trash-2" class="size-4"></i>
 
                                 </button>
                             </form>
