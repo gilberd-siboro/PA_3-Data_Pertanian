@@ -143,7 +143,7 @@ class AdminController extends Controller
 
 
 
-    public function delete_pengguna(Request $request, $id)
+    public function delete_pengguna($id)
     {
         $response = DB::statement('CALL delete_pengguna(?)', [$id]);
 
@@ -323,6 +323,20 @@ class AdminController extends Controller
         }
     }
 
+    public function delete_jenisKomoditas($id)
+    {
+        $response = DB::statement('CALL delete_jenisKomoditas(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('jenisKomoditas.index');
+    }
+
+
 
     // ------ KOMODITAS -------
 
@@ -393,6 +407,19 @@ class AdminController extends Controller
         }
     }
 
+    public function delete_komoditas($id)
+    {
+        $response = DB::statement('CALL delete_komoditas(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('komoditas.index');
+    }
+
     // ------ JENIS LAHAN -------
 
     public function jenis_lahan()
@@ -458,6 +485,20 @@ class AdminController extends Controller
             return redirect()->route('jenisLahan.index');
         }
     }
+
+    public function delete_jenisLahan($id)
+    {
+        $response = DB::statement('CALL delete_jenisLahan(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('jenisLahan.index');
+    }
+
     // ------ LAHAN -------
 
     public function lahan()
@@ -524,6 +565,19 @@ class AdminController extends Controller
             toast('Data tidak ditemukan!', 'error')->autoClose(3000);
             return redirect()->route('lahan.index');
         }
+    }
+
+    public function delete_lahan($id)
+    {
+        $response = DB::statement('CALL delete_lahan(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('lahan.index');
     }
 
 
@@ -598,6 +652,19 @@ class AdminController extends Controller
         }
     }
 
+    public function delete_departemen($id)
+    {
+        $response = DB::statement('CALL delete_departemen(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('departemen.index');
+    }
+
     // ------ BIDANG -------
 
     public function bidang()
@@ -669,6 +736,19 @@ class AdminController extends Controller
         }
     }
 
+    public function delete_bidang($id)
+    {
+        $response = DB::statement('CALL delete_bidang(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('bidang.index');
+    }
+
 
     // ------ JABATAN -------
 
@@ -735,8 +815,21 @@ class AdminController extends Controller
             toast('Data tidak ditemukan!', 'error')->autoClose(3000);
             return redirect()->route('jabatan.index');
         }
-
     }
+
+    public function delete_jabatan($id)
+    {
+        $response = DB::statement('CALL delete_jabatan(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('jabatan.index');
+    }
+
     // ------ JABATAN BIDANG -------
 
 
@@ -779,7 +872,7 @@ class AdminController extends Controller
         $jabatan = DB::select('CALL viewAll_jabatan()');
         $bidang = DB::select('CALL viewAll_bidang()');
 
-        return view('admin/jabatan_bidang/edit', compact('userData','jabatanBidang' ,'bidang', 'jabatan'));
+        return view('admin/jabatan_bidang/edit', compact('userData', 'jabatanBidang', 'bidang', 'jabatan'));
     }
 
     public function update_jabatanBidang(Request $request, $id)
@@ -811,6 +904,19 @@ class AdminController extends Controller
         }
     }
 
+    public function delete_jabatanBidang($id)
+    {
+        $response = DB::statement('CALL delete_jabatanBidang(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('jabatanBidang.index');
+    }
+    
     // ------ GOLONGAN PANGKAT -------
 
     public function golongan_pangkat()
@@ -878,7 +984,19 @@ class AdminController extends Controller
             toast('Data tidak ditemukan!', 'error')->autoClose(3000);
             return redirect()->route('golonganPangkat.index');
         }
+    }
 
+    public function delete_golonganPangkat($id)
+    {
+        $response = DB::statement('CALL delete_golonganPangkat(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('golonganPangkat.index');
     }
 
     // ------ PEGAWAI -------
@@ -943,53 +1061,77 @@ class AdminController extends Controller
         $jabatanBidang = DB::select('CALL viewAll_jabatanBidang()');
         $desa = DB::select('CALL viewAll_desa()');
 
-        return view('admin/pegawai/edit', compact('userData', 'golonganPangkat', 'pegawai','jabatanBidang','desa'));
+        return view('admin/pegawai/edit', compact('userData', 'golonganPangkat', 'pegawai', 'jabatanBidang', 'desa'));
     }
 
     public function update_pegawai(Request $request, $id)
-{
-    $pegawaiData = DB::select('CALL view_pegawaiById(' . $id . ')');
-    $pegawai = $pegawaiData[0];
+    {
+        $pegawaiData = DB::select('CALL view_pegawaiById(' . $id . ')');
+        $pegawai = $pegawaiData[0];
 
-    if (!$pegawai) {
-        toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+        if (!$pegawai) {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('pegawai.index');
+        }
+
+        $fileName = $pegawai->fileFoto; // Gunakan nama file lama jika tidak ada file baru
+
+        // Validasi gambar
+        $request->validate([
+            'fileFoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Jika ada file baru di-upload
+        if ($request->hasFile('fileFoto')) {
+            // Hapus foto lama jika bukan default atau tidak kosong
+            if (!empty($pegawai->fileFoto) && file_exists(public_path('assets/images/' . $pegawai->fileFoto))) {
+                unlink(public_path('assets/images/' . $pegawai->fileFoto));
+            }
+
+            // Simpan foto baru
+            $file = $request->file('fileFoto');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/images/'), $fileName);
+        }
+
+        // Simpan data pegawai
+        $Pegawai = json_encode([
+            'IdPegawai' => $id,
+            'Nip' => $request->get('nip'),
+            'NamaPegawai' => $request->get('namaPegawai'),
+            'GolonganPangkat' => $request->get('golonganPangkat'),
+            'JabatanBidang' => $request->get('jabatanBidang'),
+            'Alamat' => $request->get('alamat'),
+            'Ponsel' => $request->get('ponsel'),
+            'WA' => $request->get('wa'),
+            'Desa' => $request->get('desa'),
+            'Foto' => $fileName, // Tambahkan nama foto baru ke JSON
+        ]);
+
+        $response = DB::statement('CALL update_pegawai(:dataPegawai)', ['dataPegawai' => $Pegawai]);
+
+        if ($response) {
+            toast('Data berhasil diupdate!', 'success')->autoClose(3000);
+            return redirect()->route('pegawai.index');
+        } else {
+            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('pegawai.index');
+        }
+    }
+
+    public function delete_pegawai($id)
+    {
+        $response = DB::statement('CALL delete_pegawai(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
         return redirect()->route('pegawai.index');
     }
 
-    $fileName = $pegawai->fileFoto; // Gunakan nama file lama jika tidak ada file baru
-    
-    $request->validate([
-        'fileFoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-    if ($request->hasFile('fileFoto')) {
-        $file = $request->file('fileFoto');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('assets/images/'), $fileName);
-    }
-
-    $Pegawai = json_encode([
-        'IdPegawai' => $id,
-        'Nip' => $request->get('nip'),
-        'NamaPegawai' => $request->get('namaPegawai'),
-        'GolonganPangkat' => $request->get('golonganPangkat'),
-        'JabatanBidang' => $request->get('jabatanBidang'),
-        'Alamat' => $request->get('alamat'),
-        'Ponsel' => $request->get('ponsel'),
-        'WA' => $request->get('wa'),
-        'Desa' => $request->get('desa'),
-        'Foto' => $fileName, // Tambahkan ke JSON untuk update di database
-    ]);
-
-    $response = DB::statement('CALL update_pegawai(:dataPegawai)', ['dataPegawai' => $Pegawai]);
-
-    if ($response) {
-        toast('Data berhasil Di update!', 'success')->autoClose(3000);
-        return redirect()->route('pegawai.index');
-    } else {
-        toast('Data gagal disimpan!', 'error')->autoClose(3000);
-        return redirect()->route('pegawai.index');
-    }
-}
 
 
     // ------ JABATAN PETANI -------
@@ -1035,7 +1177,7 @@ class AdminController extends Controller
         $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
         $petani = DB::select('CALL viewAll_petani()');
 
-        return view('admin/jabatan_petani/edit', compact('userData', 'jabatanPetani', 'jabatanPokTan','kelompokTani','petani'));
+        return view('admin/jabatan_petani/edit', compact('userData', 'jabatanPetani', 'jabatanPokTan', 'kelompokTani', 'petani'));
     }
 
     public function update_jabatanPetani(Request $request, $id)
@@ -1064,8 +1206,9 @@ class AdminController extends Controller
             toast('Data tidak ditemukan!', 'error')->autoClose(3000);
             return redirect()->route('jabatanPetani.index');
         }
-
     }
+
+
 
     //  -------------------------- HALAMAN --------------------------------
 
@@ -1272,6 +1415,19 @@ class AdminController extends Controller
         }
     }
 
+    public function delete_kelompok_tani($id)
+    {
+        $response = DB::statement('CALL delete_kelompokTani(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('kelompokTani.index');
+    }
+
     // ------ PETANI -------
 
     public function petani()
@@ -1343,4 +1499,18 @@ class AdminController extends Controller
             return redirect()->route('petani.index');
         }
     }
+
+    public function delete_petani($id)
+    {
+        $response = DB::statement('CALL delete_petani(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('petani.index');
+    }
+
 }

@@ -44,60 +44,70 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::post('/tambah-jenis-komoditas', [AdminController::class, 'create_jenisKomoditas']);
     Route::get('/jenis-komoditas/edit/{id}', [AdminController::class, 'edit_jenisKomoditas'])->name('jenisKomoditas.edit');
     Route::post('/jenis-komoditas/update/{id}', [AdminController::class, 'update_jenisKomoditas'])->name('jenisKomoditas.update');
+    Route::post('/jenis-komoditas/delete/{id}', [AdminController::class, 'delete_jenisKomoditas'])->name('jenisKomoditas.delete');
 
     // -- Komoditas --
     Route::get('/komoditas', [AdminController::class, 'komoditas'])->name('komoditas.index');
     Route::post('/tambah-komoditas', [AdminController::class, 'create_komoditas']);
     Route::get('/komoditas/edit/{id}', [AdminController::class, 'edit_komoditas'])->name('komoditas.edit');
     Route::post('/komoditas/update/{id}', [AdminController::class, 'update_komoditas'])->name('komoditas.update');
+    Route::post('/komoditas/delete/{id}', [AdminController::class, 'delete_komoditas'])->name('komoditas.delete');
    
     // -- Jenis Lahan--
     Route::get('/jenis-lahan', [AdminController::class, 'jenis_lahan'])->name('jenisLahan.index');
     Route::post('/tambah-jenis-lahan', [AdminController::class, 'create_jenisLahan']);
     Route::get('/jenis-lahan/edit/{id}', [AdminController::class, 'edit_jenisLahan'])->name('jenisLahan.edit');
     Route::post('/jenis-lahan/update/{id}', [AdminController::class, 'update_jenisLahan'])->name('jenisLahan.update');
+    Route::post('/jenis-lahan/delete/{id}', [AdminController::class, 'delete_jenisLahan'])->name('jenisLahan.delete');
     
     // -- Lahan --
     Route::get('/lahan', [AdminController::class, 'lahan'])->name('lahan.index');
     Route::post('/tambah-lahan', [AdminController::class, 'create_lahan']);
     Route::get('/lahan/edit/{id}', [AdminController::class, 'edit_lahan'])->name('lahan.edit');
     Route::post('/lahan/update/{id}', [AdminController::class, 'update_lahan'])->name('lahan.update');
+    Route::post('/lahan/delete/{id}', [AdminController::class, 'delete_lahan'])->name('lahan.delete');
     
     // -- Departemen --
     Route::get('/departemen', [AdminController::class, 'departemen'])->name('departemen.index');
     Route::post('/tambah-departemen', [AdminController::class, 'create_departemen']);
     Route::get('/departemen/edit/{id}', [AdminController::class, 'edit_departemen'])->name('departemen.edit');
     Route::post('/departemen/update/{id}', [AdminController::class, 'update_departemen'])->name('departemen.update');
+    Route::post('/departemen/delete/{id}', [AdminController::class, 'delete_departemen'])->name('departemen.delete');
     
     // -- Bidang --
     Route::get('/bidang', [AdminController::class, 'bidang'])->name('bidang.index');
     Route::post('/tambah-bidang', [AdminController::class, 'create_bidang']);
     Route::get('/bidang/edit/{id}', [AdminController::class, 'edit_bidang'])->name('bidang.edit');
     Route::post('/bidang/update/{id}', [AdminController::class, 'update_bidang'])->name('bidang.update');
+    Route::post('/bidang/delete/{id}', [AdminController::class, 'delete_bidang'])->name('bidang.delete');
     
     // -- Jabatan --
     Route::get('/jabatan', [AdminController::class, 'jabatan'])->name('jabatan.index');
     Route::post('/tambah-jabatan', [AdminController::class, 'create_jabatan']);
     Route::get('/jabatan/edit/{id}', [AdminController::class, 'edit_jabatan'])->name('jabatan.edit');
     Route::post('/jabatan/update/{id}', [AdminController::class, 'update_jabatan'])->name('jabatan.update');
+    Route::post('/jabatan/delete/{id}', [AdminController::class, 'delete_jabatan'])->name('jabatan.delete');
     
     // -- Jabatan Bidang --
     Route::get('/jabatan-bidang', [AdminController::class, 'jabatan_bidang'])->name('jabatanBidang.index');
     Route::post('/tambah-jabatan-bidang', [AdminController::class, 'create_jabatanBidang']);
     Route::get('/jabatan-bidang/edit/{id}', [AdminController::class, 'edit_jabatanBidang'])->name('jabatanBidang.edit');
     Route::post('/jabatan-bidang/update/{id}', [AdminController::class, 'update_jabatanBidang'])->name('jabatanBidang.update');
+    Route::post('/jabatan-bidang/delete/{id}', [AdminController::class, 'delete_jabatanBidang'])->name('jabatanBidang.delete');
     
     // -- Golongan Pangkat --
     Route::get('/golongan-pangkat', [AdminController::class, 'golongan_pangkat'])->name('golonganPangkat.index');
     Route::post('/tambah-golongan-pangkat', [AdminController::class, 'create_golonganPangkat']);
     Route::get('/golongan-pangkat/edit/{id}', [AdminController::class, 'edit_golonganPangkat'])->name('golonganPangkat.edit');
     Route::post('/golongan-pangkat/update/{id}', [AdminController::class, 'update_golonganPangkat'])->name('golonganPangkat.update');
+    Route::post('/golongan-pangkat/delete/{id}', [AdminController::class, 'delete_golonganPangkat'])->name('golonganPangkat.delete');
     
     // -- Pegawai --
     Route::get('/pegawai', [AdminController::class, 'pegawai'])->name('pegawai.index');
     Route::post('/tambah-pegawai', [AdminController::class, 'create_pegawai']);
     Route::get('/pegawai/edit/{id}', [AdminController::class, 'edit_pegawai'])->name('pegawai.edit');
     Route::post('/pegawai/update/{id}', [AdminController::class, 'update_pegawai'])->name('pegawai.update');
+    Route::post('/pegawai/delete/{id}', [AdminController::class, 'delete_pegawai'])->name('pegawai.delete');
     
     // -- Jabatan Petani --
     Route::get('/jabatan-petani', [AdminController::class, 'jabatan_petani'])->name('jabatanPetani.index');
@@ -122,12 +132,14 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::post('/tambah-kelompok-tani', [AdminController::class, 'create_kelompok_tani']);
     Route::get('/kelompok-tani/edit/{id}', [AdminController::class, 'edit_kelompok_tani'])->name('kelompokTani.edit');
     Route::post('/kelompok-tani/update/{id}', [AdminController::class, 'update_kelompok_tani'])->name('kelompokTani.update');
+    Route::post('/kelompok-tani/delete/{id}', [AdminController::class, 'delete_kelompok_tani'])->name('kelompokTani.delete');
     
     // -- Petani --
     Route::get('/petani', [AdminController::class, 'petani'])->name('petani.index');
     Route::post('/tambah-petani', [AdminController::class, 'create_petani']);
     Route::get('/petani/edit/{id}', [AdminController::class, 'edit_petani'])->name('petani.edit');
     Route::post('/petani/update/{id}', [AdminController::class, 'update_petani'])->name('petani.update');
+    Route::post('/petani/delete/{id}', [AdminController::class, 'delete_petani'])->name('petani.delete');
 });
 
 
