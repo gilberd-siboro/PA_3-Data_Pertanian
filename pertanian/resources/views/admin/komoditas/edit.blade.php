@@ -14,9 +14,20 @@
 
 <div class="card mx-auto lg:w-2/3">
     <div class="card-body">
-        <form action="{{ route('komoditas.update', $komoditas -> id_komoditas)}}" method="POST">
+        <form action="{{ route('komoditas.update', $komoditas -> id_komoditas)}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
+                <div class="mb-3">
+                    <div class="relative inline-block rounded-full shadow-md size-20 bg-slate-100 profile-user xl:size-28">
+                        <img id="profile-preview" src="{{ asset('assets/images/' . $komoditas->gambar) }}" alt="" class="w-full h-full rounded-full object-cover">
+                        <div class="absolute bottom-0 flex items-center justify-center rounded-full size-8 ltr:right-0 rtl:left-0 profile-photo-edit">
+                            <input id="profile-img-file-input" type="file" class="hidden profile-img-file-input" name="gambar" accept="image/*">
+                            <label for="profile-img-file-input" class="flex items-center justify-center bg-white rounded-full shadow-lg cursor-pointer size-8 dark:bg-zink-600 profile-photo-edit">
+                                <i data-lucide="image-plus" class="size-4 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-500"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="mb-3">
                     <label for="namaKomoditas" class="inline-block mb-2 text-base font-medium">Nama Komoditas</label>
                     <input type="text" id="namaKomoditas" name="namaKomoditas" value="{{ old('namaKomoditas', $komoditas->nama_komoditas) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
@@ -30,7 +41,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-3 md:col-span-2">
+                <div class="mb-3">
                     <label for="estimasiPanen" class="inline-block mb-2 text-base font-medium">Estimasi Panen (Hari)</label>
                     <input type="text" id="estimasiPanen" name="estimasiPanen" value="{{ old('estimasiPanen', $komoditas->estimasi_panen) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                 </div>
@@ -247,4 +258,17 @@
         <button type="button" id="reset-layout" class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
     </div>
 </div>
+
+<script>
+    document.getElementById('profile-img-file-input').addEventListener('change', function(event) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let img = document.getElementById('profile-preview');
+            img.src = e.target.result;
+            img.classList.add("object-cover"); // Pastikan tetap dalam object-cover
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+
 @endsection

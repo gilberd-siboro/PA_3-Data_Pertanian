@@ -21,8 +21,10 @@ class AdminController extends Controller
         $totalKel = count($kelompokTani);
         $komoditas = DB::select('CALL viewAll_Komoditas()');
         $totalKom = count($komoditas);
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $totalPsr = count($pasar);
 
-        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom'));
+        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr'));
     }
 
     // ------ PENGGUNA -------
@@ -350,12 +352,28 @@ class AdminController extends Controller
         return view('admin/komoditas/index', compact('totalData', 'userData', 'komoditas', 'jenisKomoditas'));
     }
 
+
     public function create_komoditas(Request $request)
     {
+        // Validasi file foto
+        $request->validate([
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        // dd($validated);
+        // Simpan foto jika ada
+        if ($request->hasFile('gambar')) {
+
+            $file = $request->file('gambar');
+            $fileName = time() . '_' . $file->getClientOriginalName(); // Buat nama unik
+            $destinationPath = public_path('assets/images'); // Simpan di public/assets/images
+            $file->move($destinationPath, $fileName); // Pindahkan file
+        }
+
         $Komoditas = json_encode([
             'JenisKomoditas' => $request->get('id_jenis_komoditas'),
             'NamaKomoditas' => $request->get('nama_komoditas'),
             'EstimasiPanen' => $request->get('estimasi_panen'),
+            'Gambar' => $fileName,
         ]);
 
         $response = DB::statement('CALL insert_komoditas(:dataKomoditas)', ['dataKomoditas' => $Komoditas]);
@@ -381,15 +399,38 @@ class AdminController extends Controller
 
     public function update_komoditas(Request $request, $id)
     {
+
+        $komoditasData = DB::select('CALL view_komoditasById(' . $id . ')');
+        $komoditas = $komoditasData[0];
+
+        $fileName = $komoditas->gambar; // Gunakan nama file lama jika tidak ada file baru
+        // Validasi gambar
+        $request->validate([
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        // dd($request->gambar);
+
+        // Jika ada file baru di-upload
+        if ($request->hasFile('gambar')) {
+            // Hapus foto lama jika bukan default atau tidak kosong
+            if (!empty($komoditas->gambar) && file_exists(public_path('assets/images/' . $komoditas->gambar))) {
+                unlink(public_path('assets/images/' . $komoditas->gambar));
+            }
+
+            // Simpan foto baru
+            $file = $request->file('gambar');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/images/'), $fileName);
+        }
+
         $Komoditas = json_encode([
             'IdKomoditas' => $id,
             'NamaKomoditas' => $request->get('namaKomoditas'),
             'IdJenisKomoditas' => $request->get('jenisKomoditas'),
             'EstimasiPanen' => $request->get('estimasiPanen'),
+            'Gambar' => $fileName,
         ]);
 
-        $komoditasData = DB::select('CALL view_komoditasById(' . $id . ')');
-        $komoditas = $komoditasData[0];
 
         if ($komoditas) {
             $response = DB::statement('CALL update_komoditas(:dataKomoditas)', ['dataKomoditas' => $Komoditas]);
@@ -916,7 +957,7 @@ class AdminController extends Controller
 
         return redirect()->route('jabatanBidang.index');
     }
-    
+
     // ------ GOLONGAN PANGKAT -------
 
     public function golongan_pangkat()
@@ -1080,7 +1121,7 @@ class AdminController extends Controller
         $request->validate([
             'fileFoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+        dd($request->fileFoto);
         // Jika ada file baru di-upload
         if ($request->hasFile('fileFoto')) {
             // Hapus foto lama jika bukan default atau tidak kosong
@@ -1354,8 +1395,9 @@ class AdminController extends Controller
         $userData = session('userData');
         $kelompokTani = DB::select('CALL viewAll_kelompokTani()');
         $totalData = count($kelompokTani);
+        $kecamatan = DB::select('CALL viewAll_kecamatan()');
 
-        return view('admin/kelompok_tani/index', compact('totalData', 'userData', 'kelompokTani'));
+        return view('admin/kelompok_tani/index', compact('totalData', 'userData', 'kelompokTani', 'kecamatan'));
     }
 
     public function create_kelompok_tani(Request $request)
@@ -1363,6 +1405,7 @@ class AdminController extends Controller
         $KelompokTani = json_encode([
             'NamaKelompokTani' => $request->get('nama_kelompok'),
             'AlamatSekretariat' => $request->get('alamat_sekretariat'),
+            'Kecamatan' => $request->get('kecamatan'),
 
         ]);
 
@@ -1382,8 +1425,9 @@ class AdminController extends Controller
         $userData = session('userData');
         $kelompokTaniData = DB::select('CALL view_kelompokTaniById(' . $id . ')');
         $kelompokTani = $kelompokTaniData[0];
+        $kecamatan = DB::select('CALL viewAll_kecamatan()');
 
-        return view('admin/kelompok_tani/edit', compact('userData', 'kelompokTani'));
+        return view('admin/kelompok_tani/edit', compact('userData', 'kelompokTani', 'kecamatan'));
     }
 
     public function update_kelompok_tani(Request $request, $id)
@@ -1392,6 +1436,7 @@ class AdminController extends Controller
             'IdKelompokTani' => $id,
             'KelompokTani' => $request->get('kelompokTani'),
             'Alamat' => $request->get('alamat'),
+            'Kecamatan' => $request->get('kecamatan'),
         ]);
 
 
@@ -1513,4 +1558,88 @@ class AdminController extends Controller
         return redirect()->route('petani.index');
     }
 
+
+    // ---------- PASAR ---------------
+
+    public function pasar()
+    {
+        $userData = session('userData');
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $desa = DB::select('CALL viewAll_desa()');
+        $totalData = count($pasar);
+
+        return view('admin/pasar/index', compact('totalData', 'userData', 'pasar', 'desa'));
+    }
+
+    public function create_pasar(Request $request)
+    {
+        $Pasar = json_encode([
+            'Pasar' => $request->get('pasar'),
+            'Lokasi' => $request->get('lokasi'),
+
+        ]);
+
+        $response = DB::statement('CALL insert_pasar(:dataPasar)', ['dataPasar' => $Pasar]);
+
+        if ($response) {
+            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            return redirect()->route('pasar.index');
+        } else {
+            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('pasar.index');
+        }
+    }
+
+    public function edit_pasar($id)
+    {
+        $userData = session('userData');
+        $pasarData = DB::select('CALL view_pasarById(' . $id . ')');
+        $desa = DB::select('CALL viewAll_desa()');
+        $pasar = $pasarData[0];
+
+
+        return view('admin/pasar/edit', compact('userData', 'pasar', 'desa'));
+    }
+
+    public function update_pasar(Request $request, $id)
+    {
+        $Pasar = json_encode([
+            'IdPasar' => $id,
+            'Pasar' => $request->get('pasar'),
+            'Lokasi' => $request->get('lokasi'),
+        ]);
+
+
+
+        $pasarData = DB::select('CALL view_pasarById(' . $id . ')');
+        $pasar = $pasarData[0];
+
+        if ($pasar) {
+            $response = DB::statement('CALL update_pasar(:dataPasar)', ['dataPasar' => $Pasar]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('pasar.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('pasar.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('pasar.index');
+        }
+    }
+
+    public function delete_pasar($id)
+    {
+        $response = DB::statement('CALL delete_pasar(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('pasar.index');
+    }
 }

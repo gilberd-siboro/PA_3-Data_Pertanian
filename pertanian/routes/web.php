@@ -13,6 +13,7 @@ Route::get('/', [UserController::class, 'index']);
 Route::get('/tentang', [UserController::class, 'tentang']);
 Route::get('/komoditas-kecamatan', [UserController::class, 'komoditas_kecamatan']);
 Route::get('/persebaran-komoditas', [UserController::class, 'persebaran_komoditas']);
+Route::get('/get-komoditas-kecamatan/{id}', [UserController::class, 'getKomoditasByKecamatan'])->name('komoditas.kecamatan');
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
@@ -140,6 +141,16 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::get('/petani/edit/{id}', [AdminController::class, 'edit_petani'])->name('petani.edit');
     Route::post('/petani/update/{id}', [AdminController::class, 'update_petani'])->name('petani.update');
     Route::post('/petani/delete/{id}', [AdminController::class, 'delete_petani'])->name('petani.delete');
+    
+    // -- Pasar --
+    Route::get('/pasar', [AdminController::class, 'pasar'])->name('pasar.index');
+    Route::post('/tambah-pasar', [AdminController::class, 'create_pasar']);
+    Route::get('/pasar/edit/{id}', [AdminController::class, 'edit_pasar'])->name('pasar.edit');
+    Route::post('/pasar/update/{id}', [AdminController::class, 'update_pasar'])->name('pasar.update');
+    Route::post('/pasar/delete/{id}', [AdminController::class, 'delete_pasar'])->name('pasar.delete');
+
+
+
 });
 
 

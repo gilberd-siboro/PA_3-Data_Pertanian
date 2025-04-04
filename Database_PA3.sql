@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 01/04/2025 14:37:57
+ Date: 04/04/2025 17:47:59
 */
 
 SET NAMES utf8mb4;
@@ -139,13 +139,16 @@ CREATE TABLE `data_pertanian`  (
   CONSTRAINT `data_pertanian_ibfk_3` FOREIGN KEY (`id_komoditas`) REFERENCES `komoditas` (`id_komoditas`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `data_pertanian_ibfk_4` FOREIGN KEY (`subdis_id`) REFERENCES `subdistricts` (`subdis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `data_pertanian_ibfk_5` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of data_pertanian
 -- ----------------------------
 INSERT INTO `data_pertanian` VALUES (1, 1, 1, 1, 1000.00, 1, '11 Mar, 2025', '19 Mar, 2025', 2, 'Lumban Jaean', NULL, '2025-03-20 14:23:03', 1);
-INSERT INTO `data_pertanian` VALUES (2, 1, 1, 1, 1000.00, 1, '04 Mar, 2025', '19 Mar, 2025', 2, 'Tarutung', NULL, '2025-03-30 21:03:36', 0);
+INSERT INTO `data_pertanian` VALUES (2, 1, 1, 7, 1000.00, 1, '06 Mar, 2025', '20 Mar, 2025', 2, 'Tarutung', NULL, '2025-04-04 13:30:23', 0);
+INSERT INTO `data_pertanian` VALUES (3, 7, 1, 7, 12000.00, 15, '03 Apr, 2025', '04 Apr, 2025', 1, 'Silando', NULL, '2025-04-04 13:30:30', 0);
+INSERT INTO `data_pertanian` VALUES (4, 8, 3, 5, 1000.00, 16, '12 Feb, 2025', '04 Apr, 2025', 1, 'Batu Binumbun', NULL, NULL, 0);
+INSERT INTO `data_pertanian` VALUES (5, 9, 2, 6, 1334.00, 17, '02 Apr, 2025', '04 Apr, 2025', 1, 'Simanampang', NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for departemen
@@ -174,17 +177,18 @@ DROP TABLE IF EXISTS `districts`;
 CREATE TABLE `districts`  (
   `dis_id` int NOT NULL AUTO_INCREMENT,
   `dis_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `city_id` int NULL DEFAULT NULL,
+  `city_id` int NULL DEFAULT 1,
   PRIMARY KEY (`dis_id`) USING BTREE,
   INDEX `city_id`(`city_id` ASC) USING BTREE,
   CONSTRAINT `districts_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`city_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of districts
 -- ----------------------------
 INSERT INTO `districts` VALUES (1, 'Tarutung', 1);
-INSERT INTO `districts` VALUES (2, 'Muara', NULL);
+INSERT INTO `districts` VALUES (2, 'Muara', 1);
+INSERT INTO `districts` VALUES (3, 'Pahae Julu', 1);
 
 -- ----------------------------
 -- Table structure for golonganpangkat
@@ -275,7 +279,7 @@ CREATE TABLE `jabatan_petani`  (
   CONSTRAINT `jabatan_petani_ibfk_1` FOREIGN KEY (`idJabatanBidang`) REFERENCES `jabatanbidang` (`idJabatanBidang`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `jabatan_petani_ibfk_2` FOREIGN KEY (`id_kelompok_tani`) REFERENCES `kelompok_tani` (`id_kelompok_tani`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `jabatan_petani_ibfk_3` FOREIGN KEY (`id_petani`) REFERENCES `petani` (`id_petani`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jabatan_petani
@@ -284,6 +288,10 @@ INSERT INTO `jabatan_petani` VALUES (3, 18, 2, 1, '2025-03-23 19:40:43', '2025-0
 INSERT INTO `jabatan_petani` VALUES (7, 18, 3, 2, '2025-03-23 20:14:58', NULL, 0);
 INSERT INTO `jabatan_petani` VALUES (8, 18, 4, 3, '2025-03-23 20:20:57', NULL, 0);
 INSERT INTO `jabatan_petani` VALUES (9, 18, 5, 4, '2025-03-31 12:37:44', NULL, 0);
+INSERT INTO `jabatan_petani` VALUES (10, 18, 6, 6, '2025-04-04 10:50:23', NULL, 0);
+INSERT INTO `jabatan_petani` VALUES (11, 18, 7, 7, '2025-04-04 11:06:01', NULL, 0);
+INSERT INTO `jabatan_petani` VALUES (12, 18, 8, 8, '2025-04-04 11:17:50', NULL, 0);
+INSERT INTO `jabatan_petani` VALUES (13, 18, 9, 9, '2025-04-04 11:36:28', NULL, 0);
 
 -- ----------------------------
 -- Table structure for jabatanbidang
@@ -329,13 +337,14 @@ CREATE TABLE `jenis_komoditas`  (
   `updated_at` datetime NULL DEFAULT NULL,
   `is_deleted` tinyint(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_jenis_komoditas`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jenis_komoditas
 -- ----------------------------
 INSERT INTO `jenis_komoditas` VALUES (1, 'Tanaman Pangan', NULL, '2025-04-01 13:27:25', 0);
 INSERT INTO `jenis_komoditas` VALUES (2, 'Hortikultura', NULL, NULL, 0);
+INSERT INTO `jenis_komoditas` VALUES (5, 'Perkebunan', '2025-04-04 11:10:23', NULL, 0);
 
 -- ----------------------------
 -- Table structure for jenis_lahan
@@ -348,12 +357,13 @@ CREATE TABLE `jenis_lahan`  (
   `updated_at` datetime NULL DEFAULT NULL,
   `is_deleted` tinyint(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_jenis_lahan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jenis_lahan
 -- ----------------------------
 INSERT INTO `jenis_lahan` VALUES (1, 'Lahan Basah', NULL, '2025-04-01 13:42:00', 0);
+INSERT INTO `jenis_lahan` VALUES (2, 'Lahan Kering', '2025-04-04 11:20:43', NULL, 0);
 
 -- ----------------------------
 -- Table structure for kelompok_tani
@@ -363,19 +373,26 @@ CREATE TABLE `kelompok_tani`  (
   `id_kelompok_tani` int NOT NULL AUTO_INCREMENT,
   `nama_kelompok_tani` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `alamat_sekretariat` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `dis_id` int NOT NULL,
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   `is_deleted` tinyint(1) NULL DEFAULT 0,
-  PRIMARY KEY (`id_kelompok_tani`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id_kelompok_tani`) USING BTREE,
+  INDEX `dis_id`(`dis_id` ASC) USING BTREE,
+  CONSTRAINT `kelompok_tani_ibfk_1` FOREIGN KEY (`dis_id`) REFERENCES `districts` (`dis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of kelompok_tani
 -- ----------------------------
-INSERT INTO `kelompok_tani` VALUES (2, 'Sejahtera', 'Lumban Jaean', NULL, '2025-03-31 17:51:22', 0);
-INSERT INTO `kelompok_tani` VALUES (3, 'Setia', 'Lumban Jaean', NULL, NULL, 0);
-INSERT INTO `kelompok_tani` VALUES (4, 'DOSROHA LUMBAN JAEAN', 'Lumban Jaean', NULL, NULL, 0);
-INSERT INTO `kelompok_tani` VALUES (5, 'Maju Bersama', 'Lumban Jaean', NULL, '2025-04-01 14:35:47', 0);
+INSERT INTO `kelompok_tani` VALUES (2, 'Sejahtera', 'Lumban Jaean', 3, NULL, '2025-03-31 17:51:22', 0);
+INSERT INTO `kelompok_tani` VALUES (3, 'Setia', 'Lumban Jaean', 3, NULL, NULL, 0);
+INSERT INTO `kelompok_tani` VALUES (4, 'DOSROHA LUMBAN JAEAN', 'Lumban Jaean', 3, NULL, NULL, 0);
+INSERT INTO `kelompok_tani` VALUES (5, 'Maju Bersama', 'Lumban Jaean', 3, NULL, '2025-04-01 14:35:47', 0);
+INSERT INTO `kelompok_tani` VALUES (6, 'Andesi Aek Siansimun', 'Aeksiansimun', 1, '2025-04-04 10:49:11', NULL, 0);
+INSERT INTO `kelompok_tani` VALUES (7, 'Maju Tani', 'Silando', 2, '2025-04-04 11:05:07', '2025-04-04 11:05:16', 0);
+INSERT INTO `kelompok_tani` VALUES (8, 'Saut Gabe Naniula', 'Batu Binumbun', 2, '2025-04-04 11:16:28', NULL, 0);
+INSERT INTO `kelompok_tani` VALUES (9, 'Bersama Untuk Maju', 'Simanampang', 3, '2025-04-04 11:35:52', NULL, 0);
 
 -- ----------------------------
 -- Table structure for komoditas
@@ -386,18 +403,24 @@ CREATE TABLE `komoditas`  (
   `nama_komoditas` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `id_jenis_komoditas` int NULL DEFAULT NULL,
   `estimasi_panen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `gambar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   `is_deleted` tinyint(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_komoditas`) USING BTREE,
   INDEX `id_jenis_komoditas`(`id_jenis_komoditas` ASC) USING BTREE,
   CONSTRAINT `komoditas_ibfk_1` FOREIGN KEY (`id_jenis_komoditas`) REFERENCES `jenis_komoditas` (`id_jenis_komoditas`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of komoditas
 -- ----------------------------
-INSERT INTO `komoditas` VALUES (1, 'Padi', 1, '151', NULL, '2025-04-01 13:37:09', 0);
+INSERT INTO `komoditas` VALUES (1, 'Padi', 1, '151', 'null', NULL, '2025-04-04 13:30:02', 1);
+INSERT INTO `komoditas` VALUES (3, 'Jagung', 1, '70', 'jagung.jpg', '2025-04-04 11:09:06', NULL, 0);
+INSERT INTO `komoditas` VALUES (4, 'Kopi', 5, '300', 'kopi.jpeg', '2025-04-04 11:11:54', NULL, 0);
+INSERT INTO `komoditas` VALUES (5, 'Bawang Merah', 2, '90', 'bawangmerah.jpg', '2025-04-04 11:13:14', NULL, 0);
+INSERT INTO `komoditas` VALUES (6, 'Kakao', 5, '180', 'kakao.jpeg', '2025-04-04 11:34:38', NULL, 0);
+INSERT INTO `komoditas` VALUES (7, 'Padi', 1, '151', '1743748199_padi.jpg', '2025-04-04 13:29:59', '2025-04-04 13:33:05', 0);
 
 -- ----------------------------
 -- Table structure for lahan
@@ -413,12 +436,14 @@ CREATE TABLE `lahan`  (
   PRIMARY KEY (`id_lahan`) USING BTREE,
   INDEX `id_jenis_lahan`(`id_jenis_lahan` ASC) USING BTREE,
   CONSTRAINT `lahan_ibfk_1` FOREIGN KEY (`id_jenis_lahan`) REFERENCES `jenis_lahan` (`id_jenis_lahan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lahan
 -- ----------------------------
 INSERT INTO `lahan` VALUES (1, 'Sawah', 1, NULL, '2025-04-01 13:53:53', 0);
+INSERT INTO `lahan` VALUES (2, 'Perkebunan', 2, '2025-04-04 11:23:34', NULL, 0);
+INSERT INTO `lahan` VALUES (3, 'Tegalan', 2, '2025-04-04 11:28:40', NULL, 0);
 
 -- ----------------------------
 -- Table structure for pasar
@@ -427,12 +452,14 @@ DROP TABLE IF EXISTS `pasar`;
 CREATE TABLE `pasar`  (
   `id_pasar` int NOT NULL AUTO_INCREMENT,
   `nama_pasar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `lokasi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `subdis_id` int NULL DEFAULT NULL,
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   `isDeleted` tinyint(1) NULL DEFAULT 0,
-  PRIMARY KEY (`id_pasar`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id_pasar`) USING BTREE,
+  INDEX `subdis_id`(`subdis_id` ASC) USING BTREE,
+  CONSTRAINT `pasar_ibfk_1` FOREIGN KEY (`subdis_id`) REFERENCES `subdistricts` (`subdis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pasar
@@ -468,7 +495,7 @@ CREATE TABLE `pegawai`  (
 -- ----------------------------
 -- Records of pegawai
 -- ----------------------------
-INSERT INTO `pegawai` VALUES (1, '123123123', 'Gilberd Siboro', 2, 9, 1, 'IT Del', '081260951690', '877381928382', '1743481512_gil.jpg', NULL, '2025-04-01 14:25:25', 0);
+INSERT INTO `pegawai` VALUES (1, '123123123', 'Gilberd Siboro', 2, 9, 1, 'IT Del', '081260951690', '877381928382', '1743481512_gil.jpg', NULL, '2025-04-04 13:26:35', 0);
 INSERT INTO `pegawai` VALUES (2, '123981238', 'Erichson Berutu', 4, 16, 1, 'Tarutung', '088238192', '231231423', 'reza.jpg', NULL, NULL, 0);
 
 -- ----------------------------
@@ -487,7 +514,7 @@ CREATE TABLE `petani`  (
   PRIMARY KEY (`id_petani`) USING BTREE,
   INDEX `id_kelompok_tani`(`id_kelompok_tani` ASC) USING BTREE,
   CONSTRAINT `petani_ibfk_1` FOREIGN KEY (`id_kelompok_tani`) REFERENCES `kelompok_tani` (`id_kelompok_tani`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of petani
@@ -497,6 +524,10 @@ INSERT INTO `petani` VALUES (2, 'Volwin', 'Sitompul', 'Lumban Jaean', 3, NULL, N
 INSERT INTO `petani` VALUES (3, 'Yanti', 'Sitompul', 'Lumban Jaean', 4, NULL, NULL, 0);
 INSERT INTO `petani` VALUES (4, 'Erika', 'Magdalena Simanungkalit', 'Lumban Jaean', 5, NULL, NULL, 0);
 INSERT INTO `petani` VALUES (5, 'Kevin', 'Simangunsong', 'Siantar', 2, NULL, '2025-04-01 14:30:55', 0);
+INSERT INTO `petani` VALUES (6, 'Mangadar', 'Sotarduga Lumban Tobing', 'Aeksiansimun', 6, '2025-04-04 10:50:07', NULL, 0);
+INSERT INTO `petani` VALUES (7, 'Dolok', 'Manalu', 'Silando', 7, '2025-04-04 11:05:45', NULL, 0);
+INSERT INTO `petani` VALUES (8, 'Bonggas', 'Lumban Tobing', 'Batu Binumbun', 8, '2025-04-04 11:17:37', NULL, 0);
+INSERT INTO `petani` VALUES (9, 'Rismauli', 'Tumanggor', 'Simanampang', 9, '2025-04-04 11:36:18', NULL, 0);
 
 -- ----------------------------
 -- Table structure for provinces
@@ -526,13 +557,28 @@ CREATE TABLE `subdistricts`  (
   PRIMARY KEY (`subdis_id`) USING BTREE,
   INDEX `dis_id`(`dis_id` ASC) USING BTREE,
   CONSTRAINT `subdistricts_ibfk_1` FOREIGN KEY (`dis_id`) REFERENCES `districts` (`dis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of subdistricts
 -- ----------------------------
 INSERT INTO `subdistricts` VALUES (1, 'Hutatoruan VI', 1);
 INSERT INTO `subdistricts` VALUES (2, 'Hapoltahan', 1);
+INSERT INTO `subdistricts` VALUES (3, 'Lumban Jaean', 3);
+INSERT INTO `subdistricts` VALUES (4, 'Simasom Toruan', 3);
+INSERT INTO `subdistricts` VALUES (5, 'Pantis', 3);
+INSERT INTO `subdistricts` VALUES (6, 'Simasom', 3);
+INSERT INTO `subdistricts` VALUES (7, 'Lumban Garaga', 3);
+INSERT INTO `subdistricts` VALUES (8, 'Onan Hasang', 3);
+INSERT INTO `subdistricts` VALUES (9, 'Lumban Tonga', 3);
+INSERT INTO `subdistricts` VALUES (10, 'Pangurdotan', 3);
+INSERT INTO `subdistricts` VALUES (11, 'Aek Siansimun', 1);
+INSERT INTO `subdistricts` VALUES (12, 'Hutagalung Siualuompu', 1);
+INSERT INTO `subdistricts` VALUES (13, 'Hutapea Banuarea', 1);
+INSERT INTO `subdistricts` VALUES (14, 'Silali Toruan', 2);
+INSERT INTO `subdistricts` VALUES (15, 'Silando', 2);
+INSERT INTO `subdistricts` VALUES (16, 'Batu Binumbun', 2);
+INSERT INTO `subdistricts` VALUES (17, 'Simanampang', 3);
 
 -- ----------------------------
 -- Table structure for user_roles
@@ -782,6 +828,23 @@ BEGIN#Routine body goes here...
 	lahan.updated_at = NOW() 
 	WHERE
 		lahan.id_lahan = idLahan;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for delete_pasar
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `delete_pasar`;
+delimiter ;;
+CREATE PROCEDURE `delete_pasar`(IN idPasar JSON)
+BEGIN#Routine body goes here...
+	UPDATE pasar 
+	SET pasar.isDeleted = 1,
+	pasar.updated_at = NOW() 
+	WHERE
+		pasar.id_pasar = idPasar;
 	
 END
 ;;
@@ -1047,9 +1110,10 @@ BEGIN
 	#Routine body goes here...
 	SET @nama_kelompok = JSON_UNQUOTE(JSON_EXTRACT(dataKelompokTani,'$.NamaKelompokTani'));
 	SET @alamat = JSON_UNQUOTE(JSON_EXTRACT(dataKelompokTani,'$.AlamatSekretariat'));
-
-	INSERT INTO kelompok_tani(`nama_kelompok_tani`,`alamat_sekretariat`,`created_at`)
-	VALUES(@nama_kelompok, @alamat, NOW());
+	SET @kecamatan = JSON_UNQUOTE(JSON_EXTRACT(dataKelompokTani,'$.Kecamatan'));
+	
+	INSERT INTO kelompok_tani(`nama_kelompok_tani`,`alamat_sekretariat`, `dis_id`,`created_at`)
+	VALUES(@nama_kelompok, @alamat, @kecamatan ,NOW());
 END
 ;;
 delimiter ;
@@ -1061,13 +1125,13 @@ DROP PROCEDURE IF EXISTS `insert_komoditas`;
 delimiter ;;
 CREATE PROCEDURE `insert_komoditas`(IN dataKomoditas JSON)
 BEGIN
-	#Routine body goes here...
 	SET @jenis_komoditas = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.JenisKomoditas'));
 	SET @nama_komoditas = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.NamaKomoditas'));
 	SET @estimasi_panen = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.EstimasiPanen'));
+	SET @gambar = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.Gambar'));
 
-	INSERT INTO komoditas(`id_jenis_komoditas`,`nama_komoditas`,`estimasi_panen`, `created_at`)
-	VALUES(@jenis_komoditas, @nama_komoditas, @estimasi_panen, NOW());
+	INSERT INTO komoditas(`id_jenis_komoditas`,`nama_komoditas`,`estimasi_panen`, `gambar`, `created_at`)
+	VALUES(@jenis_komoditas, @nama_komoditas, @estimasi_panen, @gambar,NOW());
 END
 ;;
 delimiter ;
@@ -1085,6 +1149,23 @@ BEGIN
 
 	INSERT INTO lahan(lahan.id_jenis_lahan,lahan.nama_lahan, lahan.created_at)
 	VALUES(@jenis_lahan, @lahan, NOW());
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for insert_pasar
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `insert_pasar`;
+delimiter ;;
+CREATE PROCEDURE `insert_pasar`(IN dataPasar JSON)
+BEGIN
+	#Routine body goes here...
+	SET @nama_pasar = JSON_UNQUOTE(JSON_EXTRACT(dataPasar,'$.Pasar'));
+	SET @lokasi = JSON_UNQUOTE(JSON_EXTRACT(dataPasar,'$.Lokasi'));
+
+	INSERT INTO pasar(pasar.nama_pasar, pasar.subdis_id, pasar.created_at)
+	VALUES(@nama_pasar, @lokasi, NOW());
 END
 ;;
 delimiter ;
@@ -1373,8 +1454,9 @@ BEGIN
 	SET @idKelompokTani = JSON_UNQUOTE(JSON_EXTRACT(dataKelompokTani,'$.IdKelompokTani'));
 	SET @kelompokTani = JSON_UNQUOTE(JSON_EXTRACT(dataKelompokTani,'$.KelompokTani'));
 	SET @alamat = JSON_UNQUOTE(JSON_EXTRACT(dataKelompokTani,'$.Alamat'));
+	SET @kecamatan = JSON_UNQUOTE(JSON_EXTRACT(dataKelompokTani,'$.Kecamatan'));
 	
-	UPDATE kelompok_tani SET kelompok_tani.nama_kelompok_tani=@kelompokTani, kelompok_tani.alamat_sekretariat=@alamat,kelompok_tani.updated_at=NOW()
+	UPDATE kelompok_tani SET kelompok_tani.nama_kelompok_tani=@kelompokTani, kelompok_tani.alamat_sekretariat=@alamat, kelompok_tani.dis_id=@kecamatan ,kelompok_tani.updated_at=NOW()
 	WHERE kelompok_tani.id_kelompok_tani=@idKelompokTani;
 END
 ;;
@@ -1388,13 +1470,13 @@ delimiter ;;
 CREATE PROCEDURE `update_komoditas`(IN dataKomoditas JSON)
 BEGIN
 	#Routine body goes here...
-	
 	SET @idKomoditas = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.IdKomoditas'));
 	SET @namaKomoditas = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.NamaKomoditas'));
 	SET @jenisKomoditas = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.IdJenisKomoditas'));
 	SET @estimasiPanen = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.EstimasiPanen'));
+	SET @gambar = JSON_UNQUOTE(JSON_EXTRACT(dataKomoditas,'$.Gambar'));
 	
-	UPDATE komoditas SET komoditas.nama_komoditas=@namaKomoditas, komoditas.id_jenis_komoditas=@jenisKomoditas, komoditas.estimasi_panen=@estimasiPanen, komoditas.updated_at=NOW()
+	UPDATE komoditas SET komoditas.nama_komoditas=@namaKomoditas, komoditas.id_jenis_komoditas=@jenisKomoditas, komoditas.estimasi_panen=@estimasiPanen, komoditas.gambar = @gambar,komoditas.updated_at=NOW()
 	WHERE komoditas.id_komoditas=@idKomoditas;
 END
 ;;
@@ -1415,6 +1497,24 @@ BEGIN
 		
 	UPDATE lahan SET lahan.nama_lahan=@namaLahan, lahan.id_jenis_lahan=@jenisLahan, lahan.updated_at=NOW()
 	WHERE lahan.id_lahan=@idLahan;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for update_pasar
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `update_pasar`;
+delimiter ;;
+CREATE PROCEDURE `update_pasar`(IN dataPasar JSON)
+BEGIN
+	#Routine body goes here...
+	SET @idPasar = JSON_UNQUOTE(JSON_EXTRACT(dataPasar,'$.IdPasar'));
+	SET @nama_pasar = JSON_UNQUOTE(JSON_EXTRACT(dataPasar,'$.Pasar'));
+	SET @lokasi = JSON_UNQUOTE(JSON_EXTRACT(dataPasar,'$.Lokasi'));
+	
+	UPDATE pasar SET pasar.nama_pasar=@nama_pasar, pasar.subdis_id=@lokasi, pasar.updated_at=NOW()
+	WHERE pasar.id_pasar=@idPasar;
 END
 ;;
 delimiter ;
@@ -1757,19 +1857,22 @@ delimiter ;
 DROP PROCEDURE IF EXISTS `viewAll_kelompokTani`;
 delimiter ;;
 CREATE PROCEDURE `viewAll_kelompokTani`()
-BEGIN
-	#Routine body goes here...
-SELECT 
-    kelompok_tani.nama_kelompok_tani,
-    kelompok_tani.alamat_sekretariat,
+BEGIN#Routine body goes here...
+	SELECT
+		kelompok_tani.nama_kelompok_tani,
+		kelompok_tani.alamat_sekretariat,
 		kelompok_tani.id_kelompok_tani,
-    petani.nama_depan,
-    petani.nama_belakang
-FROM 
-    kelompok_tani
-    LEFT JOIN jabatan_petani ON kelompok_tani.id_kelompok_tani = jabatan_petani.id_kelompok_tani
-    LEFT JOIN petani ON jabatan_petani.id_petani = petani.id_petani
-		WHERE kelompok_tani.is_deleted = 0;
+		petani.nama_depan,
+		petani.nama_belakang,
+		districts.dis_name 
+	FROM
+		kelompok_tani
+		LEFT JOIN jabatan_petani ON kelompok_tani.id_kelompok_tani = jabatan_petani.id_kelompok_tani
+		LEFT JOIN petani ON jabatan_petani.id_petani = petani.id_petani
+		INNER JOIN districts ON kelompok_tani.dis_id = districts.dis_id 
+	WHERE
+		kelompok_tani.is_deleted = 0;
+	
 END
 ;;
 delimiter ;
@@ -1803,6 +1906,7 @@ BEGIN
 SELECT
 	komoditas.id_komoditas,
 	komoditas.nama_komoditas, 
+	komoditas.gambar,
 	jenis_komoditas.nama_jenis_komoditas, 
 	komoditas.estimasi_panen
 FROM
@@ -1812,6 +1916,40 @@ FROM
 	ON 
 		komoditas.id_jenis_komoditas = jenis_komoditas.id_jenis_komoditas
 		WHERE komoditas.is_deleted = 0;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for viewAll_komoditasKecamatan
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `viewAll_komoditasKecamatan`;
+delimiter ;;
+CREATE PROCEDURE `viewAll_komoditasKecamatan`()
+BEGIN
+	#Routine body goes here...
+SELECT
+	districts.dis_name, 
+	subdistricts.subdis_name, 
+	komoditas.id_komoditas,
+	komoditas.gambar,
+	komoditas.nama_komoditas, 
+	districts.dis_id
+FROM
+	districts
+	INNER JOIN
+	subdistricts
+	ON 
+		districts.dis_id = subdistricts.dis_id
+	INNER JOIN
+	data_pertanian
+	ON 
+		subdistricts.subdis_id = data_pertanian.subdis_id
+	INNER JOIN
+	komoditas
+	ON 
+		data_pertanian.id_komoditas = komoditas.id_komoditas
+		WHERE data_pertanian.is_deleted = 0;
 END
 ;;
 delimiter ;
@@ -1835,6 +1973,29 @@ FROM
 	ON 
 		lahan.id_jenis_lahan = jenis_lahan.id_jenis_lahan
 		WHERE lahan.is_deleted = 0;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for viewAll_pasar
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `viewAll_pasar`;
+delimiter ;;
+CREATE PROCEDURE `viewAll_pasar`()
+BEGIN
+	#Routine body goes here...
+SELECT
+	pasar.id_pasar, 
+	pasar.nama_pasar, 
+	subdistricts.subdis_name
+FROM
+	pasar
+	INNER JOIN
+	subdistricts
+	ON 
+		pasar.subdis_id = subdistricts.subdis_id
+		WHERE pasar.isDeleted = 0;
 END
 ;;
 delimiter ;
@@ -2077,7 +2238,7 @@ BEGIN
 		subdistricts
 		INNER JOIN districts ON subdistricts.dis_id = districts.dis_id 
 	WHERE
-		districts.dis_id = id;
+		subdistricts.subdis_id = id;
 	
 END
 ;;
@@ -2258,21 +2419,45 @@ DROP PROCEDURE IF EXISTS `view_komoditasById`;
 delimiter ;;
 CREATE PROCEDURE `view_komoditasById`(IN id INT)
 BEGIN
-SELECT
-	komoditas.id_komoditas,
-	komoditas.nama_komoditas,
-	komoditas.id_jenis_komoditas, 
-	jenis_komoditas.nama_jenis_komoditas, 
-	komoditas.estimasi_panen
-FROM
-	komoditas
-	INNER JOIN
-	jenis_komoditas
-	ON 
-		komoditas.id_jenis_komoditas = jenis_komoditas.id_jenis_komoditas
+	SELECT
+		komoditas.id_komoditas,
+		komoditas.nama_komoditas,
+		komoditas.id_jenis_komoditas,
+		komoditas.gambar,
+		jenis_komoditas.nama_jenis_komoditas,
+		komoditas.estimasi_panen 
+	FROM
+		komoditas
+		INNER JOIN jenis_komoditas ON komoditas.id_jenis_komoditas = jenis_komoditas.id_jenis_komoditas 
 	WHERE
 		komoditas.id_komoditas = id;
 	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_komoditasByKecamatan
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_komoditasByKecamatan`;
+delimiter ;;
+CREATE PROCEDURE `view_komoditasByKecamatan`(IN id INT)
+BEGIN
+	SELECT
+		districts.dis_name,
+		subdistricts.subdis_name,
+		komoditas.id_komoditas,
+		komoditas.gambar,
+		komoditas.nama_komoditas,
+		districts.dis_id 
+	FROM
+		districts
+		INNER JOIN subdistricts ON districts.dis_id = subdistricts.dis_id
+		INNER JOIN data_pertanian ON subdistricts.subdis_id = data_pertanian.subdis_id
+		INNER JOIN komoditas ON data_pertanian.id_komoditas = komoditas.id_komoditas 
+	WHERE
+	data_pertanian.is_deleted = 0
+	AND districts.dis_id = id;
 END
 ;;
 delimiter ;
@@ -2295,6 +2480,31 @@ BEGIN
 	
 	WHERE
 		lahan.id_lahan = id;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_pasarById
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_pasarById`;
+delimiter ;;
+CREATE PROCEDURE `view_pasarById`(IN id INT)
+BEGIN
+SELECT
+	pasar.id_pasar,
+	pasar.subdis_id, 
+	pasar.nama_pasar, 
+	subdistricts.subdis_name
+FROM
+	pasar
+	INNER JOIN
+	subdistricts
+	ON 
+		pasar.subdis_id = subdistricts.subdis_id
+	WHERE
+		pasar.id_pasar = id;
+	
 END
 ;;
 delimiter ;
