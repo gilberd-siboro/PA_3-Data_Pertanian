@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 04/04/2025 17:47:59
+ Date: 05/04/2025 12:30:21
 */
 
 SET NAMES utf8mb4;
@@ -55,7 +55,7 @@ CREATE TABLE `berita`  (
   PRIMARY KEY (`idBerita`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `berita_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of berita
@@ -2079,6 +2079,31 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for viewAll_persebaranKomoditas
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `viewAll_persebaranKomoditas`;
+delimiter ;;
+CREATE PROCEDURE `viewAll_persebaranKomoditas`()
+BEGIN
+	#Routine body goes here...
+	SELECT
+		districts.dis_name,
+		subdistricts.subdis_name,
+		komoditas.id_komoditas,
+		komoditas.gambar,
+		komoditas.nama_komoditas 
+	FROM
+		districts
+		INNER JOIN subdistricts ON districts.dis_id = subdistricts.dis_id
+		INNER JOIN data_pertanian ON subdistricts.subdis_id = data_pertanian.subdis_id
+		INNER JOIN komoditas ON data_pertanian.id_komoditas = komoditas.id_komoditas 
+	WHERE
+		data_pertanian.is_deleted = 0;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for viewAll_petani
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `viewAll_petani`;
@@ -2563,6 +2588,32 @@ FROM
 WHERE
 	users.user_id = id;
 	END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_persebaranKomoditas
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_persebaranKomoditas`;
+delimiter ;;
+CREATE PROCEDURE `view_persebaranKomoditas`(IN id INT)
+BEGIN
+	SELECT
+		districts.dis_name,
+		subdistricts.subdis_name,
+		komoditas.id_komoditas,
+		komoditas.gambar,
+		komoditas.nama_komoditas 
+	FROM
+		districts
+		INNER JOIN subdistricts ON districts.dis_id = subdistricts.dis_id
+		INNER JOIN data_pertanian ON subdistricts.subdis_id = data_pertanian.subdis_id
+		INNER JOIN komoditas ON data_pertanian.id_komoditas = komoditas.id_komoditas 
+	WHERE
+		data_pertanian.is_deleted = 0 
+		AND komoditas.id_komoditas = id;
+	
+END
 ;;
 delimiter ;
 

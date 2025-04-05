@@ -33,7 +33,7 @@
             @foreach ($komoditas as $item)
             <div class="col-md-4 ftco-animate" data-kecamatan="{{ $item->dis_name }}">
                 <div class="project-wrap">
-                    <a href="#" class="img" style="background-image:url('{{ asset('assets/images/' . $item->gambar) }}');"></a>
+                    <a href="" class="img" style="background-image:url('{{ asset('assets/images/' . $item->gambar) }}');"></a>
                     <div class="text p-4">
                         <h3><a href="#">{{ $item->nama_komoditas }}</a></h3>
                         <p class="location"><span class="fa fa-map-marker"></span> {{ $item->subdis_name }}</p>

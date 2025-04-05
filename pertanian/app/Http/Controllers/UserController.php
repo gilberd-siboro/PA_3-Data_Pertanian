@@ -60,6 +60,43 @@ class UserController extends Controller
     }
     public function persebaran_komoditas()
     {
-        return view('user/persebaran_komoditas');
+        $komoditas = DB::select('CALL viewAll_komoditas()');
+
+        // Ambil data awal dengan pagination
+        $persebaranRaw = DB::select('CALL viewAll_persebaranKomoditas()');
+        $perPage = 6;
+        $page = request()->query('page', 1);
+        $persebaran = new LengthAwarePaginator(
+            array_slice($persebaranRaw, ($page - 1) * $perPage, $perPage),
+            count($persebaranRaw),
+            $perPage,
+            $page,
+            ['path' => url()->current()]
+        );
+
+        return view('user/persebaran_komoditas', compact('komoditas','persebaran'));
+    }
+
+    public function getPersebaranKomoditas(Request $request, $id)
+    {
+        $perPage = 6; // Jumlah item per halaman
+        $page = $request->query('page', 1); // Ambil parameter halaman dari request
+
+        if ($id === "all") {
+            $persebaran = DB::select('CALL viewAll_persebaranKomoditas()');
+        } else {
+            $persebaran = DB::select('CALL view_persebaranKomoditas(?)', [$id]);
+        }
+
+        // Konversi array hasil query menjadi Laravel paginator secara manual
+        $persebaranPaginated = new LengthAwarePaginator(
+            array_slice($persebaran, ($page - 1) * $perPage, $perPage), // Data sesuai halaman
+            count($persebaran), // Total jumlah data
+            $perPage,
+            $page,
+            ['path' => url()->current()] // URL dasar untuk pagination
+        );
+
+        return response()->json($persebaranPaginated);
     }
 }
