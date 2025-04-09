@@ -150,6 +150,13 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::post('/pasar/update/{id}', [AdminController::class, 'update_pasar'])->name('pasar.update');
     Route::post('/pasar/delete/{id}', [AdminController::class, 'delete_pasar'])->name('pasar.delete');
 
+    // -- Harga Pasar --
+    Route::get('/harga', [AdminController::class, 'harga'])->name('harga.index');
+    Route::post('/tambah-harga', [AdminController::class, 'create_harga']);
+    Route::get('/harga/edit/{id}', [AdminController::class, 'edit_harga'])->name('harga.edit');
+    Route::post('/harga/update/{id}', [AdminController::class, 'update_harga'])->name('harga.update');
+    Route::post('/harga/delete/{id}', [AdminController::class, 'delete_harga'])->name('harga.delete');
+
 
 
 });
