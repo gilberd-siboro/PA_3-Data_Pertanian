@@ -24,7 +24,40 @@ class AdminController extends Controller
         $pasar = DB::select('CALL viewAll_pasar()');
         $totalPsr = count($pasar);
 
-        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr'));
+        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr','komoditas','pasar'));
+    }
+
+    public function getHargaKomoditasChart(Request $request)
+    {
+        $idKomoditas = $request->input('id_komoditas');
+        $idPasar = $request->input('id_pasar');
+
+        $results = DB::select('CALL get_harga_komoditas(?, ?)', [$idKomoditas, $idPasar]);
+
+        $data = [];
+
+        foreach ($results as $row) {
+            $tanggal = date('M', strtotime($row->tanggal)); // Format jadi 'Jan', 'Feb', dst
+
+            if (!isset($data[$tanggal])) {
+                $data[$tanggal] = [
+                    'tanggal' => $tanggal,
+                    'high' => $row->harga,
+                    'low' => $row->harga,
+                ];
+            } else {
+                $data[$tanggal]['high'] = max($data[$tanggal]['high'], $row->harga);
+                $data[$tanggal]['low'] = min($data[$tanggal]['low'], $row->harga);
+            }
+        }
+
+        $response = [
+            'categories' => array_keys($data),
+            'high' => array_column($data, 'high'),
+            'low' => array_column($data, 'low'),
+        ];
+
+        return response()->json($response);
     }
 
     // ------ PENGGUNA -------
@@ -1654,7 +1687,7 @@ class AdminController extends Controller
         $harga = DB::select('CALL viewAll_hargaKomoditas()');
         $totalData = count($harga);
 
-        return view('admin/harga/index', compact('totalData', 'userData', 'pasar', 'komoditas','harga'));
+        return view('admin/harga/index', compact('totalData', 'userData', 'pasar', 'komoditas', 'harga'));
     }
 
 
@@ -1687,7 +1720,7 @@ class AdminController extends Controller
         $harga = $hargaData[0];
 
 
-        return view('admin/harga/edit', compact('userData', 'pasar', 'komoditas','harga'));
+        return view('admin/harga/edit', compact('userData', 'pasar', 'komoditas', 'harga'));
     }
 
     public function update_harga(Request $request, $id)

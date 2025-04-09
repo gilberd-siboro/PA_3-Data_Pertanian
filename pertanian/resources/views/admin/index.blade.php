@@ -2,34 +2,59 @@
 @section('content')
 
 
-<div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-    <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
-        <div class="grow">
-            <h5 class="text-16">Dinas Pertanian Tapanuli Utara</h5>
+<!-- <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto"> -->
+<div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
+    <div class="grow">
+        <h5 class="text-16">Dinas Pertanian Tapanuli Utara</h5>
+    </div>
+    <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
+        <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
+            <a href="#" class="text-slate-400 dark:text-zink-200">Dashboard</a>
+        </li>
+    </ul>
+</div>
+<div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5">
+    <div class="relative col-span-12 overflow-hidden card 2xl:col-span-8 bg-slate-900">
+        <div class="relative card-body">
+            <div class=" grid items-center grid-cols-12">
+                <div class="col-span-12 lg:col-span-8 2xl:col-span-7">
+                    <h5 class="mb-3 font-normal tracking-wide text-slate-200">Selamat datang di Dinas Pertanian Tapanuli Utara
+                    </h5>
+                    <p class="mb-5 text-slate-400">Lihat pemberitahuan terbaru dan statistik ringkas di bawah untuk wawasan cepat. Gunakan data ini untuk bantu Anda membuat keputusan tepat dan selesaikan masalah dengan efisien.
+                    </p>
+                </div>
+                <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
+                    <img style="border-radius: 10px" src="" alt="" class="h-40 ltr:2xl:ml-auto rtl:2xl:mr-auto">
+                </div>
+            </div>
         </div>
-        <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
-            <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                <a href="#" class="text-slate-400 dark:text-zink-200">Dashboard</a>
-            </li>
-        </ul>
+    </div>
+    <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
+        <div class="card-body">
+            <h6 class="mb-4 text-15">Harga Komoditas</h6>
+
+            <!-- Filter Dropdowns -->
+            <div class="mb-4 flex gap-4">
+                <select id="komoditasSelect" class="form-select w-full" name="id_komoditas">
+                    <option value="">Pilih Komoditas</option>
+                    @foreach($komoditas as $k)
+                    <option value="{{ $k->id_komoditas }}">{{ $k->nama_komoditas }}</option>
+                    @endforeach
+                </select>
+
+                <select id="pasarSelect" class="form-select w-full" name="id_pasar">
+                    <option value="">Pilih Pasar</option>
+                    @foreach($pasar as $p)
+                    <option value="{{ $p->id_pasar }}">{{ $p->nama_pasar }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Chart -->
+            <div id="lineWithDataLabel" class="apex-charts" data-chart-colors='["bg-custom-500", "bg-green-500"]' dir="ltr"></div>
+        </div>
     </div>
 
-    <div class="relative card-body" style="background-color: black;padding: 20px">
-        <div class="grid items-center grid-cols-12">
-            <div class="col-span-12 lg:col-span-8 2xl:col-span-7">
-                <h5 class="mb-3 font-normal tracking-wide text-slate-200">Selamat datang di Dinas Pertanian Tapanuli Utara
-                </h5>
-                <p class="mb-5 text-slate-400">Lihat pemberitahuan terbaru dan statistik ringkas di bawah untuk wawasan cepat. Gunakan data ini untuk bantu Anda membuat keputusan tepat dan selesaikan masalah dengan efisien.
-                </p>
-            </div>
-            <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
-                <img style="border-radius: 10px" src="" alt="" class="h-40 ltr:2xl:ml-auto rtl:2xl:mr-auto">
-            </div>
-        </div>
-    </div>
-
-</div><!--end col-->
-<div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5" style="margin-top: 50px; margin-bottom: 50px">
     <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
         <div class="text-center card-body">
             <div class="flex items-center justify-center mx-auto rounded-full size-14 bg-custom-100 text-custom-500 dark:bg-custom-500/20">
@@ -66,7 +91,7 @@
             <p class="text-slate-500 dark:text-zink-200">Pasar</p>
         </div>
     </div><!--end col-->
-</div><!--end grid-->
+</div>
 
 
 
@@ -276,8 +301,164 @@
     </div>
 </div>
 
+@push('scripts')
+<!-- <script src="{{ asset('assets/js/pages/apexcharts-line.init.js') }}"></script> -->
+<script>
+    function rgbToHex(rgb) {
+        // Extract RGB values using regular expressions
+        const rgbValues = rgb.match(/\d+/g);
 
+        if (rgbValues.length === 3) {
+            var [r, g, b] = rgbValues.map(Number);
+        }
+        // Ensure the values are within the valid range (0-255)
+        r = Math.max(0, Math.min(255, r));
+        g = Math.max(0, Math.min(255, g));
+        b = Math.max(0, Math.min(255, b));
 
+        // Convert each component to its hexadecimal representation
+        const rHex = r.toString(16).padStart(2, '0');
+        const gHex = g.toString(16).padStart(2, '0');
+        const bHex = b.toString(16).padStart(2, '0');
 
+        // Combine the hexadecimal values with the "#" prefix
+        const hexColor = `#${rHex}${gHex}${bHex}`;
 
+        return hexColor.toUpperCase(); // Convert to uppercase for consistency
+    }
+
+    // common function to get charts colors from class
+    function getChartColorsArray(chartId) {
+        const chartElement = document.getElementById(chartId);
+        if (chartElement) {
+            const colors = chartElement.dataset.chartColors;
+            if (colors) {
+                const parsedColors = JSON.parse(colors);
+                const mappedColors = parsedColors.map((value) => {
+                    const newValue = value.replace(/\s/g, "");
+                    if (!newValue.includes("#")) {
+                        const element = document.querySelector(newValue);
+                        if (element) {
+                            const styles = window.getComputedStyle(element);
+                            const backgroundColor = styles.backgroundColor;
+                            return backgroundColor || newValue;
+                        } else {
+                            const divElement = document.createElement('div');
+                            divElement.className = newValue;
+                            document.body.appendChild(divElement);
+
+                            const styles = window.getComputedStyle(divElement);
+                            const backgroundColor = styles.backgroundColor.includes("#") ? styles.backgroundColor : rgbToHex(styles.backgroundColor);
+                            return backgroundColor || newValue;
+                        }
+                    } else {
+                        return newValue;
+                    }
+                });
+                return mappedColors;
+            } else {
+                console.warn(`chart-colors attribute not found on: ${chartId}`);
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const komoditasSelect = document.getElementById('komoditasSelect');
+        const pasarSelect = document.getElementById('pasarSelect');
+        const chartContainer = document.querySelector("#lineWithDataLabel");
+
+        let chart;
+
+        function loadChartData(idKomoditas = '', idPasar = '') {
+            fetch(`/getHargaKomoditasChart?idKomoditas=${idKomoditas}&idPasar=${idPasar}`)
+                .then(response => response.json())
+                .then(data => {
+                    const categories = data.map(item => item.tanggal);
+                    const highSeries = data.map(item => item.high);
+                    const lowSeries = data.map(item => item.low);
+
+                    const dataLabelOptions = {
+                        series: [{
+                                name: "Harga Tertinggi",
+                                data: highSeries
+                            },
+                            {
+                                name: "Harga Terendah",
+                                data: lowSeries
+                            }
+                        ],
+                        chart: {
+                            height: 350,
+                            type: 'line',
+                            dropShadow: {
+                                enabled: true,
+                                color: '#000',
+                                top: 18,
+                                left: 7,
+                                blur: 10,
+                                opacity: 0.2
+                            },
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        colors: getChartColorsArray("lineWithDataLabel"),
+                        dataLabels: {
+                            enabled: true
+                        },
+                        stroke: {
+                            curve: 'smooth'
+                        },
+                        markers: {
+                            size: 1
+                        },
+                        xaxis: {
+                            categories: categories,
+                            title: {
+                                text: 'Tanggal'
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Harga (Rp)'
+                            },
+                            min: Math.min(...lowSeries) - 5,
+                            max: Math.max(...highSeries) + 5
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'right',
+                            floating: true,
+                            offsetY: -25,
+                            offsetX: -5
+                        }
+                    };
+
+                    // Render or update chart
+                    if (chart) {
+                        chart.updateOptions(dataLabelOptions);
+                    } else {
+                        chart = new ApexCharts(chartContainer, dataLabelOptions);
+                        chart.render();
+                    }
+                })
+                .catch(error => {
+                    console.error('Gagal memuat data chart:', error);
+                });
+        }
+
+        // Event Listener filter
+        komoditasSelect.addEventListener('change', function() {
+            loadChartData(komoditasSelect.value, pasarSelect.value);
+        });
+
+        pasarSelect.addEventListener('change', function() {
+            loadChartData(komoditasSelect.value, pasarSelect.value);
+        });
+
+        // Load awal tanpa filter
+        loadChartData();
+    });
+</script>
+@endpush
 @endsection

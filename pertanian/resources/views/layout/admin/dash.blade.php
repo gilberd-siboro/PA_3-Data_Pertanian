@@ -9,7 +9,7 @@
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="StarCode Kh" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/gambar/logopptsb1.jpg') }}">
+    <link rel="shortcut icon" href="">
 
     <!-- Layout config Js -->
     <script src="{{ asset('assets/js/layout.js') }}"></script>
@@ -31,13 +31,13 @@
             <div class="flex items-center justify-center px-5 text-center h-header group-data-[layout=horizontal]:hidden group-data-[sidebar-size=sm]:fixed group-data-[sidebar-size=sm]:top-0 group-data-[sidebar-size=sm]:bg-vertical-menu group-data-[sidebar-size=sm]:group-data-[sidebar=dark]:bg-vertical-menu-dark group-data-[sidebar-size=sm]:group-data-[sidebar=brand]:bg-vertical-menu-brand group-data-[sidebar-size=sm]:group-data-[sidebar=modern]:bg-gradient-to-br group-data-[sidebar-size=sm]:group-data-[sidebar=modern]:to-vertical-menu-to-modern group-data-[sidebar-size=sm]:group-data-[sidebar=modern]:from-vertical-menu-form-modern group-data-[sidebar-size=sm]:group-data-[sidebar=modern]:bg-vertical-menu-modern group-data-[sidebar-size=sm]:z-10 group-data-[sidebar-size=sm]:w-[calc(theme('spacing.vertical-menu-sm')_-_1px)] group-data-[sidebar-size=sm]:group-data-[sidebar=dark]:dark:bg-zink-700">
                 <a href="#" class="group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden group-data-[sidebar=modern]:hidden">
                     <span class="group-data-[sidebar-size=sm]:hidden">
-                        <img src="{{ asset('assets/gambar/logopptsb1.jpg') }}" style="height: 80px;border-radius: 20px;margin-top:4px" alt="" class="h-6 mx-auto">
+                        <img src="" style="height: 80px;border-radius: 20px;margin-top:4px" alt="" class="h-6 mx-auto">
                     </span>
                 </a>
                 <a href="#" class="hidden group-data-[sidebar=dark]:block group-data-[sidebar=brand]:block group-data-[sidebar=modern]:block">
 
                     <span class="group-data-[sidebar-size=sm]:hidden">
-                        <img src="{{ asset('assets/gambar/logopptsb1.jpg') }}" style="height: 80px;border-radius: 20px;margin-top:4px" alt="" class="h-6 mx-auto">
+                        <img src="" style="height: 80px;border-radius: 20px;margin-top:4px" alt="" class="h-6 mx-auto">
                     </span>
                 </a>
                 <button type="button" class="hidden p-0 float-end" id="vertical-hover">
@@ -370,6 +370,8 @@
 
         <!-- apexcharts js -->
         <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+        <!-- <script src="{{ asset('assets/js/pages/apexcharts-line.init.js') }}"></script> -->
+
 
 
 
@@ -481,7 +483,7 @@
         </script>
         <!-- App js -->
         <script src="{{ asset('assets/js/app.js') }}"></script>
-
+        @stack('scripts')
 </body>
 
 </html>
