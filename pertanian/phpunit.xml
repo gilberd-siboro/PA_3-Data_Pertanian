@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
->
+         executionOrder="random"
+         resolveDependencies="true">
+
+    <coverage>
+        <include>
+            <directory suffix=".php">app</directory>
+        </include>
+        <report>
+            <xml outputDirectory="coverage" />
+        </report>
+    </coverage>
+
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
@@ -12,11 +23,7 @@
             <directory>tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <source>
-        <include>
-            <directory>app</directory>
-        </include>
-    </source>
+
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
@@ -30,4 +37,5 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
+
 </phpunit>
