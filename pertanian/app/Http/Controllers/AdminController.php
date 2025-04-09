@@ -1643,6 +1643,9 @@ class AdminController extends Controller
         return redirect()->route('pasar.index');
     }
 
+
+    # ----- Harga Komoditas -----------
+
     public function harga()
     {
         $userData = session('userData');
@@ -1668,10 +1671,10 @@ class AdminController extends Controller
 
         if ($response) {
             toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
-            return redirect()->route('harga.index');
+            return redirect()->route('Adminharga.index');
         } else {
             toast('Data gagal disimpan!', 'error')->autoClose(3000);
-            return redirect()->route('harga.index');
+            return redirect()->route('Adminharga.index');
         }
     }
 
@@ -1684,12 +1687,13 @@ class AdminController extends Controller
         $harga = $hargaData[0];
 
 
-        return view('admin/pasar/edit', compact('userData', 'pasar', 'komoditas','harga'));
+        return view('admin/harga/edit', compact('userData', 'pasar', 'komoditas','harga'));
     }
 
     public function update_harga(Request $request, $id)
     {
         $Harga = json_encode([
+            'IdHarga' => $id,
             'Harga' => $request->get('harga'),
             'Tanggal' => $request->get('tanggal'),
             'Pasar' => $request->get('pasar'),
@@ -1706,14 +1710,14 @@ class AdminController extends Controller
 
             if ($response) {
                 toast('Data berhasil Di update!', 'success')->autoClose(3000);
-                return redirect()->route('harga.index');
+                return redirect()->route('Adminharga.index');
             } else {
                 toast('Data gagal disimpan!', 'error')->autoClose(3000);
-                return redirect()->route('harga.index');
+                return redirect()->route('Adminharga.index');
             }
         } else {
             toast('Data tidak ditemukan!', 'error')->autoClose(3000);
-            return redirect()->route('harga.index');
+            return redirect()->route('Adminharga.index');
         }
     }
 
@@ -1727,6 +1731,6 @@ class AdminController extends Controller
             toast('Data gagal dihapus!', 'error')->autoClose(3000);
         }
 
-        return redirect()->route('harga.index');
+        return redirect()->route('Adminharga.index');
     }
 }

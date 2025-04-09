@@ -117,4 +117,94 @@ class PenyuluhController extends Controller
     
         return redirect()->route('dataPertanian.index');
     }
+
+    # ----- Harga Komoditas -----------
+
+    public function harga()
+    {
+        $userData = session('userData');
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $komoditas = DB::select('CALL viewAll_Komoditas()');
+        $harga = DB::select('CALL viewAll_hargaKomoditas()');
+        $totalData = count($harga);
+
+        return view('penyuluh/harga/index', compact('totalData', 'userData', 'pasar', 'komoditas','harga'));
+    }
+
+
+    public function create_harga(Request $request)
+    {
+        $Harga = json_encode([
+            'Harga' => $request->get('harga'),
+            'Tanggal' => $request->get('tanggal'),
+            'Pasar' => $request->get('pasar'),
+            'Komoditas' => $request->get('komoditas'),
+        ]);
+
+        $response = DB::statement('CALL insert_harga(:dataHarga)', ['dataHarga' => $Harga]);
+
+        if ($response) {
+            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            return redirect()->route('harga.index');
+        } else {
+            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('harga.index');
+        }
+    }
+
+    public function edit_harga($id)
+    {
+        $userData = session('userData');
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $komoditas = DB::select('CALL viewAll_Komoditas()');
+        $hargaData = DB::select('CALL view_hargaKomoditasById(' . $id . ')');
+        $harga = $hargaData[0];
+
+
+        return view('penyuluh/harga/edit', compact('userData', 'pasar', 'komoditas','harga'));
+    }
+
+    public function update_harga(Request $request, $id)
+    {
+        $Harga = json_encode([
+            'IdHarga' => $id,
+            'Harga' => $request->get('harga'),
+            'Tanggal' => $request->get('tanggal'),
+            'Pasar' => $request->get('pasar'),
+            'Komoditas' => $request->get('komoditas'),
+        ]);
+
+
+
+        $hargaData = DB::select('CALL view_hargaKomoditasById(' . $id . ')');
+        $harga = $hargaData[0];
+
+        if ($harga) {
+            $response = DB::statement('CALL update_harga(:dataHarga)', ['dataHarga' => $Harga]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('harga.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('harga.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('harga.index');
+        }
+    }
+
+    public function delete_harga($id)
+    {
+        $response = DB::statement('CALL delete_harga(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('harga.index');
+    }
 }

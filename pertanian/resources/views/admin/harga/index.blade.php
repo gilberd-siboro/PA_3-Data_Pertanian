@@ -28,7 +28,7 @@
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Nama Komoditas</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
-                        Harga</th>
+                        Harga per Kg</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
                         Tanggal</th>
                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-b border-slate-200 dark:border-zink-500 Name">
@@ -51,7 +51,8 @@
                         {{ $h->nama_komoditas }}
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
-                        {{ $h->harga }}
+                       Rp{{ number_format($h->harga, 0, ',', '.') }}
+
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
                         {{ $h->tanggal }}
@@ -61,8 +62,8 @@
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Action">
                         <div class="flex gap-3">
-                            <a href="{{ route('harga.edit', $h->id_harga) }}" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"><i data-lucide="pencil" class="size-4"></i></a>
-                            <form id="deleteForm_{{ $h->id_harga }}" action="{{ route('harga.delete', $h -> id_harga)}}" method="POST">
+                            <a href="{{ route('Adminharga.edit', $h->id_harga) }}" class="flex items-center justify-center transition-all duration-200 ease-linear rounded-md size-8 edit-item-btn bg-slate-100 text-slate-500 hover:text-custom-500 hover:bg-custom-100 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-custom-500/20 dark:hover:text-custom-500"><i data-lucide="pencil" class="size-4"></i></a>
+                            <form id="deleteForm_{{ $h->id_harga }}" action="{{ route('Adminharga.delete', $h -> id_harga)}}" method="POST">
                                 @csrf
                                 <button type="submit" class="toggle-status flex items-center justify-center text-white transition-all duration-200 ease-linear rounded-md size-8 hover:text-white 
                                                     bg-red-500 ">
@@ -93,21 +94,37 @@
                 @csrf
                 <div class="xl:col-span-12">
                     <label for="lokasi" class="inline-block mb-2 text-base font-medium">Nama Komoditas</label>
-                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="lokasi" id="lokasi">
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="komoditas" id="komoditas">
                         <option value="">Pilih Komoditas</option>
                         @foreach($komoditas as $k)
                         <option value="{{ $k->id_komoditas }}">{{ $k->nama_komoditas }}</option>
                         @endforeach
                     </select>
                 </div>
-                
+
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
-                        <label for="harga" class="inline-block mb-2 text-base font-medium">Harga</label>
-                        <input type="text" id="harga" name="harga" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Harga">
+                        <label for="harga" class="inline-block mb-2 text-base font-medium">Harga per Kg</label>
+                        <div class="flex items-center">
+                            <span class="inline-block px-3 py-2 border ltr:border-r-0 rtl:border-l-0 border-slate-200 dark:border-zink-500 ltr:rounded-l-md rtl:rounded-r-md">Rp</span>
+                            <input type="text" id="inputText" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="harga" class="ltr:rounded-l-none rtl:rounded-r-none form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="00000">
+                        </div>
                     </div>
                 </div>
-
+                <div class="xl:col-span-12">
+                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal
+                    </label>
+                    <input type="text" id="joiningDateInput" name="tanggal" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
+                </div>
+                <div class="xl:col-span-12">
+                    <label for="pasar" class="inline-block mb-2 text-base font-medium">Nama Pasar</label>
+                    <select class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" name="pasar" id="pasar">
+                        <option value="">Pilih Pasar</option>
+                        @foreach($pasar as $p)
+                        <option value="{{ $p->id_pasar }}">{{ $p->nama_pasar }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="flex justify-end gap-2 mt-4">
                     <button type="reset" id="close-modal" data-modal-close="Tambah" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-600 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Cancel</button>
                     <button type="submit" id="addNew" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 ">Tambah

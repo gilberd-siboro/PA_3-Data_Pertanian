@@ -151,11 +151,11 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::post('/pasar/delete/{id}', [AdminController::class, 'delete_pasar'])->name('pasar.delete');
 
     // -- Harga Pasar --
-    Route::get('/harga', [AdminController::class, 'harga'])->name('harga.index');
-    Route::post('/tambah-harga', [AdminController::class, 'create_harga']);
-    Route::get('/harga/edit/{id}', [AdminController::class, 'edit_harga'])->name('harga.edit');
-    Route::post('/harga/update/{id}', [AdminController::class, 'update_harga'])->name('harga.update');
-    Route::post('/harga/delete/{id}', [AdminController::class, 'delete_harga'])->name('harga.delete');
+    Route::get('/admin-harga', [AdminController::class, 'harga'])->name('Adminharga.index');
+    Route::post('/admin-tambah-harga', [AdminController::class, 'create_harga']);
+    Route::get('/admin-harga/edit/{id}', [AdminController::class, 'edit_harga'])->name('Adminharga.edit');
+    Route::post('/admin-harga/update/{id}', [AdminController::class, 'update_harga'])->name('Adminharga.update');
+    Route::post('/admin-harga/delete/{id}', [AdminController::class, 'delete_harga'])->name('Adminharga.delete');
 
 
 
@@ -173,6 +173,16 @@ Route::middleware(['Role:Penyuluh'])->group(function () {
     Route::get('/data-pertanian/edit/{id}', [PenyuluhController::class, 'edit'])->name('dataPertanian.edit');
     Route::post('/data-pertanian/update/{id}', [PenyuluhController::class, 'update'])->name('dataPertanian.update');
     Route::post('/data-pertanian/delete/{id}', [PenyuluhController::class, 'delete'])->name('dataPertanian.delete');
+
+    // -- Harga Pasar --
+    Route::get('/harga', [PenyuluhController::class, 'harga'])->name('harga.index');
+    Route::post('/tambah-harga', [PenyuluhController::class, 'create_harga']);
+    Route::get('/harga/edit/{id}', [PenyuluhController::class, 'edit_harga'])->name('harga.edit');
+    Route::post('/harga/update/{id}', [PenyuluhController::class, 'update_harga'])->name('harga.update');
+    Route::post('/harga/delete/{id}', [PenyuluhController::class, 'delete_harga'])->name('harga.delete');
+
+
+
 });
 
 
