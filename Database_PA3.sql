@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 05/04/2025 12:30:21
+ Date: 10/04/2025 09:32:26
 */
 
 SET NAMES utf8mb4;
@@ -55,7 +55,7 @@ CREATE TABLE `berita`  (
   PRIMARY KEY (`idBerita`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `berita_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of berita
@@ -181,7 +181,7 @@ CREATE TABLE `districts`  (
   PRIMARY KEY (`dis_id`) USING BTREE,
   INDEX `city_id`(`city_id` ASC) USING BTREE,
   CONSTRAINT `districts_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`city_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of districts
@@ -189,6 +189,8 @@ CREATE TABLE `districts`  (
 INSERT INTO `districts` VALUES (1, 'Tarutung', 1);
 INSERT INTO `districts` VALUES (2, 'Muara', 1);
 INSERT INTO `districts` VALUES (3, 'Pahae Julu', 1);
+INSERT INTO `districts` VALUES (4, 'Sipoholon', 1);
+INSERT INTO `districts` VALUES (5, 'Sipahutar', 1);
 
 -- ----------------------------
 -- Table structure for golonganpangkat
@@ -232,11 +234,25 @@ CREATE TABLE `harga_komoditas`  (
   INDEX `id_komoditas`(`id_komoditas` ASC) USING BTREE,
   CONSTRAINT `harga_komoditas_ibfk_1` FOREIGN KEY (`id_pasar`) REFERENCES `pasar` (`id_pasar`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `harga_komoditas_ibfk_2` FOREIGN KEY (`id_komoditas`) REFERENCES `komoditas` (`id_komoditas`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of harga_komoditas
 -- ----------------------------
+INSERT INTO `harga_komoditas` VALUES (1, '10570', '03 Feb, 2025', 1, 3, '2025-04-09 10:37:40', '2025-04-10 09:27:56', 0);
+INSERT INTO `harga_komoditas` VALUES (3, '20000', '09 Mar, 2025', 1, 3, '2025-04-10 08:21:42', '2025-04-10 08:59:32', 0);
+INSERT INTO `harga_komoditas` VALUES (4, '25000', '03 Jan, 2024', 1, 4, '2025-04-10 08:23:19', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (5, '20000', '06 Mar, 2024', 1, 4, '2025-04-10 08:23:46', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (6, '22000', '17 Apr, 2025', 1, 4, '2025-04-10 09:00:24', '2025-04-10 09:00:59', 0);
+INSERT INTO `harga_komoditas` VALUES (7, '15000', '11 Jan, 2024', 1, 4, '2025-04-10 09:06:03', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (8, '18000', '07 Mar, 2024', 1, 4, '2025-04-10 09:07:14', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (9, '24000', '24 Apr, 2025', 1, 4, '2025-04-10 09:07:59', '2025-04-10 09:08:24', 0);
+INSERT INTO `harga_komoditas` VALUES (10, '17000', '11 Feb, 2025', 1, 3, '2025-04-10 09:09:28', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (11, '13000', '12 Mar, 2025', 1, 3, '2025-04-10 09:10:14', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (12, '10000', '10 Apr, 2025', 2, 3, '2025-04-10 09:15:12', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (13, '15000', '11 Apr, 2025', 2, 3, '2025-04-10 09:15:38', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (14, '15000', '14 May, 2025', 2, 3, '2025-04-10 09:16:01', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (15, '12000', '28 May, 2025', 2, 3, '2025-04-10 09:16:17', NULL, 0);
 
 -- ----------------------------
 -- Table structure for jabatan
@@ -459,11 +475,13 @@ CREATE TABLE `pasar`  (
   PRIMARY KEY (`id_pasar`) USING BTREE,
   INDEX `subdis_id`(`subdis_id` ASC) USING BTREE,
   CONSTRAINT `pasar_ibfk_1` FOREIGN KEY (`subdis_id`) REFERENCES `subdistricts` (`subdis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pasar
 -- ----------------------------
+INSERT INTO `pasar` VALUES (1, 'Pasar Sipoholon', 18, '2025-04-07 19:28:15', NULL, 0);
+INSERT INTO `pasar` VALUES (2, 'Pasar Baru Sipahutar', 19, '2025-04-10 09:14:37', NULL, 0);
 
 -- ----------------------------
 -- Table structure for pegawai
@@ -557,7 +575,7 @@ CREATE TABLE `subdistricts`  (
   PRIMARY KEY (`subdis_id`) USING BTREE,
   INDEX `dis_id`(`dis_id` ASC) USING BTREE,
   CONSTRAINT `subdistricts_ibfk_1` FOREIGN KEY (`dis_id`) REFERENCES `districts` (`dis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of subdistricts
@@ -579,6 +597,8 @@ INSERT INTO `subdistricts` VALUES (14, 'Silali Toruan', 2);
 INSERT INTO `subdistricts` VALUES (15, 'Silando', 2);
 INSERT INTO `subdistricts` VALUES (16, 'Batu Binumbun', 2);
 INSERT INTO `subdistricts` VALUES (17, 'Simanampang', 3);
+INSERT INTO `subdistricts` VALUES (18, 'Hutaraja Simanungkalit', 4);
+INSERT INTO `subdistricts` VALUES (19, 'Sipahutar I', 5);
 
 -- ----------------------------
 -- Table structure for user_roles
@@ -709,6 +729,23 @@ BEGIN#Routine body goes here...
 	golonganpangkat.updatedAt = NOW() 
 	WHERE
 		golonganpangkat.idGolonganPangkat = idGolonganPangkat;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for delete_harga
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `delete_harga`;
+delimiter ;;
+CREATE PROCEDURE `delete_harga`(IN idHarga JSON)
+BEGIN#Routine body goes here...
+	UPDATE harga_komoditas 
+	SET harga_komoditas.isDeleted= 1,
+	harga_komoditas.updated_at = NOW() 
+	WHERE
+		harga_komoditas.id_harga = idHarga;
 	
 END
 ;;
@@ -899,6 +936,36 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for get_harga_komoditas
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `get_harga_komoditas`;
+delimiter ;;
+CREATE PROCEDURE `get_harga_komoditas`(IN idKomoditas INT,
+    IN idPasar INT)
+BEGIN
+    SELECT
+        STR_TO_DATE(harga_komoditas.tanggal, '%d %b, %Y') AS tanggal,
+        MAX(harga_komoditas.harga) AS harga_tertinggi,
+        MIN(harga_komoditas.harga) AS harga_terendah
+    FROM
+        harga_komoditas
+        JOIN komoditas ON harga_komoditas.id_komoditas = komoditas.id_komoditas
+        JOIN pasar ON harga_komoditas.id_pasar = pasar.id_pasar
+    WHERE
+        harga_komoditas.isDeleted = 0
+        AND komoditas.is_deleted = 0
+        AND pasar.isDeleted = 0
+        AND (idKomoditas IS NULL OR harga_komoditas.id_komoditas = idKomoditas)
+        AND (idPasar IS NULL OR harga_komoditas.id_pasar = idPasar)
+    GROUP BY
+        STR_TO_DATE(harga_komoditas.tanggal, '%d %b, %Y')
+    ORDER BY
+        STR_TO_DATE(harga_komoditas.tanggal, '%d %b, %Y') ASC;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for insert_bidang
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `insert_bidang`;
@@ -991,6 +1058,26 @@ BEGIN
     -- Memasukkan data ke tabel
     INSERT INTO golonganpangkat (golongan, pangkat,  keterangan, createdAt)
     VALUES (@golongan, @pangkat, @keterangan, NOW());
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for insert_harga
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `insert_harga`;
+delimiter ;;
+CREATE PROCEDURE `insert_harga`(IN dataHarga JSON)
+BEGIN
+	#Routine body goes here...
+	SET @harga = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Harga'));
+	SET @tanggal = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Tanggal'));
+	SET @nama_pasar = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Pasar'));
+	SET @komoditas = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Komoditas'));
+
+
+	INSERT INTO harga_komoditas(harga_komoditas.harga, harga_komoditas.tanggal, harga_komoditas.id_pasar, harga_komoditas.id_komoditas ,harga_komoditas.created_at)
+	VALUES(@harga, @tanggal,@nama_pasar, @komoditas, NOW());
 END
 ;;
 delimiter ;
@@ -1330,6 +1417,26 @@ BEGIN
 	
 	UPDATE golonganpangkat SET golonganpangkat.golongan=@golongan, golonganpangkat.pangkat=@pangkat, golonganpangkat.keterangan=@keterangan, golonganpangkat.updatedAt=NOW()
 	WHERE golonganpangkat.idGolonganPangkat=@idGolonganPangkat;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for update_harga
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `update_harga`;
+delimiter ;;
+CREATE PROCEDURE `update_harga`(IN dataHarga JSON)
+BEGIN
+	#Routine body goes here...
+	SET @idHarga = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.IdHarga'));
+	SET @harga = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Harga'));
+	SET @tanggal = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Tanggal'));
+	SET @nama_pasar = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Pasar'));
+	SET @komoditas = JSON_UNQUOTE(JSON_EXTRACT(dataHarga,'$.Komoditas'));
+	
+		UPDATE harga_komoditas SET harga_komoditas.harga=@harga,  harga_komoditas.tanggal=@tanggal, harga_komoditas.id_pasar=@nama_pasar, harga_komoditas.id_komoditas=@komoditas, harga_komoditas.updated_at=NOW()
+	WHERE harga_komoditas.id_harga=@idHarga;
 END
 ;;
 delimiter ;
@@ -1699,6 +1806,35 @@ BEGIN#Routine body goes here...
 	WHERE
 		golonganpangkat.isDeleted = 0;
 	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for viewAll_hargaKomoditas
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `viewAll_hargaKomoditas`;
+delimiter ;;
+CREATE PROCEDURE `viewAll_hargaKomoditas`()
+BEGIN
+	#Routine body goes here...
+SELECT
+	harga_komoditas.id_harga, 
+	harga_komoditas.harga, 
+	harga_komoditas.tanggal, 
+	komoditas.nama_komoditas, 
+	pasar.nama_pasar
+FROM
+	harga_komoditas
+	INNER JOIN
+	pasar
+	ON 
+		harga_komoditas.id_pasar = pasar.id_pasar
+	INNER JOIN
+	komoditas
+	ON 
+		harga_komoditas.id_komoditas = komoditas.id_komoditas
+		WHERE harga_komoditas.isDeleted = 0;
 END
 ;;
 delimiter ;
@@ -2283,6 +2419,37 @@ BEGIN
 	
 	WHERE
 		golonganpangkat.idGolonganPangkat = id;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_hargaKomoditasById
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_hargaKomoditasById`;
+delimiter ;;
+CREATE PROCEDURE `view_hargaKomoditasById`(IN id INT)
+BEGIN
+SELECT
+	harga_komoditas.id_harga, 
+	harga_komoditas.harga, 
+	harga_komoditas.tanggal,
+	harga_komoditas.id_komoditas,
+	harga_komoditas.id_pasar, 
+	komoditas.nama_komoditas, 
+	pasar.nama_pasar
+FROM
+	harga_komoditas
+	INNER JOIN
+	pasar
+	ON 
+		harga_komoditas.id_pasar = pasar.id_pasar
+	INNER JOIN
+	komoditas
+	ON 
+		harga_komoditas.id_komoditas = komoditas.id_komoditas
+		WHERE harga_komoditas.id_harga = id;
 	
 END
 ;;

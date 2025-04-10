@@ -16,9 +16,50 @@ class PenyuluhController extends Controller
         $totalKel = count($kelompokTani);
         $komoditas = DB::select('CALL viewAll_Komoditas()');
         $totalKom = count($komoditas);
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $totalPsr = count($pasar);
 
-        return view('penyuluh/index', compact('userData','totalPetani','totalKel','totalKom'));
+        return view('penyuluh/index', compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr', 'komoditas', 'pasar'));
     }
+
+    public function getHargaKomoditasChart(Request $request)
+    {
+        $idKomoditas = $request->input('id_komoditas');
+        $idPasar = $request->input('id_pasar');
+
+        $results = DB::select('CALL get_harga_komoditas(?, ?)', [$idKomoditas, $idPasar]);
+
+        $data = [];
+
+        foreach ($results as $row) {
+            // Karena tanggal dari stored procedure sudah dalam format 'Y-m-d'
+            if (!$row->tanggal) continue;
+
+            $dateObj = new \DateTime($row->tanggal);
+            $tanggal = $dateObj->format('M Y'); // Contoh: 'Feb 2025'
+
+            if (!isset($data[$tanggal])) {
+                $data[$tanggal] = [
+                    'tanggal' => $tanggal,
+                    'high' => $row->harga_tertinggi,
+                    'low' => $row->harga_terendah,
+                ];
+            } else {
+                $data[$tanggal]['high'] = max($data[$tanggal]['high'], $row->harga_tertinggi);
+                $data[$tanggal]['low'] = min($data[$tanggal]['low'], $row->harga_terendah);
+            }
+        }
+
+        // Siapkan response sesuai kebutuhan chart di JS
+        $response = [
+            'categories' => array_keys($data),
+            'high' => array_column($data, 'high'),
+            'low' => array_column($data, 'low'),
+        ];
+
+        return response()->json($response);
+    }
+
     public function data_pertanian()
     {
         $userData = session('userData');
@@ -29,7 +70,7 @@ class PenyuluhController extends Controller
         $dataPertanian = DB::select('CALL viewAll_dataPertanian()');
         $totalData = count($dataPertanian); // Menghitung jumlah data
 
-        return view('penyuluh/data/index', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian','totalData'));
+        return view('penyuluh/data/index', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian', 'totalData'));
     }
 
     public function edit($id)
@@ -114,7 +155,7 @@ class PenyuluhController extends Controller
         } else {
             toast('Data gagal dihapus!', 'error')->autoClose(3000);
         }
-    
+
         return redirect()->route('dataPertanian.index');
     }
 
@@ -128,7 +169,7 @@ class PenyuluhController extends Controller
         $harga = DB::select('CALL viewAll_hargaKomoditas()');
         $totalData = count($harga);
 
-        return view('penyuluh/harga/index', compact('totalData', 'userData', 'pasar', 'komoditas','harga'));
+        return view('penyuluh/harga/index', compact('totalData', 'userData', 'pasar', 'komoditas', 'harga'));
     }
 
 
@@ -161,7 +202,7 @@ class PenyuluhController extends Controller
         $harga = $hargaData[0];
 
 
-        return view('penyuluh/harga/edit', compact('userData', 'pasar', 'komoditas','harga'));
+        return view('penyuluh/harga/edit', compact('userData', 'pasar', 'komoditas', 'harga'));
     }
 
     public function update_harga(Request $request, $id)

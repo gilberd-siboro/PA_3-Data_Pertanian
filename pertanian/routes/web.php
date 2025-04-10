@@ -26,10 +26,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['Role:Admin'])->group(function () {
     //  ------------------- Admin Utama ------------------------------------
     Route::get('/admin-dashboard', [AdminController::class, 'admin'])->name('admin.dashboard');
+    Route::get('/getHargaKomoditasChart', [AdminController::class, 'getHargaKomoditasChart']);
 
     // -- Pengguna --
     Route::get('/admin-pengguna', [AdminController::class, 'pengguna'])->name('pengguna.index');
-    Route::get('/getHargaKomoditasChart', [AdminController::class, 'getHargaKomoditasChart']);
     Route::post('/tambah-pengguna', [AdminController::class, 'create_pengguna']);
     Route::get('/admin-pengguna/edit/{id}', [AdminController::class, 'edit_pengguna'])->name('pengguna.edit');
     Route::post('/admin-pengguna/update/{id}', [AdminController::class, 'update_pengguna'])->name('pengguna.update');
@@ -164,7 +164,7 @@ Route::middleware(['Role:Admin'])->group(function () {
 Route::middleware(['Role:Penyuluh'])->group(function () {
 
     Route::get('/penyuluh-dashboard', [PenyuluhController::class, 'penyuluh'])->name('penyuluh.dashboard');
-
+    Route::get('/penyuluh-getHargaKomoditasChart', [PenyuluhController::class, 'getHargaKomoditasChart']);
     // -- Data Pertanian --
     Route::get('/data-pertanian', [PenyuluhController::class, 'data_pertanian'])->name('dataPertanian.index');
     Route::post('/tambah-data-pertanian', [PenyuluhController::class, 'create_data_pertanian']);

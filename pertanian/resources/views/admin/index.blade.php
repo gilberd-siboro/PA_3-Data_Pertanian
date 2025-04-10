@@ -32,8 +32,6 @@
     <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
         <div class="card-body">
             <h6 class="mb-4 text-15">Harga Komoditas</h6>
-
-            <!-- Filter Dropdowns -->
             <div class="mb-4 flex gap-4">
                 <select id="komoditasSelect" class="form-select w-full" name="id_komoditas">
                     <option value="">Pilih Komoditas</option>
@@ -370,13 +368,12 @@
         let chart;
 
         function loadChartData(idKomoditas = '', idPasar = '') {
-            fetch(`/getHargaKomoditasChart?idKomoditas=${idKomoditas}&idPasar=${idPasar}`)
+            fetch(`/getHargaKomoditasChart?id_komoditas=${idKomoditas}&id_pasar=${idPasar}`)
                 .then(response => response.json())
                 .then(data => {
-                    const categories = data.map(item => item.tanggal);
-                    const highSeries = data.map(item => item.high);
-                    const lowSeries = data.map(item => item.low);
-
+                    const categories = data.categories;
+                    const highSeries = data.high;
+                    const lowSeries = data.low;
                     const dataLabelOptions = {
                         series: [{
                                 name: "Harga Tertinggi",
@@ -404,7 +401,10 @@
                         },
                         colors: getChartColorsArray("lineWithDataLabel"),
                         dataLabels: {
-                            enabled: true
+                            enabled: true,
+                            formatter: function(val) {
+                                return 'Rp' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                            }
                         },
                         stroke: {
                             curve: 'smooth'
@@ -415,7 +415,7 @@
                         xaxis: {
                             categories: categories,
                             title: {
-                                text: 'Tanggal'
+                                text: 'Bulan'
                             }
                         },
                         yaxis: {
@@ -423,7 +423,19 @@
                                 text: 'Harga (Rp)'
                             },
                             min: Math.min(...lowSeries) - 5,
-                            max: Math.max(...highSeries) + 5
+                            max: Math.max(...highSeries) + 5,
+                            labels: {
+                                formatter: function(val) {
+                                    return 'Rp' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                }
+                            }
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function(val) {
+                                    return 'Rp' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                }
+                            }
                         },
                         legend: {
                             position: 'top',
@@ -457,7 +469,7 @@
         });
 
         // Load awal tanpa filter
-        loadChartData();
+        loadChartData()
     });
 </script>
 @endpush

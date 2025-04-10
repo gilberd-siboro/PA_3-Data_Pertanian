@@ -51,7 +51,7 @@
                         {{ $h->nama_komoditas }}
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
-                       Rp{{ number_format($h->harga, 0, ',', '.') }}
+                        Rp{{ number_format($h->harga, 0, ',', '.') }}
 
                     </td>
                     <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 Email">
@@ -90,7 +90,7 @@
         </div>
         <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
 
-            <form class="create-form" id="create-form" action="/tambah-harga" method="POST">
+            <form class="create-form" id="create-form" action="/admin-tambah-harga" method="POST">
                 @csrf
                 <div class="xl:col-span-12">
                     <label for="lokasi" class="inline-block mb-2 text-base font-medium">Nama Komoditas</label>

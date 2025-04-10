@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class AdminController extends Controller
 {
@@ -13,7 +15,6 @@ class AdminController extends Controller
     //  --------------------- MENU -----------------------------
     public function admin()
     {
-        $userData = session('userData');
         $userData = session('userData');
         $petani = DB::select('CALL viewAll_petani()');
         $totalPetani = count($petani);
@@ -24,7 +25,7 @@ class AdminController extends Controller
         $pasar = DB::select('CALL viewAll_pasar()');
         $totalPsr = count($pasar);
 
-        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr','komoditas','pasar'));
+        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr', 'komoditas', 'pasar'));
     }
 
     public function getHargaKomoditasChart(Request $request)
@@ -37,20 +38,25 @@ class AdminController extends Controller
         $data = [];
 
         foreach ($results as $row) {
-            $tanggal = date('M', strtotime($row->tanggal)); // Format jadi 'Jan', 'Feb', dst
+            // Karena tanggal dari stored procedure sudah dalam format 'Y-m-d'
+            if (!$row->tanggal) continue;
+
+            $dateObj = new \DateTime($row->tanggal);
+            $tanggal = $dateObj->format('M Y'); // Contoh: 'Feb 2025'
 
             if (!isset($data[$tanggal])) {
                 $data[$tanggal] = [
                     'tanggal' => $tanggal,
-                    'high' => $row->harga,
-                    'low' => $row->harga,
+                    'high' => $row->harga_tertinggi,
+                    'low' => $row->harga_terendah,
                 ];
             } else {
-                $data[$tanggal]['high'] = max($data[$tanggal]['high'], $row->harga);
-                $data[$tanggal]['low'] = min($data[$tanggal]['low'], $row->harga);
+                $data[$tanggal]['high'] = max($data[$tanggal]['high'], $row->harga_tertinggi);
+                $data[$tanggal]['low'] = min($data[$tanggal]['low'], $row->harga_terendah);
             }
         }
 
+        // Siapkan response sesuai kebutuhan chart di JS
         $response = [
             'categories' => array_keys($data),
             'high' => array_column($data, 'high'),
@@ -59,6 +65,41 @@ class AdminController extends Controller
 
         return response()->json($response);
     }
+
+    // public function getHargaKomoditasChart(Request $request)
+    // {
+    //     try {
+    //         $idKomoditas = $request->input('id_komoditas');
+    //         $idPasar = $request->input('id_pasar');
+
+    //         $results = DB::select('CALL get_harga_komoditas(?, ?)', [$idKomoditas, $idPasar]);
+
+    //         foreach ($results as $row) {
+    //             \Log::info('Row data:', (array)$row);
+
+    //             $rawTanggal = $row->tanggal;
+
+    //             if ($rawTanggal === null) {
+    //                 \Log::error('Kolom tanggal bernilai NULL');
+    //                 continue;
+    //             }
+
+    //             $dateObj = \DateTime::createFromFormat('d M, Y', $rawTanggal);
+
+    //             if (!$dateObj) {
+    //                 \Log::error('Tanggal tidak bisa di-parse: ' . $rawTanggal);
+    //             } else {
+    //                 \Log::info('Tanggal berhasil di-parse: ' . $dateObj->format('Y-m-d'));
+    //             }
+    //         }
+
+    //         return response()->json(['message' => 'Log berhasil, cek laravel.log']);
+    //     } catch (\Exception $e) {
+    //         \Log::error('Gagal memuat data chart: ' . $e->getMessage());
+    //         return response()->json(['error' => 'Terjadi kesalahan saat mengambil data'], 500);
+    //     }
+    // }
+
 
     // ------ PENGGUNA -------
 
