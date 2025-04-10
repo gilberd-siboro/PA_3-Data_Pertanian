@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class AdminController extends Controller
 {
@@ -13,7 +15,6 @@ class AdminController extends Controller
     //  --------------------- MENU -----------------------------
     public function admin()
     {
-        $userData = session('userData');
         $userData = session('userData');
         $petani = DB::select('CALL viewAll_petani()');
         $totalPetani = count($petani);
@@ -24,8 +25,81 @@ class AdminController extends Controller
         $pasar = DB::select('CALL viewAll_pasar()');
         $totalPsr = count($pasar);
 
-        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr'));
+        return view('admin/index',  compact('userData', 'totalPetani', 'totalKel', 'totalKom', 'totalPsr', 'komoditas', 'pasar'));
     }
+
+    public function getHargaKomoditasChart(Request $request)
+    {
+        $idKomoditas = $request->input('id_komoditas');
+        $idPasar = $request->input('id_pasar');
+
+        $results = DB::select('CALL get_harga_komoditas(?, ?)', [$idKomoditas, $idPasar]);
+
+        $data = [];
+
+        foreach ($results as $row) {
+            // Karena tanggal dari stored procedure sudah dalam format 'Y-m-d'
+            if (!$row->tanggal) continue;
+
+            $dateObj = new \DateTime($row->tanggal);
+            $tanggal = $dateObj->format('M Y'); // Contoh: 'Feb 2025'
+
+            if (!isset($data[$tanggal])) {
+                $data[$tanggal] = [
+                    'tanggal' => $tanggal,
+                    'high' => $row->harga_tertinggi,
+                    'low' => $row->harga_terendah,
+                ];
+            } else {
+                $data[$tanggal]['high'] = max($data[$tanggal]['high'], $row->harga_tertinggi);
+                $data[$tanggal]['low'] = min($data[$tanggal]['low'], $row->harga_terendah);
+            }
+        }
+
+        // Siapkan response sesuai kebutuhan chart di JS
+        $response = [
+            'categories' => array_keys($data),
+            'high' => array_column($data, 'high'),
+            'low' => array_column($data, 'low'),
+        ];
+
+        return response()->json($response);
+    }
+
+    // public function getHargaKomoditasChart(Request $request)
+    // {
+    //     try {
+    //         $idKomoditas = $request->input('id_komoditas');
+    //         $idPasar = $request->input('id_pasar');
+
+    //         $results = DB::select('CALL get_harga_komoditas(?, ?)', [$idKomoditas, $idPasar]);
+
+    //         foreach ($results as $row) {
+    //             \Log::info('Row data:', (array)$row);
+
+    //             $rawTanggal = $row->tanggal;
+
+    //             if ($rawTanggal === null) {
+    //                 \Log::error('Kolom tanggal bernilai NULL');
+    //                 continue;
+    //             }
+
+    //             $dateObj = \DateTime::createFromFormat('d M, Y', $rawTanggal);
+
+    //             if (!$dateObj) {
+    //                 \Log::error('Tanggal tidak bisa di-parse: ' . $rawTanggal);
+    //             } else {
+    //                 \Log::info('Tanggal berhasil di-parse: ' . $dateObj->format('Y-m-d'));
+    //             }
+    //         }
+
+    //         return response()->json(['message' => 'Log berhasil, cek laravel.log']);
+    //     } catch (\Exception $e) {
+    //         \Log::error('Gagal memuat data chart: ' . $e->getMessage());
+    //         return response()->json(['error' => 'Terjadi kesalahan saat mengambil data'], 500);
+    //     }
+    // }
+
 
     // ------ PENGGUNA -------
 
@@ -1641,5 +1715,96 @@ class AdminController extends Controller
         }
 
         return redirect()->route('pasar.index');
+    }
+
+
+    # ----- Harga Komoditas -----------
+
+    public function harga()
+    {
+        $userData = session('userData');
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $komoditas = DB::select('CALL viewAll_Komoditas()');
+        $harga = DB::select('CALL viewAll_hargaKomoditas()');
+        $totalData = count($harga);
+
+        return view('admin/harga/index', compact('totalData', 'userData', 'pasar', 'komoditas', 'harga'));
+    }
+
+
+    public function create_harga(Request $request)
+    {
+        $Harga = json_encode([
+            'Harga' => $request->get('harga'),
+            'Tanggal' => $request->get('tanggal'),
+            'Pasar' => $request->get('pasar'),
+            'Komoditas' => $request->get('komoditas'),
+        ]);
+
+        $response = DB::statement('CALL insert_harga(:dataHarga)', ['dataHarga' => $Harga]);
+
+        if ($response) {
+            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            return redirect()->route('Adminharga.index');
+        } else {
+            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('Adminharga.index');
+        }
+    }
+
+    public function edit_harga($id)
+    {
+        $userData = session('userData');
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $komoditas = DB::select('CALL viewAll_Komoditas()');
+        $hargaData = DB::select('CALL view_hargaKomoditasById(' . $id . ')');
+        $harga = $hargaData[0];
+
+
+        return view('admin/harga/edit', compact('userData', 'pasar', 'komoditas', 'harga'));
+    }
+
+    public function update_harga(Request $request, $id)
+    {
+        $Harga = json_encode([
+            'IdHarga' => $id,
+            'Harga' => $request->get('harga'),
+            'Tanggal' => $request->get('tanggal'),
+            'Pasar' => $request->get('pasar'),
+            'Komoditas' => $request->get('komoditas'),
+        ]);
+
+
+
+        $hargaData = DB::select('CALL view_hargaKomoditasById(' . $id . ')');
+        $harga = $hargaData[0];
+
+        if ($harga) {
+            $response = DB::statement('CALL update_harga(:dataHarga)', ['dataHarga' => $Harga]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('Adminharga.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('Adminharga.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('Adminharga.index');
+        }
+    }
+
+    public function delete_harga($id)
+    {
+        $response = DB::statement('CALL delete_harga(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('Adminharga.index');
     }
 }

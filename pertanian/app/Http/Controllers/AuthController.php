@@ -19,7 +19,7 @@ class AuthController extends Controller
         request()->validate(
             [
                 'username' => 'required|string|max:16',
-                'password' => 'required',
+                'password' => ['required', 'regex:/^[a-zA-Z0-9]+$/'],
             ]
         );
 
