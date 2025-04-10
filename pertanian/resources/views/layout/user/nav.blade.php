@@ -50,11 +50,11 @@
 
     <footer class="ftco-footer bg-bottom ftco-no-pt" style="background-image: url(images/footer.jpg);">
             <div class="row mb-5">
-                <div class="col-md-4 pt-5 border-left">
+                <div class="col-md-4 pt-5">
                     <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
-                        <h2 class="ftco-heading-2">Hubungi Kami</h2>
+                        <h2 class="ftco-heading-2">Dinas Pertanian</h2>
                         <ul class="list-unstyled">
-                            <li><span class="py-2 d-block">Kabupaten Tapanuli Utara/span></li>
+                            <li><span class="py-2 d-block">Kabupaten Tapanuli Utara</span></li>
                             <li><span class="py-2 d-block">Jl. SM. Simanjuntak No. 1 Tarutung</span></li>
                             <li><span class="py-2 d-block">Tapanuli Utara, Sumatera Utara</span></li>
                             <li><span class="py-2 d-block">Kode Pos 22411</span></li>
@@ -62,22 +62,33 @@
                     </div>
                 </div>
     
-                <!-- Kolom Hubungi Kami -->
-                <div class="col-md-4 pt-5 border-left">
-                    <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
-                        <h2 class="ftco-heading-2">Hubungi Kami</h2>
-                        <ul class="list-unstyled">
-                            <li><span class="py-2 d-block">Jl. SM. Simanjuntak No. 1 Tarutung</span></li>
-                            <li><span class="py-2 d-block">Tapanuli Utara, Sumatera Utara</span></li>
-                            <li><span class="py-2 d-block">Kode Pos 22411</span></li>
-                            <li><span class="py-2 d-block">No Telephone: XXXX-XXXX-XXX</span></li>
-                            <li><span class="py-2 d-block">Email: dinaspertaniantapanuli@gmail.com</a></li>
-                        </ul>
-                    </div>
+             <!-- Kolom Hubungi Kami -->
+<div class="col-md-4 pt-5">
+    <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
+        <h2 class="ftco-heading-2">Hubungi Kami</h2>
+        <ul class="list-unstyled">
+            <li class="py-2">
+                <span><i class="fa fa-map-marker mr-2"></i>Alamat</span>
+                <div class="ml-1 pl-1">
+                    <div>Jl. SM. Simanjuntak No. 1 Tarutung</div>
+                    <div>Tapanuli Utara, Sumatera Utara</div>
+                    <div>Kode Pos 22411</div>
                 </div>
+            </li>
+            <li class="py-2">
+                <span><i class="fa fa-phone mr-2"></i>No Telephone :</span>
+                <span class="ml-1">XXXX-XXXX-XXX</span>
+            </li>
+            <li class="py-2">
+                <span><i class="fa fa-envelope mr-2"></i>Email :</span>
+                <span class="ml-1">dinaspertaniantapanuli@gmail.com</span>
+            </li>
+        </ul>
+    </div>
+</div>
     
                 <!-- Kolom Sosial Media -->
-                <div class="col-md-4 pt-5 border-left">
+                <div class="col-md-4 pt-5">
                     <div class="ftco-footer-widget pt-md-5 mb-4">
                         <h2 class="ftco-heading-2">Ikuti Sosmed Kami</h2>
                         <ul class="ftco-footer-social list-unstyled">
@@ -85,10 +96,17 @@
                             <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
                             <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
                         </ul>
-                    </div>
+                    </div>   
+                    <div class="col-md-4 pt-5">
+                        <img src="images/Logo Pemkab Tapanuli Utara.png" alt="Logo Pemkab" 
+                        style="height: 150px; width: 225px;">
+                </div> 
                 </div>
             </div>
-    
+            <!-- Logo -->
+          
+
+           
             <!-- Copyright -->
             <div class="row">
                 <div class="col-md-12 text-center">
