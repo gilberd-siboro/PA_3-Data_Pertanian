@@ -36,88 +36,93 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item {{ \Request::is('/') ? 'active' : '' }}"><a href="/" class="nav-link">Beranda</a></li>
-                    <li class="nav-item {{ \Request::is('tentang') ? 'active' : '' }}"><a href="/tentang" class="nav-link">Tentang</a></li>
-                    <li class="nav-item {{ \Request::is('komoditas-kecamatan') ? 'active' : '' }}"><a href="/komoditas-kecamatan" class="nav-link">Komoditas Kecamatan</a></li>
-                    <li class="nav-item {{ \Request::is('persebaran-komoditas') ? 'active' : '' }}"><a href="/persebaran-komoditas" class="nav-link">Persebaran Komoditas</a></li>
+                    <li class="nav-item {{ \Request::is('/') ? 'active' : '' }}">
+                        <a href="/" class="nav-link">Beranda</a>
+                    </li>
+                    <li class="nav-item {{ \Request::is('tentang') ? 'active' : '' }}">
+                        <a href="/tentang" class="nav-link">Tentang</a>
+                    </li>
+
+                    <!-- Dropdown item -->
+                    <li class="nav-item dropdown {{ \Request::is('komoditas-kecamatan') || \Request::is('persebaran-komoditas') ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Data Pertanian
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item {{ \Request::is('komoditas-kecamatan') ? 'active' : '' }}" href="/komoditas-kecamatan">Komoditas Kecamatan</a>
+                            <a class="dropdown-item {{ \Request::is('persebaran-komoditas') ? 'active' : '' }}" href="/persebaran-komoditas">Persebaran Komoditas</a>
+                            <a class="dropdown-item {{ \Request::is('harga-komoditas') ? 'active' : '' }}" href="/harga-komoditas">Harga Komoditas</a>
+                            <a class="dropdown-item {{ \Request::is('tren-harga') ? 'active' : '' }}" href="/tren-harga">Tren Harga</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
+
         </div>
     </nav>
     <!-- END nav -->
     @yield('content')
 
-
-    <footer class="ftco-footer bg-bottom ftco-no-pt" style="background-image: url(images/footer.jpg);">
+    <footer class="ftco-footer bg-bottom ftco-no-pt" style="background-image: url(images/bg.jpg);">
+        <div class="container">
             <div class="row mb-5">
-                <div class="col-md-4 pt-5">
-                    <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
-                        <h2 class="ftco-heading-2">Dinas Pertanian</h2>
-                        <ul class="list-unstyled">
-                            <li><span class="py-2 d-block">Kabupaten Tapanuli Utara</span></li>
-                            <li><span class="py-2 d-block">Jl. SM. Simanjuntak No. 1 Tarutung</span></li>
-                            <li><span class="py-2 d-block">Tapanuli Utara, Sumatera Utara</span></li>
-                            <li><span class="py-2 d-block">Kode Pos 22411</span></li>
-                        </ul>
-                    </div>
-                </div>
-    
-             <!-- Kolom Hubungi Kami -->
-<div class="col-md-4 pt-5">
-    <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
-        <h2 class="ftco-heading-2">Hubungi Kami</h2>
-        <ul class="list-unstyled">
-            <li class="py-2">
-                <span><i class="fa fa-map-marker mr-2"></i>Alamat</span>
-                <div class="ml-1 pl-1">
-                    <div>Jl. SM. Simanjuntak No. 1 Tarutung</div>
-                    <div>Tapanuli Utara, Sumatera Utara</div>
-                    <div>Kode Pos 22411</div>
-                </div>
-            </li>
-            <li class="py-2">
-                <span><i class="fa fa-phone mr-2"></i>No Telephone :</span>
-                <span class="ml-1">XXXX-XXXX-XXX</span>
-            </li>
-            <li class="py-2">
-                <span><i class="fa fa-envelope mr-2"></i>Email :</span>
-                <span class="ml-1">dinaspertaniantapanuli@gmail.com</span>
-            </li>
-        </ul>
-    </div>
-</div>
-    
-                <!-- Kolom Sosial Media -->
-                <div class="col-md-4 pt-5">
+                <!-- <div class="col-md pt-5">
                     <div class="ftco-footer-widget pt-md-5 mb-4">
-                        <h2 class="ftco-heading-2">Ikuti Sosmed Kami</h2>
-                        <ul class="ftco-footer-social list-unstyled">
+                        <h2 class="ftco-heading-2">About</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
                             <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
                             <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
                             <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
                         </ul>
-                    </div>   
-                    <div class="col-md-4 pt-5">
-                        <img src="images/Logo Pemkab Tapanuli Utara.png" alt="Logo Pemkab" 
-                        style="height: 150px; width: 225px;">
-                </div> 
+                    </div>
+                </div> -->
+                <div class="col-md pt-5 border-left">
+                    <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Informasi</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="py-2 d-block">Beranda</a></li>
+                            <li><a href="#" class="py-2 d-block">Tentang</a></li>
+                            <li><a href="#" class="py-2 d-block">Komoditas Kecamatan</a></li>
+                            <li><a href="#" class="py-2 d-block">Persebaran Komoditas</a></li>
+                            <li><a href="#" class="py-2 d-block">Harga Komoditas</a></li>
+                            <li><a href="#" class="py-2 d-block">Tren Harga Komoditas</a></li>
+                            <li><a href="#" class="py-2 d-block">Berita</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <!-- Logo -->
-          
+                <div class="col-md pt-5 border-left">
+                    <div class="ftco-footer-widget pt-md-5 mb-4">
+                        <h2 class="ftco-heading-2">Hubungi Kami</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon fa fa-map-marker"></span><span class="text">Dinas Pertanian Kabupaten Tapanuli Utara
+                                        Jl. SM. Simanjuntak No. 1 Tarutung
+                                        Tapanuli Utara, Sumatera Utara
+                                        Kode Pos 22411</span></li>
+                                <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">
+                                            081263764112</span></a></li>
+                                <li><a href="#"><span class="icon fa fa-paper-plane"></span><span class="text">dinaspertaniantaput@gmail.com</span></a></li>
+                            </ul>
 
-           
-            <!-- Copyright -->
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p class="mb-0">
-                        <li><span class="py-2 d-block">Copyright © 2025 Kab. Tapanuli Utara bekerja sama dengan E-GOV Center IT Del. All Rights Reserved.</span></li>
-                    </p>
+                        </div>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
+                            <li class="ftco-animate"><a href="https://www.youtube.com/channel/UCPjDJcWjzuoS8RfYuqb9C8w"><span class="fa fa-youtube"></span></a></li>
+                            <li class="ftco-animate"><a href="https://web.facebook.com/dinaspertanian.tapanuliutara"><span class="fa fa-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="https://www.instagram.com/dinaspertaniantaput/"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md pt-5 border-left">
+                    <div class="ftco-footer-widget pt-md-5 mb-4">
+                        <h2 class="ftco-heading-2">Dinas Pertanian Tapanuli Utara</h2>
+
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
-    
+
 
 
     <!-- loader -->

@@ -15,7 +15,10 @@ Route::get('/komoditas-kecamatan', [UserController::class, 'komoditas_kecamatan'
 Route::get('/get-komoditas-kecamatan/{id}', [UserController::class, 'getKomoditasByKecamatan'])->name('komoditas.kecamatan');
 Route::get('/persebaran-komoditas', [UserController::class, 'persebaran_komoditas']);
 Route::get('/get-persebaran-komoditas/{id}', [UserController::class, 'getPersebaranKomoditas'])->name('komoditas.persebaran');
-
+Route::get('/harga-komoditas', [UserController::class, 'harga']);
+Route::get('/get-harga-komoditas/{id}', [UserController::class, 'getHarga'])->name('komoditas.harga');
+Route::get('/tren-harga', [UserController::class, 'tren']);
+Route::get('/get-harga-pasar', [UserController::class, 'getHargaPasar']);
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/proses-login', [AuthController::class, 'proses_login'])->name('login.process');

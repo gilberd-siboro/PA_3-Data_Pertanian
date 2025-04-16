@@ -99,4 +99,68 @@ class UserController extends Controller
 
         return response()->json($persebaranPaginated);
     }
+
+
+    public function harga(){
+
+        $hargaRaw = DB::select('CALL viewAll_latestHarga()');
+        $pasar = DB::select('CALL viewAll_pasar()');
+        $perPage = 6;
+        $page = request()->query('page', 1);
+        $harga = new LengthAwarePaginator(
+            array_slice($hargaRaw, ($page - 1) * $perPage, $perPage),
+            count($hargaRaw),
+            $perPage,
+            $page,
+            ['path' => url()->current()]
+        );
+        return view('user/harga', compact('pasar','harga'));
+    }
+
+    // view_hargaByPasar
+
+    public function getHarga(Request $request, $id)
+    {
+        $perPage = 6; // Jumlah item per halaman
+        $page = $request->query('page', 1); // Ambil parameter halaman dari request
+
+        if ($id === "all") {
+            $harga = DB::select('CALL viewAll_latestHarga()');
+        } else {
+            $harga = DB::select('CALL view_hargaByPasar(?)', [$id]);
+        }
+
+        // Konversi array hasil query menjadi Laravel paginator secara manual
+        $hargaPaginated = new LengthAwarePaginator(
+            array_slice($harga, ($page - 1) * $perPage, $perPage), // Data sesuai halaman
+            count($harga), // Total jumlah data
+            $perPage,
+            $page,
+            ['path' => url()->current()] // URL dasar untuk pagination
+        );
+
+        return response()->json($hargaPaginated);
+    }
+
+    public function getHargaPasar(Request $request)
+    {
+        // Ambil parameter filter komoditas dan pasar dari request
+        $komoditas = $request->komoditas;
+        $pasar = $request->pasar;
+
+        // Memanggil stored procedure 'view_trenHarga'
+        $data = DB::select('CALL view_trenHarga(?, ?)', [
+            $komoditas === 'all' ? null : $komoditas, // Jika 'all', maka NULL
+            $pasar === 'all' ? null : $pasar         // Jika 'all', maka NULL
+        ]);
+
+        // Mengembalikan data dalam format JSON
+        return response()->json($data);
+    }
+    public function tren(){
+
+        $komoditas = DB::select('CALL viewAll_Komoditas()');
+        $pasar = DB::select('CALL viewAll_pasar()');
+        return view('user/tren', compact('komoditas','pasar'));
+    }
 }

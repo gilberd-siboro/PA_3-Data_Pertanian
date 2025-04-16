@@ -1,20 +1,6 @@
 @extends('layout.user.nav')
 @section('content')
 
-
-<!-- <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('images/dinaspertanian.png');">
-  <div class="overlay"></div>
-  <div class="container">
-    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-      <div class="col-md-9 ftco-animate pb-5 text-center">
-        <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Beranda <i class="fa fa-chevron-right"></i></a></span> <span>Tentang<i class="fa fa-chevron-right"></i></span></p>
-        <h1 class="mb-0 bread">Tentang</h1>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-
 <section class="ftco-section ftco-about img" style="background-image: url('images/ricefield3.jpg');">
   <div class="overlay"></div>
   <div class="container py-md-5">
@@ -61,13 +47,14 @@
       </div>
     </div>
   </div>
-  <div class="container1">
+  <!-- <div class="container1">
     <img src="images/tomat.jpg" alt="Petani" class="image">
     <div class="text1">Departemen Pertanian didirikan pada tanggal 1 Januari 1905 berdasarkan Surat Keputusan Gubernur Jenderal Hindia Belanda...</div>
+    <p>lorem15</p>
     <div class="text1">Pada masa penjajahan Belanda urusan pertanian ditangani oleh Departement van Landbouw...</div>
     <img src="images/wortel.jpg" alt="Kakao" class="image">
     <img src="images/andaliman.jpg" alt="Tomat" class="image">
     <div class="text1">Sejak tanggal 19 Agustus 1945, urusan pertanian, perdagangan, dan industrialisasi berada di bawah Kementerian Kemakmuran...</div>
-  </div>
+  </div> -->
 </section>
 @endsection

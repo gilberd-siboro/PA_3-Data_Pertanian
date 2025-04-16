@@ -12183,6 +12183,44 @@ h5,
   }
 }
 
+@media (max-width: 991px) {
+  .dropdown-menu {
+    background-color: #000 !important;
+  }
+
+  .dropdown-menu .dropdown-item {
+    color: #fff !important;
+  }
+
+  .dropdown-menu .dropdown-item:hover {
+    background-color: #222 !important;
+  }
+
+  /* Tambahan: dropdown item aktif */
+  .dropdown-menu .dropdown-item.active {
+    background-color: #222 !important;
+    color: #fff !important;
+  }
+}
+
+
+/* Tampilan besar (>= 992px) */
+@media (min-width: 992px) {
+  .dropdown-menu .dropdown-item.active {
+    background-color: #fd7e14 !important;
+    /* atau ganti sesuai selera */
+    color: #fff !important;
+  }
+
+  /* Saat diklik atau focus (hilangkan biru default Bootstrap) */
+  .dropdown-menu .dropdown-item:active,
+  .dropdown-menu .dropdown-item:focus {
+    background-color: #fd7e14 !important;
+    color: #fff !important;
+    box-shadow: none;
+  }
+}
+
 .ftco-navbar-light .navbar-nav>.nav-item>.nav-link {
   font-size: 15px;
   padding-top: 1.5rem;
@@ -13114,21 +13152,25 @@ h5,
   background: #347928;
   position: relative;
 }
+
 .services.services-1 .icon1 {
   background: #E73232;
-  
+
 }
+
 .services.services-1 .icon2 {
   background: #347928;
-  
+
 }
+
 .services.services-1 .icon3 {
   background: #BDC52A;
-  
+
 }
+
 .services.services-1 .icon4 {
   background: #2375B9;
-  
+
 }
 
 .services.services-1 .icon span {

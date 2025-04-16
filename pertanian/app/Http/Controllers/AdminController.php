@@ -66,40 +66,6 @@ class AdminController extends Controller
         return response()->json($response);
     }
 
-    // public function getHargaKomoditasChart(Request $request)
-    // {
-    //     try {
-    //         $idKomoditas = $request->input('id_komoditas');
-    //         $idPasar = $request->input('id_pasar');
-
-    //         $results = DB::select('CALL get_harga_komoditas(?, ?)', [$idKomoditas, $idPasar]);
-
-    //         foreach ($results as $row) {
-    //             \Log::info('Row data:', (array)$row);
-
-    //             $rawTanggal = $row->tanggal;
-
-    //             if ($rawTanggal === null) {
-    //                 \Log::error('Kolom tanggal bernilai NULL');
-    //                 continue;
-    //             }
-
-    //             $dateObj = \DateTime::createFromFormat('d M, Y', $rawTanggal);
-
-    //             if (!$dateObj) {
-    //                 \Log::error('Tanggal tidak bisa di-parse: ' . $rawTanggal);
-    //             } else {
-    //                 \Log::info('Tanggal berhasil di-parse: ' . $dateObj->format('Y-m-d'));
-    //             }
-    //         }
-
-    //         return response()->json(['message' => 'Log berhasil, cek laravel.log']);
-    //     } catch (\Exception $e) {
-    //         \Log::error('Gagal memuat data chart: ' . $e->getMessage());
-    //         return response()->json(['error' => 'Terjadi kesalahan saat mengambil data'], 500);
-    //     }
-    // }
-
 
     // ------ PENGGUNA -------
 
