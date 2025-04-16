@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 10/04/2025 09:32:26
+ Date: 16/04/2025 09:03:34
 */
 
 SET NAMES utf8mb4;
@@ -249,9 +249,9 @@ INSERT INTO `harga_komoditas` VALUES (8, '18000', '07 Mar, 2024', 1, 4, '2025-04
 INSERT INTO `harga_komoditas` VALUES (9, '24000', '24 Apr, 2025', 1, 4, '2025-04-10 09:07:59', '2025-04-10 09:08:24', 0);
 INSERT INTO `harga_komoditas` VALUES (10, '17000', '11 Feb, 2025', 1, 3, '2025-04-10 09:09:28', NULL, 0);
 INSERT INTO `harga_komoditas` VALUES (11, '13000', '12 Mar, 2025', 1, 3, '2025-04-10 09:10:14', NULL, 0);
-INSERT INTO `harga_komoditas` VALUES (12, '10000', '10 Apr, 2025', 2, 3, '2025-04-10 09:15:12', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (12, '10000', '11 Feb, 2025', 2, 3, '2025-04-10 09:15:12', '2025-04-15 10:54:33', 0);
 INSERT INTO `harga_komoditas` VALUES (13, '15000', '11 Apr, 2025', 2, 3, '2025-04-10 09:15:38', NULL, 0);
-INSERT INTO `harga_komoditas` VALUES (14, '15000', '14 May, 2025', 2, 3, '2025-04-10 09:16:01', NULL, 0);
+INSERT INTO `harga_komoditas` VALUES (14, '15000', '14 Apr, 2025', 2, 3, '2025-04-10 09:16:01', '2025-04-14 23:51:47', 0);
 INSERT INTO `harga_komoditas` VALUES (15, '12000', '28 May, 2025', 2, 3, '2025-04-10 09:16:17', NULL, 0);
 
 -- ----------------------------
@@ -2114,6 +2114,36 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for viewAll_latestHarga
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `viewAll_latestHarga`;
+delimiter ;;
+CREATE PROCEDURE `viewAll_latestHarga`()
+BEGIN#Routine body goes here...
+	SELECT
+		harga_komoditas.harga,
+		pasar.nama_pasar,
+		subdistricts.subdis_name,
+		komoditas.nama_komoditas,
+		komoditas.gambar,
+		pasar.id_pasar,
+		harga_komoditas.tanggal,
+		harga_komoditas.id_komoditas 
+	FROM
+		harga_komoditas
+		JOIN ( SELECT id_komoditas, MAX( STR_TO_DATE( tanggal, '%d %b, %Y' )) AS max_tanggal FROM harga_komoditas WHERE isDeleted = 0 GROUP BY id_komoditas ) filter_komoditas ON harga_komoditas.id_komoditas = filter_komoditas.id_komoditas 
+		AND STR_TO_DATE( harga_komoditas.tanggal, '%d %b, %Y' ) = filter_komoditas.max_tanggal
+		JOIN pasar ON harga_komoditas.id_pasar = pasar.id_pasar
+		JOIN komoditas ON harga_komoditas.id_komoditas = komoditas.id_komoditas
+		JOIN subdistricts ON pasar.subdis_id = subdistricts.subdis_id 
+	WHERE
+		harga_komoditas.isDeleted = 0;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for viewAll_pasar
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `viewAll_pasar`;
@@ -2419,6 +2449,37 @@ BEGIN
 	
 	WHERE
 		golonganpangkat.idGolonganPangkat = id;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_hargaByPasar
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_hargaByPasar`;
+delimiter ;;
+CREATE PROCEDURE `view_hargaByPasar`(IN id INT)
+BEGIN
+	SELECT
+		harga_komoditas.harga,
+		pasar.nama_pasar,
+		subdistricts.subdis_name,
+		komoditas.nama_komoditas,
+		komoditas.gambar,
+		pasar.id_pasar,
+		harga_komoditas.tanggal,
+		harga_komoditas.id_komoditas 
+	FROM
+		harga_komoditas
+		JOIN ( SELECT id_komoditas, MAX( STR_TO_DATE( tanggal, '%d %b, %Y' )) AS max_tanggal FROM harga_komoditas WHERE isDeleted = 0 GROUP BY id_komoditas ) filter_komoditas ON harga_komoditas.id_komoditas = filter_komoditas.id_komoditas 
+		AND STR_TO_DATE( harga_komoditas.tanggal, '%d %b, %Y' ) = filter_komoditas.max_tanggal
+		JOIN pasar ON harga_komoditas.id_pasar = pasar.id_pasar
+		JOIN komoditas ON harga_komoditas.id_komoditas = komoditas.id_komoditas
+		JOIN subdistricts ON pasar.subdis_id = subdistricts.subdis_id 
+	WHERE
+		harga_komoditas.isDeleted = 0 
+		AND pasar.id_pasar = id ;-- ganti dengan nilai id_pasar
 	
 END
 ;;
@@ -2803,6 +2864,36 @@ BEGIN
 		INNER JOIN kelompok_tani ON petani.id_kelompok_tani = kelompok_tani.id_kelompok_tani 
 	WHERE
 		petani.id_petani = id;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_trenHarga
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_trenHarga`;
+delimiter ;;
+CREATE PROCEDURE `view_trenHarga`(IN idKomoditas INT, IN idPasar INT)
+BEGIN
+    SELECT 
+        hk.tanggal,
+				hk.harga,
+        k.nama_komoditas,
+        p.nama_pasar,
+        s.subdis_name
+    FROM harga_komoditas hk
+    JOIN komoditas k ON hk.id_komoditas = k.id_komoditas
+    JOIN pasar p ON hk.id_pasar = p.id_pasar
+    JOIN subdistricts s ON p.subdis_id = s.subdis_id
+    WHERE 
+        hk.isDeleted = 0
+        AND k.is_deleted = 0
+        AND p.isDeleted = 0
+        AND (idKomoditas IS NULL OR hk.id_komoditas = idKomoditas)
+        AND (idPasar IS NULL OR hk.id_pasar = idPasar)
+    ORDER BY 
+        STR_TO_DATE(hk.tanggal, '%d %b, %Y') ASC;
 	
 END
 ;;
