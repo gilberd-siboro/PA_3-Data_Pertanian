@@ -9,13 +9,6 @@
                 <span class="subheading">Selamat Datang di Agromob</span>
                 <h1 class="mb-4">Bersama Kembangkan Pertanian <span>Tapanuli Utara</span> </h1>
             </div>
-            <div class="col-md d-flex align-items-center justify-content-center">
-                <a href="https://www.youtube.com/embed/1oi4_8_SPYU?autoplay=1" class="glightbox" data-glightbox="iframe">
-                    <div class="icon-video d-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px; background: rgb(255, 255, 255); border-radius: 50%;">
-                        <span class="fa fa-play"></span>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 </div>
@@ -94,3 +87,4 @@
 </script>
 
 @endsection
+

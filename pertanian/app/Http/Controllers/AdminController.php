@@ -1773,4 +1773,214 @@ class AdminController extends Controller
 
         return redirect()->route('Adminharga.index');
     }
+
+    # -------- Berita ----------
+
+    public function berita()
+    {
+        $userData = session('userData');
+        $berita = DB::select('CALL viewAll_berita()');
+        $totalData = count($berita);
+
+        return view('admin/berita/index', compact('totalData', 'userData','berita'));
+    }
+
+    public function create_berita(Request $request)
+    {
+        // Validasi file foto
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        // dd($validated);
+        // Simpan foto jika ada
+        if ($request->hasFile('foto')) {
+
+            $file = $request->file('foto');
+            $fileName = time() . '_' . $file->getClientOriginalName(); // Buat nama unik
+            $destinationPath = public_path('assets/images'); // Simpan di public/assets/images
+            $file->move($destinationPath, $fileName); // Pindahkan file
+        }
+
+        // JSON untuk dikirim ke Stored Procedure
+        $Berita = json_encode([
+            'Judul' => $request->get('judul'),
+            'Deskripsi' => $request->get('deskripsi'),
+            'Tanggal' => $request->get('tanggal'),
+            'User' => session('userData')->user_id,
+            'Foto' => $fileName, // Simpan path file foto
+        ]);
+
+        $response = DB::statement('CALL insert_berita(:dataBerita)', ['dataBerita' => $Berita]);
+
+        if ($response) {
+            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            return redirect()->route('Adminberita.index');
+        } else {
+            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('Adminberita.index');
+        }
+    }
+
+    public function edit_berita($id)
+    {
+        $userData = session('userData');
+        $beritaData = DB::select('CALL view_beritaById(' . $id . ')');
+        $berita = $beritaData[0];
+
+        return view('admin/berita/edit', compact('userData', 'berita'));
+    }
+
+    public function update_berita(Request $request, $id)
+    {
+
+        $beritaData = DB::select('CALL view_beritaById(' . $id . ')');
+        $berita = $beritaData[0];
+
+        $fileName = $berita->foto; // Gunakan nama file lama jika tidak ada file baru
+        // Validasi gambar
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ]);
+        // dd($request->gambar);
+
+        // Jika ada file baru di-upload
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika bukan default atau tidak kosong
+            if (!empty($berita->foto) && file_exists(public_path('assets/images/' . $berita->foto))) {
+                unlink(public_path('assets/images/' . $berita->foto));
+            }
+
+            // Simpan foto baru
+            $file = $request->file('foto');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/images/'), $fileName);
+        }
+
+        $Berita = json_encode([
+            'IdBerita' => $id,
+            'Judul' => $request->get('judul'),
+            'Deskripsi' => $request->get('deskripsi'),
+            'Tanggal' => $request->get('tanggal'),
+            'Foto' => $fileName, // Simpan path file foto
+        ]);
+        // dd($Berita);
+
+
+        if ($berita) {
+            $response = DB::statement('CALL update_berita(:dataBerita)', ['dataBerita' => $Berita]);
+
+            if ($response) {
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                return redirect()->route('Adminberita.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('Adminberita.index');
+            }
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+            return redirect()->route('Adminberita.index');
+        }
+    }
+
+
+    public function delete_berita($id)
+    {
+        $response = DB::statement('CALL delete_berita(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('Adminberita.index');
+    }
+
+
+        // ---------- Bantuan ---------------
+
+        public function bantuan()
+        {
+            $userData = session('userData');
+            $bantuan = DB::select('CALL viewAll_bantuan()');
+            $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
+            $totalData = count($bantuan);
+    
+            return view('admin/bantuan/index', compact('totalData', 'userData', 'bantuan', 'kelompokTani'));
+        }
+    
+        public function create_bantuan(Request $request)
+        {
+            $Bantuan = json_encode([
+                'JenisBantuan' => $request->get('jenis'),
+                'Tanggal' => $request->get('tanggal'),
+                'KelompokTani' => $request->get('kel_tani'),
+    
+            ]);
+    
+            $response = DB::statement('CALL insert_bantuan(:dataBantuan)', ['dataBantuan' => $Bantuan]);
+    
+            if ($response) {
+                toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+                return redirect()->route('Adminbantuan.index');
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                return redirect()->route('Adminbantuan.index');
+            }
+        }
+    
+        public function edit_bantuan($id)
+        {
+            $userData = session('userData');
+            $bantuanData = DB::select('CALL view_bantuanById(' . $id . ')');
+            $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
+            $bantuan = $bantuanData[0];
+    
+    
+            return view('admin/bantuan/edit', compact('userData', 'bantuan', 'kelompokTani'));
+        }
+    
+        public function update_bantuan(Request $request, $id)
+        {
+            $Bantuan = json_encode([
+                'IdBantuan' => $id,
+                'JenisBantuan' => $request->get('jenis'),
+                'Tanggal' => $request->get('tanggal'),
+                'KelompokTani' => $request->get('kel_tani'),
+            ]);
+    
+    
+    
+            $bantuanData = DB::select('CALL view_bantuanById(' . $id . ')');
+            $bantuan = $bantuanData[0];
+    
+            if ($bantuan) {
+                $response = DB::statement('CALL update_bantuan(:dataBantuan)', ['dataBantuan' => $Bantuan]);
+    
+                if ($response) {
+                    toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                    return redirect()->route('Adminbantuan.index');
+                } else {
+                    toast('Data gagal disimpan!', 'error')->autoClose(3000);
+                    return redirect()->route('Adminbantuan.index');
+                }
+            } else {
+                toast('Data tidak ditemukan!', 'error')->autoClose(3000);
+                return redirect()->route('Adminbantuan.index');
+            }
+        }
+    
+        public function delete_bantuan($id)
+        {
+            $response = DB::statement('CALL delete_bantuan(?)', [$id]);
+    
+            if ($response) {
+                toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+            } else {
+                toast('Data gagal dihapus!', 'error')->autoClose(3000);
+            }
+    
+            return redirect()->route('Adminbantuan.index');
+        }
+    
 }

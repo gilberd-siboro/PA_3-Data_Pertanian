@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 16/04/2025 09:03:34
+ Date: 28/04/2025 10:13:58
 */
 
 SET NAMES utf8mb4;
@@ -32,11 +32,12 @@ CREATE TABLE `bantuan`  (
   PRIMARY KEY (`id_bantuan`) USING BTREE,
   INDEX `id_kelompok_tani`(`id_kelompok_tani` ASC) USING BTREE,
   CONSTRAINT `bantuan_ibfk_1` FOREIGN KEY (`id_kelompok_tani`) REFERENCES `kelompok_tani` (`id_kelompok_tani`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of bantuan
 -- ----------------------------
+INSERT INTO `bantuan` VALUES (1, 'asd', '02 Apr, 2025', 3, '2025-04-24 14:43:07', '2025-04-24 14:50:28', 1);
 
 -- ----------------------------
 -- Table structure for berita
@@ -55,11 +56,12 @@ CREATE TABLE `berita`  (
   PRIMARY KEY (`idBerita`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `berita_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of berita
 -- ----------------------------
+INSERT INTO `berita` VALUES (1, 'Tes', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta nulla repellat eligendi officiis quam consequuntur esse quidem tempora aperiam minima!', '1745288712_11422046_MingguKe12.jpg', '17 Apr, 2025', 1, '2025-04-22 09:25:12', '2025-04-24 13:30:18', 0);
 
 -- ----------------------------
 -- Table structure for bidang
@@ -665,9 +667,43 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'pertanian', '1', 1, NULL, '$2y$12$c8roUKWHlDDuaRxREfJm9.9WxdZiDVc9w9CbhdLZTgS7mEek9Km8a', 'asdasd@gmail.com', 1, NULL, '2025-04-01 12:57:04', 0);
+INSERT INTO `users` VALUES (1, 'pertanian', '1', 1, NULL, '$2y$12$c8roUKWHlDDuaRxREfJm9.9WxdZiDVc9w9CbhdLZTgS7mEek9Km8a', 'asdasd@gmail.com', 1, NULL, '2025-04-16 21:08:36', 0);
 INSERT INTO `users` VALUES (2, 'penyuluh', '1', 1, NULL, '$2y$12$xWUr9RuFuOnEMH7rpdkAcOS1CnsrJkWXOqTfbBUctPyxz6B6.4dqi', 'asd@gmail.com', 2, NULL, '2025-03-26 08:27:24', 0);
 INSERT INTO `users` VALUES (4, 'eric', '2', 1, NULL, '$2y$12$IREI7ZXob3wVDBFhYOSCQujRi0CoZt1UmmX1ajvXa0OOxVnR/OBk.', 'eric@gmail.com', 1, '2025-03-18 10:07:06', '2025-03-24 11:11:44', 1);
+
+-- ----------------------------
+-- Procedure structure for delete_bantuan
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `delete_bantuan`;
+delimiter ;;
+CREATE PROCEDURE `delete_bantuan`(IN idBantuan JSON)
+BEGIN#Routine body goes here...
+	UPDATE bantuan 
+	SET bantuan.isDeleted = 1,
+	bantuan.updated_at = NOW() 
+	WHERE
+		bantuan.id_bantuan = idBantuan;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for delete_berita
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `delete_berita`;
+delimiter ;;
+CREATE PROCEDURE `delete_berita`(IN idBerita JSON)
+BEGIN#Routine body goes here...
+	UPDATE berita 
+	SET berita.isDeleted = 1,
+	berita.updated_at = NOW() 
+	WHERE
+		berita.idBerita = idBerita;
+	
+END
+;;
+delimiter ;
 
 -- ----------------------------
 -- Procedure structure for delete_bidang
@@ -961,6 +997,43 @@ BEGIN
         STR_TO_DATE(harga_komoditas.tanggal, '%d %b, %Y')
     ORDER BY
         STR_TO_DATE(harga_komoditas.tanggal, '%d %b, %Y') ASC;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for insert_bantuan
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `insert_bantuan`;
+delimiter ;;
+CREATE PROCEDURE `insert_bantuan`(IN dataBantuan JSON)
+BEGIN
+	#Routine body goes here...
+	SET @jenis_bantuan = JSON_UNQUOTE(JSON_EXTRACT(dataBantuan,'$.JenisBantuan'));
+	SET @tanggal = JSON_UNQUOTE(JSON_EXTRACT(dataBantuan,'$.Tanggal'));
+	SET @kelompok_tani = JSON_UNQUOTE(JSON_EXTRACT(dataBantuan,'$.KelompokTani'));
+	
+	INSERT INTO bantuan(bantuan.jenis_bantuan, bantuan.tanggal, bantuan.id_kelompok_tani,bantuan.created_at)
+	VALUES(@jenis_bantuan, @tanggal, @kelompok_tani, NOW());
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for insert_berita
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `insert_berita`;
+delimiter ;;
+CREATE PROCEDURE `insert_berita`(IN dataBerita JSON)
+BEGIN
+	SET @judul = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Judul'));
+	SET @deskripsi = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Deskripsi'));
+	SET @tanggal = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Tanggal'));
+	SET @foto = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Foto'));
+	SET @`user` = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.User'));
+		
+	INSERT INTO berita(berita.judul, berita.deskripsi, berita.tanggal, berita.foto, berita.user_id, berita.created_at)
+	VALUES(@judul, @deskripsi, @tanggal, @foto, @`user`,NOW());
 END
 ;;
 delimiter ;
@@ -1317,6 +1390,46 @@ BEGIN
 
 	INSERT INTO petani(`nama_depan`,`nama_belakang`,`alamat_rumah`,petani.id_kelompok_tani, petani.created_at)
 	VALUES(@nama_depan, @nama_belakang, @alamat, @kelompok_tani, NOW());
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for update_bantuan
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `update_bantuan`;
+delimiter ;;
+CREATE PROCEDURE `update_bantuan`(IN dataBantuan JSON)
+BEGIN
+#Routine body goes here...	
+	SET @idBantuan = JSON_UNQUOTE(JSON_EXTRACT( dataBantuan, '$.IdBantuan' ));
+	SET @jenis_bantuan = JSON_UNQUOTE(JSON_EXTRACT( dataBantuan, '$.JenisBantuan' ));
+	SET @tanggal = JSON_UNQUOTE(JSON_EXTRACT( dataBantuan, '$.Tanggal' ));
+	SET @kelompok_tani = JSON_UNQUOTE(JSON_EXTRACT( dataBantuan, '$.KelompokTani' ));
+	
+	UPDATE bantuan SET bantuan.jenis_bantuan = @jenis_bantuan,bantuan.tanggal = @tanggal,bantuan.id_kelompok_tani = @kelompok_tani, bantuan.updated_at = NOW() 
+	WHERE
+		bantuan.id_bantuan = @idBantuan;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for update_berita
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `update_berita`;
+delimiter ;;
+CREATE PROCEDURE `update_berita`(IN dataBerita JSON)
+BEGIN
+	#Routine body goes here...
+	SET @idBerita = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.IdBerita'));
+	SET @judul = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Judul'));
+	SET @deskripsi = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Deskripsi'));
+	SET @tanggal = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Tanggal'));
+	SET @foto = JSON_UNQUOTE(JSON_EXTRACT(dataBerita,'$.Foto'));
+ 
+	UPDATE berita SET berita.judul=@judul, berita.deskripsi=@deskripsi, berita.tanggal = @tanggal, berita.foto = @foto, berita.updated_at=NOW()
+	WHERE berita.idBerita=@idBerita;
 END
 ;;
 delimiter ;
@@ -1687,6 +1800,54 @@ BEGIN
 	
 	UPDATE petani SET petani.nama_depan=@namaDepan, petani.nama_belakang=@namaBelakang, petani.alamat_rumah=@alamat, petani.id_kelompok_tani=@kelompokTani, petani.updated_at=NOW()
 	WHERE petani.id_petani=@idPetani;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for viewAll_bantuan
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `viewAll_bantuan`;
+delimiter ;;
+CREATE PROCEDURE `viewAll_bantuan`()
+BEGIN
+	#Routine body goes here...
+SELECT
+	*, 
+	kelompok_tani.nama_kelompok_tani
+FROM
+	bantuan
+	INNER JOIN
+	kelompok_tani
+	ON 
+		bantuan.id_kelompok_tani = kelompok_tani.id_kelompok_tani
+WHERE
+	bantuan.isDeleted = 0;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for viewAll_berita
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `viewAll_berita`;
+delimiter ;;
+CREATE PROCEDURE `viewAll_berita`()
+BEGIN
+	#Routine body goes here...
+SELECT
+	berita.idBerita,
+	berita.judul,
+	berita.deskripsi,
+	berita.foto,
+	berita.tanggal,
+	berita.user_id,
+	pegawai.namaPegawai 
+FROM
+	berita
+	INNER JOIN users ON berita.user_id = users.user_id
+	INNER JOIN pegawai ON users.personal_id = pegawai.idPegawai
+	WHERE berita.isDeleted = 0;
 END
 ;;
 delimiter ;
@@ -2320,6 +2481,44 @@ SELECT
 	user_roles.role_name
 FROM
 	user_roles;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_bantuanById
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_bantuanById`;
+delimiter ;;
+CREATE PROCEDURE `view_bantuanById`(IN id INT)
+BEGIN
+	SELECT
+		*,
+		kelompok_tani.nama_kelompok_tani 
+	FROM
+		bantuan
+		INNER JOIN kelompok_tani ON bantuan.id_kelompok_tani = kelompok_tani.id_kelompok_tani 
+	WHERE
+		bantuan.id_bantuan = id;
+	
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for view_beritaById
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `view_beritaById`;
+delimiter ;;
+CREATE PROCEDURE `view_beritaById`(IN id INT)
+BEGIN
+	SELECT
+		* 
+	FROM
+		berita 
+	WHERE
+		berita.idBerita = id;
+	
 END
 ;;
 delimiter ;

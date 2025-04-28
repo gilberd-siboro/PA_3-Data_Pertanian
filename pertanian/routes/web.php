@@ -160,6 +160,20 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::get('/admin-harga/edit/{id}', [AdminController::class, 'edit_harga'])->name('Adminharga.edit');
     Route::post('/admin-harga/update/{id}', [AdminController::class, 'update_harga'])->name('Adminharga.update');
     Route::post('/admin-harga/delete/{id}', [AdminController::class, 'delete_harga'])->name('Adminharga.delete');
+
+    // -- Berita --
+    Route::get('/admin-berita', [AdminController::class, 'berita'])->name('Adminberita.index');
+    Route::post('/admin-tambah-berita', [AdminController::class, 'create_berita']);
+    Route::get('/admin-berita/edit/{id}', [AdminController::class, 'edit_berita'])->name('Adminberita.edit');
+    Route::post('/admin-berita/update/{id}', [AdminController::class, 'update_berita'])->name('Adminberita.update');
+    Route::post('/admin-berita/delete/{id}', [AdminController::class, 'delete_berita'])->name('Adminberita.delete');
+    
+    // -- Bantuan --
+    Route::get('/admin-bantuan', [AdminController::class, 'bantuan'])->name('Adminbantuan.index');
+    Route::post('/admin-tambah-bantuan', [AdminController::class, 'create_bantuan']);
+    Route::get('/admin-bantuan/edit/{id}', [AdminController::class, 'edit_bantuan'])->name('Adminbantuan.edit');
+    Route::post('/admin-bantuan/update/{id}', [AdminController::class, 'update_bantuan'])->name('Adminbantuan.update');
+    Route::post('/admin-bantuan/delete/{id}', [AdminController::class, 'delete_bantuan'])->name('Adminbantuan.delete');
 });
 
 

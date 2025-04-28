@@ -44,7 +44,7 @@
                     </li>
 
                     <!-- Dropdown item -->
-                    <li class="nav-item dropdown {{ \Request::is('komoditas-kecamatan') || \Request::is('persebaran-komoditas') ? 'active' : '' }}">
+                    <li class="nav-item dropdown {{ \Request::is('komoditas-kecamatan','persebaran-komoditas','harga-komoditas','tren-harga') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Data Pertanian
                         </a>
