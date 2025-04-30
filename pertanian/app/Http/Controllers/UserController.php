@@ -10,7 +10,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('user/index');
+        $berita = DB::select('CALL viewAll_beritaIndex()');
+        $beritaAll = DB::select('CALL viewAll_beritaIndex()');
+        $berita = array_slice($beritaAll, 0, 3);
+        return view('user/index', compact('berita'));
     }
     public function tentang()
     {
@@ -74,7 +77,7 @@ class UserController extends Controller
             ['path' => url()->current()]
         );
 
-        return view('user/persebaran_komoditas', compact('komoditas','persebaran'));
+        return view('user/persebaran_komoditas', compact('komoditas', 'persebaran'));
     }
 
     public function getPersebaranKomoditas(Request $request, $id)
@@ -101,7 +104,8 @@ class UserController extends Controller
     }
 
 
-    public function harga(){
+    public function harga()
+    {
 
         $hargaRaw = DB::select('CALL viewAll_latestHarga()');
         $pasar = DB::select('CALL viewAll_pasar()');
@@ -114,7 +118,7 @@ class UserController extends Controller
             $page,
             ['path' => url()->current()]
         );
-        return view('user/harga', compact('pasar','harga'));
+        return view('user/harga', compact('pasar', 'harga'));
     }
 
     // view_hargaByPasar
@@ -157,10 +161,11 @@ class UserController extends Controller
         // Mengembalikan data dalam format JSON
         return response()->json($data);
     }
-    public function tren(){
+    public function tren()
+    {
 
         $komoditas = DB::select('CALL viewAll_Komoditas()');
         $pasar = DB::select('CALL viewAll_pasar()');
-        return view('user/tren', compact('komoditas','pasar'));
+        return view('user/tren', compact('komoditas', 'pasar'));
     }
 }

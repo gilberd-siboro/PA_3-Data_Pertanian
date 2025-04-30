@@ -42,6 +42,9 @@
                     <li class="nav-item {{ \Request::is('tentang') ? 'active' : '' }}">
                         <a href="/tentang" class="nav-link">Tentang</a>
                     </li>
+                    <li class="nav-item {{ \Request::is('berita') ? 'active' : '' }}">
+                        <a href="/berita" class="nav-link">Berita</a>
+                    </li>
 
                     <!-- Dropdown item -->
                     <li class="nav-item dropdown {{ \Request::is('komoditas-kecamatan','persebaran-komoditas','harga-komoditas','tren-harga') ? 'active' : '' }}">
