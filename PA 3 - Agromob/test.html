@@ -1,38 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dropdown dengan Pencarian</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berita Terkini</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="ui container" style="margin-top: 50px;">
-        <h2>Pilih Negara</h2>
-        <div class="ui fluid search selection dropdown">
-            <input type="hidden" name="country">
-            <i class="dropdown icon"></i>
-            <div class="default text">Pilih Negara</div>
-            <div class="menu">
-                <div class="item" data-value="us"><i class="us flag"></i>Amerika Serikat</div>
-                <div class="item" data-value="gb"><i class="gb flag"></i>Inggris</div>
-                <div class="item" data-value="fr"><i class="fr flag"></i>Prancis</div>
-                <div class="item" data-value="de"><i class="de flag"></i>Jerman</div>
-                <div class="item" data-value="id"><i class="id flag"></i>Indonesia</div>
-                <div class="item" data-value="jp"><i class="jp flag"></i>Jepang</div>
-                <div class="item" data-value="cn"><i class="cn flag"></i>Tiongkok</div>
-            </div>
+<body class="bg-white text-gray-800">
+
+  <div class="max-w-6xl mx-auto py-12 px-4 text-center">
+    <h1 class="text-3xl font-bold mb-10">Berita Terkini</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <img src="https://via.placeholder.com/300x180" alt="Berita" class="rounded-md mb-4 w-full h-44 object-cover" />
+        <div class="text-left">
+          <div class="flex items-center text-sm text-gray-500 mb-2">
+            <span class="bg-orange-500 text-white px-2 py-1 rounded mr-2 text-xs">20 Dec 2022</span>
+            <span>By Admin</span>
+          </div>
+          <h2 class="font-semibold text-lg mb-2">Harga Jagung di pasar Naik!</h2>
+          <p class="text-sm text-gray-600 mb-4">
+            Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+          <a href="#" class="text-sm font-medium text-black hover:underline flex items-center">
+            → Baca Selengkapnya
+          </a>
         </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <img src="https://via.placeholder.com/300x180" alt="Berita" class="rounded-md mb-4 w-full h-44 object-cover" />
+        <div class="text-left">
+          <div class="flex items-center text-sm text-gray-500 mb-2">
+            <span class="bg-orange-500 text-white px-2 py-1 rounded mr-2 text-xs">20 Dec 2022</span>
+            <span>By Admin</span>
+          </div>
+          <h2 class="font-semibold text-lg mb-2">Harga Jagung di pasar Naik!</h2>
+          <p class="text-sm text-gray-600 mb-4">
+            Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+          <a href="#" class="text-sm font-medium text-black hover:underline flex items-center">
+            → Baca Selengkapnya
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <img src="https://via.placeholder.com/300x180" alt="Berita" class="rounded-md mb-4 w-full h-44 object-cover" />
+        <div class="text-left">
+          <div class="flex items-center text-sm text-gray-500 mb-2">
+            <span class="bg-orange-500 text-white px-2 py-1 rounded mr-2 text-xs">20 Dec 2022</span>
+            <span>By Admin</span>
+          </div>
+          <h2 class="font-semibold text-lg mb-2">Harga Jagung di pasar Naik!</h2>
+          <p class="text-sm text-gray-600 mb-4">
+            Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+          <a href="#" class="text-sm font-medium text-black hover:underline flex items-center">
+            → Baca Selengkapnya
+          </a>
+        </div>
+      </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('.ui.dropdown').dropdown({
-                fullTextSearch: true
-            });
-        });
-    </script>
+    <!-- Tombol -->
+    <div class="mt-10">
+      <a href="#" class="bg-orange-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-orange-600 transition">
+        Lihat Selengkapnya
+      </a>
+    </div>
+  </div>
+
 </body>
 </html>
