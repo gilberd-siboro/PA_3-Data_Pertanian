@@ -19,6 +19,10 @@ class UserController extends Controller
     {
         return view('user/tentang');
     }
+    public function berita()
+    {
+        return view('user/berita');
+    }
 
     public function getKomoditasByKecamatan(Request $request, $id)
     {

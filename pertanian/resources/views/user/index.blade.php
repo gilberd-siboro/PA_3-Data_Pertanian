@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<section class="ftco-section services-section">
+<section class="ftco-sect   ion services-section">
     <div class="container">
         <div class="row d-flex">
             <div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
@@ -134,6 +134,15 @@
                 </div>
             </div>
         </div>
+        <div class="row d-flex justify-content-center mb-4">
+            <div class="col-12">
+                <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.3202737945207!2d98.96240527480519!3d2.0276079979541572!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x302e6efa434f3163%3A0x6a1c8ddb16de4bb3!2sDinas%20Pertanian%20Kabupaten%20Tapanuli%20Utara!5e0!3m2!1sid!2sid!4v1745979142415!5m2!1sid!2sid" style="position: absolute; top: 0; left: 0; width: 100%; height: 70%; border: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 <script>
