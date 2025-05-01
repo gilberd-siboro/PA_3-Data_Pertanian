@@ -10,7 +10,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        $berita = DB::select('CALL viewAll_beritaIndex()');
         $beritaAll = DB::select('CALL viewAll_beritaIndex()');
         $berita = array_slice($beritaAll, 0, 3);
         return view('user/index', compact('berita'));
@@ -19,9 +18,20 @@ class UserController extends Controller
     {
         return view('user/tentang');
     }
-    public function berita()
+    public function berita(Request $request)
     {
-        return view('user/berita');
+        $perPage = 5;
+        $page = request()->query('page', 1);
+        $beritaRaw = DB::select('CALL viewAll_beritaIndex()');
+        $berita = new LengthAwarePaginator(
+            array_slice($beritaRaw, ($page - 1) * $perPage, $perPage),
+            count($beritaRaw),
+            $perPage,
+            $page,
+            ['path' => url()->current()]
+        );
+
+        return view('user/berita', compact('berita'));
     }
 
     public function getKomoditasByKecamatan(Request $request, $id)

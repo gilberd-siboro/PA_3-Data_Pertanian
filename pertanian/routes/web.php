@@ -11,7 +11,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [UserController::class, 'index']);
 Route::get('/tentang', [UserController::class, 'tentang']);
-Route::get('/berita', [UserController::class, 'tentang']);
+Route::get('/berita', [UserController::class, 'berita']);
 Route::get('/komoditas-kecamatan', [UserController::class, 'komoditas_kecamatan']);
 Route::get('/get-komoditas-kecamatan/{id}', [UserController::class, 'getKomoditasByKecamatan'])->name('komoditas.kecamatan');
 Route::get('/persebaran-komoditas', [UserController::class, 'persebaran_komoditas']);

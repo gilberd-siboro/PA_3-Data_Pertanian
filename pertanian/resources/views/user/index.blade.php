@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<section class="ftco-sect   ion services-section">
+<section class="ftco-section services-section">
     <div class="container">
         <div class="row d-flex">
             <div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
@@ -89,30 +89,19 @@
         </div>
 
         <!-- Tambahkan template card di bawah ini -->
-        <section class="articles">
+        <div class="grid">
+            <!-- Card 1 -->
             @foreach($berita as $news)
-            <article>
-                <div class="article-wrapper">
-                    <figure>
-                        <img src="{{ asset('assets/images/' . $news->foto) }}" alt="" />
-                    </figure>
-                    <div class="article-body">
-                        <p>{{ $news->tanggal}}</p>
-                        <h2>{{ $news->judul }}</h2>
-                        <p>
-                            {{ \Illuminate\Support\Str::limit($news->deskripsi, 100, '...') }}
-                        </p>
-                        <a href="#" class="read-more">
-                            Baca Selengkapnya
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </div>
+            <div class="card">
+                <img src="{{ asset('assets/images/' . $news->foto) }}" alt="Berita" />
+                <div class="meta">
+                    <span>{{ $news -> tanggal }}</span>
                 </div>
-            </article>
+                <h2>{{ $news -> judul }}</h2>
+                <p>{{ \Illuminate\Support\Str::limit($news->deskripsi, 100, '...') }}</p>
+            </div>
             @endforeach
-        </section>
+        </div>
         <!-- Akhir card -->
         <div class="row d-flex justify-content-center mt-5">
             <div class="order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
