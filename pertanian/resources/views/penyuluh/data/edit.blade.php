@@ -76,13 +76,24 @@
                     <p class="formatted-date-display">Tanggal Pencatatan: {{ $dataPertanian->tanggal_pencatatan }}</p>
                 </div>
 
-                <!-- <div class="mb-3">
-                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal Pencatatan</label>
-                    <input type="text" id="joiningDateInput" name="tanggal_pencatatan" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y" value="{{ $dataPertanian->tanggal_pencatatan }}">
-                </div> -->
                 <div class="mb-3">
                     <label for="luasLahan" class="inline-block mb-2 text-base font-medium">Alamat Lengkap</label>
                     <input type="text" id="alamatLengkap" name="alamatLengkap" value="{{ old('alamatLengkap', $dataPertanian->alamat_lengkap) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                </div>
+                <div class="mb-3 md:col-span-2">
+                    <label for="gambar" class="inline-block mb-2 text-base font-medium">Gambar Lahan</label>
+                    <div>
+                        <input type="file" name="gambar[]" multiple accept="image/*" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter your name">
+                    </div>
+                </div>
+                <div class="mb-3 md:col-span-2">
+                    <label for="lokasi" class="inline-block mb-2 text-base font-medium">Lokasi</label>
+                    <!-- Leaflet Map Container -->
+                    <div id="map" style="height: 400px;" class="rounded-lg border border-slate-200 dark:border-zink-500 mb-4"></div>
+
+                    <!-- Hidden inputs to store lat/lng -->
+                    <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude', $dataPertanian->latitude) }}">
+                    <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude', $dataPertanian->longitude) }}">
                 </div>
             </div>
             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Edit Data</button>
@@ -297,3 +308,50 @@
     </div>
 </div>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ganti ikon marker default
+        delete L.Icon.Default.prototype._getIconUrl;
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        });
+
+        // Ambil latitude dan longitude dari input hidden
+        var lat = parseFloat(document.getElementById('latitude').value) || 0;
+        var lng = parseFloat(document.getElementById('longitude').value) || 0;
+
+        // Inisialisasi peta dengan koordinat lama (atau default ke 0,0 jika tidak ada data)
+        var map = L.map('map').setView([lat, lng], 13);
+
+        // Menambahkan tile layer OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Menambahkan marker pada posisi lat/lng dengan ikon yang sudah diganti
+        var marker = L.marker([lat, lng], {
+            draggable: true // Membuat marker bisa dipindahkan
+        }).addTo(map);
+
+
+        // Update latitude dan longitude ketika marker dipindahkan
+        marker.on('dragend', function(e) {
+            var latlng = e.target.getLatLng();
+            document.getElementById('latitude').value = latlng.lat;
+            document.getElementById('longitude').value = latlng.lng;
+        });
+
+        // Mengizinkan pengguna untuk mengklik peta dan memindahkan marker
+        map.on('click', function(e) {
+            // Set marker pada posisi klik
+            marker.setLatLng(e.latlng);
+
+            // Update hidden input dengan lat/lng baru
+            document.getElementById('latitude').value = e.latlng.lat;
+            document.getElementById('longitude').value = e.latlng.lng;
+        });
+    });
+</script>

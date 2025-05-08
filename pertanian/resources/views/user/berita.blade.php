@@ -24,7 +24,7 @@
                     <div class="news-title">{{ $news -> judul }}</div>
                     <div class="divider"></div>
                     <div class="news-text">{{ \Illuminate\Support\Str::limit($news->deskripsi, 200, '...') }}</div>
-                    <a href="#" class="news-link">Baca Selengkapnya →</a>
+                    <a href="{{ route('berita.isi', $news->idBerita) }}" class="news-link">Baca Selengkapnya →</a>
                 </div>
             </div>
             @endforeach

@@ -107,14 +107,14 @@
                         <label for="harga" class="inline-block mb-2 text-base font-medium">Harga per Kg</label>
                         <div class="flex items-center">
                             <span class="inline-block px-3 py-2 border ltr:border-r-0 rtl:border-l-0 border-slate-200 dark:border-zink-500 ltr:rounded-l-md rtl:rounded-r-md">Rp</span>
-                            <input type="text" id="inputText" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="harga" class="ltr:rounded-l-none rtl:rounded-r-none form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="00000">
+                            <input type="text" required id="inputText" oninput="this.value = this.value.replace(/[^0-9]/g, '')" name="harga" class="ltr:rounded-l-none rtl:rounded-r-none form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="00000">
                         </div>
                     </div>
                 </div>
                 <div class="xl:col-span-12">
                     <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal
                     </label>
-                    <input type="text" id="joiningDateInput" name="tanggal" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
+                    <input type="text" required id="joiningDateInput" name="tanggal" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
                 </div>
                 <div class="xl:col-span-12">
                     <label for="pasar" class="inline-block mb-2 text-base font-medium">Nama Pasar</label>

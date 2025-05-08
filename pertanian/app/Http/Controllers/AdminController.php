@@ -223,10 +223,54 @@ class AdminController extends Controller
         $dataPertanianData = DB::select('CALL view_dataPertanianById(' . $id . ')');
         $dataPertanian = $dataPertanianData[0];
 
-        return view('admin/data/edit', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian'));
+        $gambarArray = [];
+        if (!empty($dataPertanian->gambar_lahan)) {
+            $gambarArray = explode(',', $dataPertanian->gambar_lahan);
+        }
+        return view('admin/data/edit', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian', 'gambarArray'));
     }
+
+    public function deleteGambar($id)
+    {
+        // Call the stored procedure to delete the image by id
+        DB::statement('CALL delete_gambar(?)', [$id]);
+
+        // Redirect or return a response
+        return redirect()->back()->with('success', 'Gambar berhasil dihapus');
+    }
+    public function detail($id)
+    {
+        $userData = session('userData');
+
+        // Call the stored procedure
+        $dataPertanianData = DB::select('CALL view_dataDetailId(' . $id . ')');
+
+
+        // Akses data pertama
+        $dataPertanian = $dataPertanianData[0];
+
+        // Ubah string gambar_lahan dan id_gambar menjadi array
+        $gambarUrls = explode(',', $dataPertanian->gambar_lahan);
+        $idGambars = explode(',', $dataPertanian->id_gambar);
+
+        // Array untuk gambar
+        $gambarArray = [];
+        foreach ($gambarUrls as $index => $url) {
+            $gambarArray[] = [
+                'id' => $idGambars[$index] ?? null,
+                'url' => $url,
+            ];
+        }
+
+        // Return view with data
+        return view('admin/data/detail', compact('userData', 'dataPertanian', 'gambarArray'));
+    }
+
+
+
     public function update(Request $request, $id)
     {
+        // Proses update data pertanian
         $DataPertanian = json_encode([
             'IdDataPertanian' => $id,
             'Petani' => $request->get('id_petani'),
@@ -237,10 +281,11 @@ class AdminController extends Controller
             'Alamat' => $request->get('alamatLengkap'),
             'TanggalTanam' => $request->get('tanggal_tanam'),
             'TanggalCatat' => $request->get('tanggal_pencatatan'),
+            'Latitude' => $request->get('latitude'),
+            'Longitude' => $request->get('longitude'),
         ]);
 
-
-
+        // Update data pertanian di database
         $dataPertanianData = DB::select('CALL view_dataPertanianById(' . $id . ')');
         $dataPertanian = $dataPertanianData[0];
 
@@ -248,7 +293,33 @@ class AdminController extends Controller
             $response = DB::statement('CALL update_DataPertanian(:dataPertanian)', ['dataPertanian' => $DataPertanian]);
 
             if ($response) {
-                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                // Cek jika ada gambar yang di-upload
+                if ($request->hasFile('gambar')) {
+                    $files = $request->file('gambar');
+                    foreach ($files as $file) {
+                        // Buat nama file unik berdasarkan timestamp dan nama asli file
+                        $fileName = time() . '_' . $file->getClientOriginalName();
+                        $destinationPath = public_path('assets/images'); // Path tempat menyimpan gambar
+
+                        // Pindahkan file ke folder public/assets/images
+                        $file->move($destinationPath, $fileName);
+
+                        // Dapatkan path gambar yang disimpan
+                        $path = $fileName;
+
+                        // Panggil stored procedure untuk memasukkan gambar ke dalam tabel gambar_lahan
+                        $response = DB::statement('CALL insert_gambar(:dataGambar)', [
+                            'dataGambar' => json_encode([
+                                'DataPertanian' => $id,
+                                'UrlGambar' => $path,  // $path adalah URL gambar yang disimpan
+                            ])
+                        ]);
+                    }
+                }
+
+
+
+                toast('Data berhasil diupdate!', 'success')->autoClose(3000);
                 return redirect()->route('AdmindataPertanian.index');
             } else {
                 toast('Data gagal disimpan!', 'error')->autoClose(3000);
@@ -260,8 +331,29 @@ class AdminController extends Controller
         }
     }
 
+
     public function create_data_pertanian(Request $request)
     {
+        // Validasi file gambar
+        $request->validate([
+            'gambar' => 'required',
+            'gambar.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $gambarPaths = [];
+
+        if ($request->hasFile('gambar')) {
+            foreach ($request->file('gambar') as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName(); // Buat nama unik
+                $destinationPath = public_path('assets/images'); // Simpan di public/assets/images
+                $file->move($destinationPath, $fileName); // Pindahkan file
+
+                $gambarPaths[] = $fileName; // Simpan path relatif jika diperlukan
+            }
+        }
+
+
+        // Menyiapkan data untuk disimpan
         $DataPertanian = json_encode([
             'Petani' => $request->get('id_petani'),
             'Lahan' => $request->get('id_lahan'),
@@ -271,19 +363,37 @@ class AdminController extends Controller
             'Alamat' => $request->get('alamat_lengkap'),
             'TanggalTanam' => $request->get('tanggal_tanam'),
             'TanggalCatat' => $request->get('tanggal_pencatatan'),
-            'Pencatat' => session('userData')->user_id
+            'Pencatat' => session('userData')->user_id,
+            'GambarLahan' => $gambarPaths,
+            'Latitude' => $request->get('latitude'),
+            'Longitude' => $request->get('longitude'),
+
         ]);
 
-        $response = DB::statement('CALL insert_dataPertanian(:dataPertanian)', ['dataPertanian' => $DataPertanian]);
+        // dd($DataPertanian);
 
-        if ($response) {
-            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+        try {
+            // Jalankan stored procedure dan ambil hasil SELECT
+            $result = DB::select('CALL insert_dataPertanian(:dataPertanian)', [
+                'dataPertanian' => $DataPertanian
+            ]);
+            // dd($result);
+            // Ambil nilai 'status' dari hasil stored procedure
+            $status = $result[0]->STATUS ?? 'ERROR';
+
+            if ($status === 'SUCCESS') {
+                toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            }
             return redirect()->route('AdmindataPertanian.index');
-        } else {
-            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+        } catch (\Exception $e) {
+            toast('Terjadi kesalahan: ' . $e->getMessage(), 'error')->autoClose(5000);
             return redirect()->route('AdmindataPertanian.index');
         }
     }
+
+
 
 
     public function delete(Request $request, $id)
@@ -1307,21 +1417,37 @@ class AdminController extends Controller
 
     public function create_kecamatan(Request $request)
     {
-        $Kecamatan = json_encode([
-            'Kecamatan' => $request->get('dis_name'),
+        $dis_name = $request->get('dis_name');
 
+        // Ambil semua data kecamatan
+        $existingKecamatan = DB::select('CALL viewAll_kecamatan()');
+
+        // Cek apakah dis_name sudah ada (case-insensitive)
+        $isDuplicate = collect($existingKecamatan)->contains(function ($item) use ($dis_name) {
+            return strtolower($item->dis_name) === strtolower($dis_name); // pastikan sesuaikan nama kolomnya
+        });
+
+        if ($isDuplicate) {
+            toast('Nama kecamatan sudah ada!', 'error')->autoClose(3000);
+            return redirect()->back()->withInput();
+        }
+
+        // Jika tidak duplikat, insert
+        $Kecamatan = json_encode([
+            'Kecamatan' => $dis_name,
         ]);
 
         $response = DB::statement('CALL insert_kecamatan(:dataKecamatan)', ['dataKecamatan' => $Kecamatan]);
 
         if ($response) {
             toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
-            return redirect()->route('kecamatan.index');
         } else {
             toast('Data gagal disimpan!', 'error')->autoClose(3000);
-            return redirect()->route('kecamatan.index');
         }
+
+        return redirect()->route('kecamatan.index');
     }
+
 
     public function edit_kecamatan($id)
     {
@@ -1334,11 +1460,26 @@ class AdminController extends Controller
 
     public function update_kecamatan(Request $request, $id)
     {
+
+        $dis_name = $request->get('kecamatan');
+
+        // Ambil semua data kecamatan
+        $existingKecamatan = DB::select('CALL viewAll_kecamatan()');
+
+        // Cek apakah dis_name sudah ada (case-insensitive)
+        $isDuplicate = collect($existingKecamatan)->contains(function ($item) use ($dis_name) {
+            return strtolower($item->dis_name) === strtolower($dis_name); // pastikan sesuaikan nama kolomnya
+        });
+
+        if ($isDuplicate) {
+            toast('Nama kecamatan sudah ada!', 'error')->autoClose(3000);
+            return redirect()->back()->withInput();
+        }
+
         $Kecamatan = json_encode([
             'IdKecamatan' => $id,
             'Kecamatan' => $request->get('kecamatan'),
         ]);
-
 
 
         $kecamatanData = DB::select('CALL view_kecamatanById(' . $id . ')');
@@ -1374,6 +1515,23 @@ class AdminController extends Controller
 
     public function create_desa(Request $request)
     {
+
+        $subdis_name = $request->get('subdis_name');
+        $existingDesa = DB::select('CALL viewAll_desa()');
+
+
+
+        // Cek apakah dis_name sudah ada (case-insensitive)
+        $isDuplicate = collect($existingDesa)->contains(function ($item) use ($subdis_name) {
+            return strtolower($item->subdis_name) === strtolower($subdis_name); // pastikan sesuaikan nama kolomnya
+        });
+
+        if ($isDuplicate) {
+            toast('Nama Desa sudah ada!', 'error')->autoClose(3000);
+            return redirect()->back()->withInput();
+        }
+
+
         $Desa = json_encode([
             'NamaDesa' => $request->get('subdis_name'),
             'Kecamatan' => $request->get('dis_id'),
@@ -1384,10 +1542,8 @@ class AdminController extends Controller
 
         if ($response) {
             toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
-            return redirect()->route('desa.index');
         } else {
             toast('Data gagal disimpan!', 'error')->autoClose(3000);
-            return redirect()->route('desa.index');
         }
     }
 
@@ -1779,10 +1935,10 @@ class AdminController extends Controller
     public function berita()
     {
         $userData = session('userData');
-        $berita = DB::select('CALL viewAll_berita()');
+        $berita = DB::select('CALL viewAll_beritaIndex()');
         $totalData = count($berita);
 
-        return view('admin/berita/index', compact('totalData', 'userData','berita'));
+        return view('admin/berita/index', compact('totalData', 'userData', 'berita'));
     }
 
     public function create_berita(Request $request)
@@ -1806,10 +1962,11 @@ class AdminController extends Controller
             'Judul' => $request->get('judul'),
             'Deskripsi' => $request->get('deskripsi'),
             'Tanggal' => $request->get('tanggal'),
+            'Waktu' => $request->get('waktu'),
             'User' => session('userData')->user_id,
             'Foto' => $fileName, // Simpan path file foto
         ]);
-
+        // dd($Berita);
         $response = DB::statement('CALL insert_berita(:dataBerita)', ['dataBerita' => $Berita]);
 
         if ($response) {
@@ -1897,90 +2054,89 @@ class AdminController extends Controller
     }
 
 
-        // ---------- Bantuan ---------------
+    // ---------- Bantuan ---------------
 
-        public function bantuan()
-        {
-            $userData = session('userData');
-            $bantuan = DB::select('CALL viewAll_bantuan()');
-            $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
-            $totalData = count($bantuan);
-    
-            return view('admin/bantuan/index', compact('totalData', 'userData', 'bantuan', 'kelompokTani'));
+    public function bantuan()
+    {
+        $userData = session('userData');
+        $bantuan = DB::select('CALL viewAll_bantuan()');
+        $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
+        $totalData = count($bantuan);
+
+        return view('admin/bantuan/index', compact('totalData', 'userData', 'bantuan', 'kelompokTani'));
+    }
+
+    public function create_bantuan(Request $request)
+    {
+        $Bantuan = json_encode([
+            'JenisBantuan' => $request->get('jenis'),
+            'Tanggal' => $request->get('tanggal'),
+            'KelompokTani' => $request->get('kel_tani'),
+
+        ]);
+
+        $response = DB::statement('CALL insert_bantuan(:dataBantuan)', ['dataBantuan' => $Bantuan]);
+
+        if ($response) {
+            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            return redirect()->route('Adminbantuan.index');
+        } else {
+            toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            return redirect()->route('Adminbantuan.index');
         }
-    
-        public function create_bantuan(Request $request)
-        {
-            $Bantuan = json_encode([
-                'JenisBantuan' => $request->get('jenis'),
-                'Tanggal' => $request->get('tanggal'),
-                'KelompokTani' => $request->get('kel_tani'),
-    
-            ]);
-    
-            $response = DB::statement('CALL insert_bantuan(:dataBantuan)', ['dataBantuan' => $Bantuan]);
-    
+    }
+
+    public function edit_bantuan($id)
+    {
+        $userData = session('userData');
+        $bantuanData = DB::select('CALL view_bantuanById(' . $id . ')');
+        $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
+        $bantuan = $bantuanData[0];
+
+
+        return view('admin/bantuan/edit', compact('userData', 'bantuan', 'kelompokTani'));
+    }
+
+    public function update_bantuan(Request $request, $id)
+    {
+        $Bantuan = json_encode([
+            'IdBantuan' => $id,
+            'JenisBantuan' => $request->get('jenis'),
+            'Tanggal' => $request->get('tanggal'),
+            'KelompokTani' => $request->get('kel_tani'),
+        ]);
+
+
+
+        $bantuanData = DB::select('CALL view_bantuanById(' . $id . ')');
+        $bantuan = $bantuanData[0];
+
+        if ($bantuan) {
+            $response = DB::statement('CALL update_bantuan(:dataBantuan)', ['dataBantuan' => $Bantuan]);
+
             if ($response) {
-                toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+                toast('Data berhasil Di update!', 'success')->autoClose(3000);
                 return redirect()->route('Adminbantuan.index');
             } else {
                 toast('Data gagal disimpan!', 'error')->autoClose(3000);
                 return redirect()->route('Adminbantuan.index');
             }
-        }
-    
-        public function edit_bantuan($id)
-        {
-            $userData = session('userData');
-            $bantuanData = DB::select('CALL view_bantuanById(' . $id . ')');
-            $kelompokTani = DB::select('CALL viewAll_kelompokTaniFull()');
-            $bantuan = $bantuanData[0];
-    
-    
-            return view('admin/bantuan/edit', compact('userData', 'bantuan', 'kelompokTani'));
-        }
-    
-        public function update_bantuan(Request $request, $id)
-        {
-            $Bantuan = json_encode([
-                'IdBantuan' => $id,
-                'JenisBantuan' => $request->get('jenis'),
-                'Tanggal' => $request->get('tanggal'),
-                'KelompokTani' => $request->get('kel_tani'),
-            ]);
-    
-    
-    
-            $bantuanData = DB::select('CALL view_bantuanById(' . $id . ')');
-            $bantuan = $bantuanData[0];
-    
-            if ($bantuan) {
-                $response = DB::statement('CALL update_bantuan(:dataBantuan)', ['dataBantuan' => $Bantuan]);
-    
-                if ($response) {
-                    toast('Data berhasil Di update!', 'success')->autoClose(3000);
-                    return redirect()->route('Adminbantuan.index');
-                } else {
-                    toast('Data gagal disimpan!', 'error')->autoClose(3000);
-                    return redirect()->route('Adminbantuan.index');
-                }
-            } else {
-                toast('Data tidak ditemukan!', 'error')->autoClose(3000);
-                return redirect()->route('Adminbantuan.index');
-            }
-        }
-    
-        public function delete_bantuan($id)
-        {
-            $response = DB::statement('CALL delete_bantuan(?)', [$id]);
-    
-            if ($response) {
-                toast('Data berhasil dihapus!', 'success')->autoClose(3000);
-            } else {
-                toast('Data gagal dihapus!', 'error')->autoClose(3000);
-            }
-    
+        } else {
+            toast('Data tidak ditemukan!', 'error')->autoClose(3000);
             return redirect()->route('Adminbantuan.index');
         }
-    
+    }
+
+    public function delete_bantuan($id)
+    {
+        $response = DB::statement('CALL delete_bantuan(?)', [$id]);
+
+        if ($response) {
+            toast('Data berhasil dihapus!', 'success')->autoClose(3000);
+        } else {
+            toast('Data gagal dihapus!', 'error')->autoClose(3000);
+        }
+
+        return redirect()->route('Adminbantuan.index');
+    }
 }

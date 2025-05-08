@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Agromob - Dinas Pertanian</title>
+    <title>Sipotani - Dinas Pertanian</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,24 +12,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
 
 
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="/">Agromob<span>Dinas Pertanian</span></a>
+            <a class="navbar-brand" href="/">Sipotani<span>Dinas Pertanian</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
             </button>
@@ -66,31 +66,20 @@
     <!-- END nav -->
     @yield('content')
 
-    <footer class="ftco-footer bg-bottom ftco-no-pt" style="background-image: url(images/bg.jpg);">
+    <footer class="ftco-footer bg-bottom ftco-no-pt" style="background-image: url('{{ asset('images/bg.jpg') }}');">
         <div class="container">
             <div class="row mb-5">
-                <!-- <div class="col-md pt-5">
-                    <div class="ftco-footer-widget pt-md-5 mb-4">
-                        <h2 class="ftco-heading-2">About</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
-                            <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
-                        </ul>
-                    </div>
-                </div> -->
                 <div class="col-md pt-5 border-left">
                     <div class="ftco-footer-widget pt-md-5 mb-4 ml-md-5">
                         <h2 class="ftco-heading-2">Informasi</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">Beranda</a></li>
-                            <li><a href="#" class="py-2 d-block">Tentang</a></li>
-                            <li><a href="#" class="py-2 d-block">Komoditas Kecamatan</a></li>
-                            <li><a href="#" class="py-2 d-block">Persebaran Komoditas</a></li>
-                            <li><a href="#" class="py-2 d-block">Harga Komoditas</a></li>
-                            <li><a href="#" class="py-2 d-block">Tren Harga Komoditas</a></li>
-                            <li><a href="#" class="py-2 d-block">Berita</a></li>
+                            <li><a href="/" class="py-2 d-block">Beranda</a></li>
+                            <li><a href="/tentang" class="py-2 d-block">Tentang</a></li>
+                            <li><a href="/komoditas-kecamatan" class="py-2 d-block">Komoditas Kecamatan</a></li>
+                            <li><a href="/persebaran-komoditas" class="py-2 d-block">Persebaran Komoditas</a></li>
+                            <li><a href="/harga-komoditas" class="py-2 d-block">Harga Komoditas</a></li>
+                            <li><a href="/tren-harga" class="py-2 d-block">Tren Harga Komoditas</a></li>
+                            <li><a href="/berita" class="py-2 d-block">Berita</a></li>
                         </ul>
                     </div>
                 </div>
@@ -117,9 +106,9 @@
                     </div>
                 </div>
                 <div class="col-md pt-5 border-left">
-                    <div class="ftco-footer-widget pt-md-5 mb-4">
+                    <div class="ftco-footer-widget pt-md-5 mb-4 text-center">
                         <h2 class="ftco-heading-2">Dinas Pertanian Tapanuli Utara</h2>
-
+                        <img src="{{ asset('images/logo_dinas.png') }}" alt="Logo Dinas" class="img-fluid mt-3" style="max-width: 200px;">
                     </div>
                 </div>
             </div>
@@ -135,23 +124,22 @@
         </svg></div>
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/scrollax.min.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+    <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/scrollax.min.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
+    <script src="{{ asset('js/google-map.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-
 </body>
 
 </html>

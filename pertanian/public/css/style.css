@@ -5110,7 +5110,13 @@ input[type="button"].btn-block {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+
+  /* Tambahkan ini untuk drop shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* background: rgba(255, 255, 255, 0.2); */
+  backdrop-filter: blur(3px);
 }
+
 
 .navbar .container,
 .navbar .container-fluid,
@@ -12144,7 +12150,7 @@ h5,
 
 @media (max-width: 991.98px) {
   .ftco-navbar-light {
-    background: #000000 !important;
+    background: #000 !important;
     position: relative;
     top: 0;
     padding-top: 0;
@@ -12166,9 +12172,10 @@ h5,
 
 @media (max-width: 991.98px) {
   .ftco-navbar-light .navbar-brand {
-    color: #fff;
+    color: #fff !important;
     padding-top: 1rem;
     padding-bottom: 1rem;
+
   }
 }
 
@@ -12434,6 +12441,12 @@ h5,
   padding-bottom: 1rem;
 }
 
+@media (max-width: 991.98px) {
+  .ftco-navbar-light.scrolled .navbar-brand {
+    color: #000 !important;
+  }
+}
+
 .navbar-brand {
   font-weight: 700;
   font-size: 24px;
@@ -12468,7 +12481,7 @@ h5,
   bottom: 0;
   content: '';
   opacity: .3;
-  background: #000000;
+  /* background: #000000; */
 }
 
 .hero-wrap.hero-wrap-2 .overlay {
@@ -13342,7 +13355,7 @@ textarea.form-control {
 }
 
 .ftco-section {
-  padding: 7em 0;
+  padding: 7em 7em 0 7em;
   position: relative;
   width: 100%;
 }

@@ -34,6 +34,14 @@ class UserController extends Controller
         return view('user/berita', compact('berita'));
     }
 
+    public function isiBerita($id)
+    {
+        $beritaData = DB::select('CALL view_beritaById(' . $id . ')');
+        $berita = $beritaData[0];
+
+        return view('user/isiberita', compact('berita'));
+    }
+
     public function getKomoditasByKecamatan(Request $request, $id)
     {
         $perPage = 6; // Jumlah item per halaman

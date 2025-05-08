@@ -120,13 +120,13 @@
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="nip" class="inline-block mb-2 text-base font-medium">NIP</label>
-                        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="nip" name="nip" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="NIP">
+                        <input type="text" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="nip" name="nip" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="NIP">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="nama_pegawai" class="inline-block mb-2 text-base font-medium">Nama Pegawai</label>
-                        <input type="text" id="nama_pegawai" name="nama_pegawai" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Pegawai">
+                        <input type="text" required id="nama_pegawai" name="nama_pegawai" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Nama Pegawai">
                     </div>
                 </div>
                 <div class="xl:col-span-12">
@@ -159,26 +159,26 @@
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="alamat" class="inline-block mb-2 text-base font-medium">Alamat</label>
-                        <input type="text" id="alamat" name="alamat" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Status">
+                        <input type="text" required id="alamat" name="alamat" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Status">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="ponsel" class="inline-block mb-2 text-base font-medium">No Ponsel</label>
-                        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="ponsel" min=0 name="ponsel" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="08xx-xxxx-xxxx">
+                        <input type="text" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="ponsel" min=0 name="ponsel" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="08xx-xxxx-xxxx">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="wa" class="inline-block mb-2 text-base font-medium">No WA</label>
-                        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="wa" min=0 name="wa" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="08xx-xxxx-xxxx">
+                        <input type="text" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="wa" min=0 name="wa" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="08xx-xxxx-xxxx">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="foto" class="inline-block mb-2 text-base font-medium">Foto</label>
                         <div>
-                            <input type="file" name="foto" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter your name">
+                            <input type="file" required name="foto" class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500" placeholder="Enter your name">
                         </div>
                     </div>
                 </div>

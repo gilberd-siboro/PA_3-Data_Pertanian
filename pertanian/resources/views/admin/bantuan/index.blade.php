@@ -89,13 +89,13 @@
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="jenis" class="inline-block mb-2 text-base font-medium">Jenis Bantuan</label>
-                        <input type="text" id="jenis" name="jenis" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Bantuan">
+                        <input type="text" required id="jenis" name="jenis" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Jenis Bantuan">
                     </div>
                 </div>
                 <div class="xl:col-span-6">
                     <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Tanggal
                         </label>
-                    <input type="text" id="joiningDateInput" name="tanggal" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
+                    <input type="text" required id="joiningDateInput" name="tanggal" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Pilih Tanggal" data-provider="flatpickr" data-date-format="d M, Y">
                 </div>
                 <div class="xl:col-span-12">
                     <label for="kel_tani" class="inline-block mb-2 text-base font-medium">Kelompok Tani</label>

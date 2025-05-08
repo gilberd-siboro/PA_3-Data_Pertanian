@@ -14,7 +14,7 @@
   </div>
 </section>
 
-<section class="ftco-section ftco-about ftco-no-pt img">
+<section class="ftco-section ftco-about ftco-no-pt img mb-4">
   <div class="container">
     <div class="row d-flex">
       <div class="col-md-12 about-intro">
@@ -47,14 +47,5 @@
       </div>
     </div>
   </div>
-  <!-- <div class="container1">
-    <img src="images/tomat.jpg" alt="Petani" class="image">
-    <div class="text1">Departemen Pertanian didirikan pada tanggal 1 Januari 1905 berdasarkan Surat Keputusan Gubernur Jenderal Hindia Belanda...</div>
-    <p>lorem15</p>
-    <div class="text1">Pada masa penjajahan Belanda urusan pertanian ditangani oleh Departement van Landbouw...</div>
-    <img src="images/wortel.jpg" alt="Kakao" class="image">
-    <img src="images/andaliman.jpg" alt="Tomat" class="image">
-    <div class="text1">Sejak tanggal 19 Agustus 1945, urusan pertanian, perdagangan, dan industrialisasi berada di bawah Kementerian Kemakmuran...</div>
-  </div> -->
 </section>
 @endsection

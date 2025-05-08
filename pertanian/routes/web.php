@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PenyuluhController;
+
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PenyuluhController;
 
 
 // ----------- USER -----------
@@ -12,6 +13,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', [UserController::class, 'index']);
 Route::get('/tentang', [UserController::class, 'tentang']);
 Route::get('/berita', [UserController::class, 'berita']);
+Route::get('/berita/{id}', [UserController::class, 'isiBerita'])->name('berita.isi');
 Route::get('/komoditas-kecamatan', [UserController::class, 'komoditas_kecamatan']);
 Route::get('/get-komoditas-kecamatan/{id}', [UserController::class, 'getKomoditasByKecamatan'])->name('komoditas.kecamatan');
 Route::get('/persebaran-komoditas', [UserController::class, 'persebaran_komoditas']);
@@ -44,6 +46,8 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::post('/admin-tambah-data-pertanian', [AdminController::class, 'create_data_pertanian']);
     Route::get('/admin-data-pertanian/edit/{id}', [AdminController::class, 'edit'])->name('AdmindataPertanian.edit');
     Route::post('/admin-data-pertanian/update/{id}', [AdminController::class, 'update'])->name('AdmindataPertanian.update');
+    Route::delete('/adminGambar/{id}', [AdminController::class, 'deleteGambar'])->name('gambar.delete');
+    Route::get('/admin-data-pertanian/detail/{id}', [AdminController::class, 'detail'])->name('AdmindataPertanian.detail');
     Route::post('/admin-data-pertanian/delete/{id}', [AdminController::class, 'delete'])->name('AdmindataPertanian.delete');
 
     // -- Jenis Komoditas --
@@ -168,7 +172,7 @@ Route::middleware(['Role:Admin'])->group(function () {
     Route::get('/admin-berita/edit/{id}', [AdminController::class, 'edit_berita'])->name('Adminberita.edit');
     Route::post('/admin-berita/update/{id}', [AdminController::class, 'update_berita'])->name('Adminberita.update');
     Route::post('/admin-berita/delete/{id}', [AdminController::class, 'delete_berita'])->name('Adminberita.delete');
-    
+
     // -- Bantuan --
     Route::get('/admin-bantuan', [AdminController::class, 'bantuan'])->name('Adminbantuan.index');
     Route::post('/admin-tambah-bantuan', [AdminController::class, 'create_bantuan']);
@@ -188,6 +192,8 @@ Route::middleware(['Role:Penyuluh'])->group(function () {
     Route::post('/tambah-data-pertanian', [PenyuluhController::class, 'create_data_pertanian']);
     Route::get('/data-pertanian/edit/{id}', [PenyuluhController::class, 'edit'])->name('dataPertanian.edit');
     Route::post('/data-pertanian/update/{id}', [PenyuluhController::class, 'update'])->name('dataPertanian.update');
+    Route::delete('/gambar/{id}', [PenyuluhController::class, 'deleteGambar'])->name('Pgambar.delete');
+    Route::get('/data-pertanian/detail/{id}', [PenyuluhController::class, 'detail'])->name('dataPertanian.detail');
     Route::post('/data-pertanian/delete/{id}', [PenyuluhController::class, 'delete'])->name('dataPertanian.delete');
 
     // -- Harga Pasar --

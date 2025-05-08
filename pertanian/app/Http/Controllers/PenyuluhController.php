@@ -60,6 +60,8 @@ class PenyuluhController extends Controller
         return response()->json($response);
     }
 
+    // ---------------- Data Pertanian --------------------
+
     public function data_pertanian()
     {
         $userData = session('userData');
@@ -73,6 +75,68 @@ class PenyuluhController extends Controller
         return view('penyuluh/data/index', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian', 'totalData'));
     }
 
+    public function create_data_pertanian(Request $request)
+    {
+        // Validasi file gambar
+        $request->validate([
+            'gambar' => 'required',
+            'gambar.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $gambarPaths = [];
+
+        if ($request->hasFile('gambar')) {
+            foreach ($request->file('gambar') as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName(); // Buat nama unik
+                $destinationPath = public_path('assets/images'); // Simpan di public/assets/images
+                $file->move($destinationPath, $fileName); // Pindahkan file
+
+                $gambarPaths[] = $fileName; // Simpan path relatif jika diperlukan
+            }
+        }
+
+
+        // Menyiapkan data untuk disimpan
+        $DataPertanian = json_encode([
+            'Petani' => $request->get('id_petani'),
+            'Lahan' => $request->get('id_lahan'),
+            'Komoditas' => $request->get('id_komoditas'),
+            'LuasLahan' => $request->get('luas_lahan'),
+            'Desa' => $request->get('subdis_id'),
+            'Alamat' => $request->get('alamat_lengkap'),
+            'TanggalTanam' => $request->get('tanggal_tanam'),
+            'TanggalCatat' => $request->get('tanggal_pencatatan'),
+            'Pencatat' => session('userData')->user_id,
+            'GambarLahan' => $gambarPaths,
+            'Latitude' => $request->get('latitude'),
+            'Longitude' => $request->get('longitude'),
+
+        ]);
+
+        // dd($DataPertanian);
+
+        try {
+            // Jalankan stored procedure dan ambil hasil SELECT
+            $result = DB::select('CALL insert_dataPertanian(:dataPertanian)', [
+                'dataPertanian' => $DataPertanian
+            ]);
+            // dd($result);
+            // Ambil nilai 'status' dari hasil stored procedure
+            $status = $result[0]->STATUS ?? 'ERROR';
+
+            if ($status === 'SUCCESS') {
+                toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
+            } else {
+                toast('Data gagal disimpan!', 'error')->autoClose(3000);
+            }
+            return redirect()->route('dataPertanian.index');
+        } catch (\Exception $e) {
+            toast('Terjadi kesalahan: ' . $e->getMessage(), 'error')->autoClose(5000);
+            return redirect()->route('dataPertanian.index');
+        }
+    }
+
+
     public function edit($id)
     {
         $userData = session('userData');
@@ -83,10 +147,16 @@ class PenyuluhController extends Controller
         $dataPertanianData = DB::select('CALL view_dataPertanianById(' . $id . ')');
         $dataPertanian = $dataPertanianData[0];
 
-        return view('penyuluh/data/edit', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian'));
+        $gambarArray = [];
+        if (!empty($dataPertanian->gambar_lahan)) {
+            $gambarArray = explode(',', $dataPertanian->gambar_lahan);
+        }
+        return view('penyuluh/data/edit', compact('userData', 'petani', 'lahan', 'desa', 'komoditas', 'dataPertanian', 'gambarArray'));
     }
+
     public function update(Request $request, $id)
     {
+        // Proses update data pertanian
         $DataPertanian = json_encode([
             'IdDataPertanian' => $id,
             'Petani' => $request->get('id_petani'),
@@ -97,10 +167,11 @@ class PenyuluhController extends Controller
             'Alamat' => $request->get('alamatLengkap'),
             'TanggalTanam' => $request->get('tanggal_tanam'),
             'TanggalCatat' => $request->get('tanggal_pencatatan'),
+            'Latitude' => $request->get('latitude'),
+            'Longitude' => $request->get('longitude'),
         ]);
 
-
-
+        // Update data pertanian di database
         $dataPertanianData = DB::select('CALL view_dataPertanianById(' . $id . ')');
         $dataPertanian = $dataPertanianData[0];
 
@@ -108,7 +179,33 @@ class PenyuluhController extends Controller
             $response = DB::statement('CALL update_DataPertanian(:dataPertanian)', ['dataPertanian' => $DataPertanian]);
 
             if ($response) {
-                toast('Data berhasil Di update!', 'success')->autoClose(3000);
+                // Cek jika ada gambar yang di-upload
+                if ($request->hasFile('gambar')) {
+                    $files = $request->file('gambar');
+                    foreach ($files as $file) {
+                        // Buat nama file unik berdasarkan timestamp dan nama asli file
+                        $fileName = time() . '_' . $file->getClientOriginalName();
+                        $destinationPath = public_path('assets/images'); // Path tempat menyimpan gambar
+
+                        // Pindahkan file ke folder public/assets/images
+                        $file->move($destinationPath, $fileName);
+
+                        // Dapatkan path gambar yang disimpan
+                        $path = $fileName;
+
+                        // Panggil stored procedure untuk memasukkan gambar ke dalam tabel gambar_lahan
+                        $response = DB::statement('CALL insert_gambar(:dataGambar)', [
+                            'dataGambar' => json_encode([
+                                'DataPertanian' => $id,
+                                'UrlGambar' => $path,  // $path adalah URL gambar yang disimpan
+                            ])
+                        ]);
+                    }
+                }
+
+
+
+                toast('Data berhasil diupdate!', 'success')->autoClose(3000);
                 return redirect()->route('dataPertanian.index');
             } else {
                 toast('Data gagal disimpan!', 'error')->autoClose(3000);
@@ -120,30 +217,42 @@ class PenyuluhController extends Controller
         }
     }
 
-    public function create_data_pertanian(Request $request)
+    public function deleteGambar($id)
     {
-        $DataPertanian = json_encode([
-            'Petani' => $request->get('id_petani'),
-            'Lahan' => $request->get('id_lahan'),
-            'Komoditas' => $request->get('id_komoditas'),
-            'LuasLahan' => $request->get('luas_lahan'),
-            'Desa' => $request->get('subdis_id'),
-            'Alamat' => $request->get('alamat_lengkap'),
-            'TanggalTanam' => $request->get('tanggal_tanam'),
-            'TanggalCatat' => $request->get('tanggal_pencatatan'),
-            'Pencatat' => session('userData')->user_id
-        ]);
+        // Call the stored procedure to delete the image by id
+        DB::statement('CALL delete_gambar(?)', [$id]);
 
-        $response = DB::statement('CALL insert_dataPertanian(:dataPertanian)', ['dataPertanian' => $DataPertanian]);
-
-        if ($response) {
-            toast('Data berhasil ditambahkan!', 'success')->autoClose(3000);
-            return redirect()->route('dataPertanian.index');
-        } else {
-            toast('Data gagal disimpan!', 'error')->autoClose(3000);
-            return redirect()->route('dataPertanian.index');
-        }
+        // Redirect or return a response
+        return redirect()->back()->with('success', 'Gambar berhasil dihapus');
     }
+    public function detail($id)
+    {
+        $userData = session('userData');
+
+        // Call the stored procedure
+        $dataPertanianData = DB::select('CALL view_dataDetailId(' . $id . ')');
+
+
+        // Akses data pertama
+        $dataPertanian = $dataPertanianData[0];
+
+        // Ubah string gambar_lahan dan id_gambar menjadi array
+        $gambarUrls = explode(',', $dataPertanian->gambar_lahan);
+        $idGambars = explode(',', $dataPertanian->id_gambar);
+
+        // Array untuk gambar
+        $gambarArray = [];
+        foreach ($gambarUrls as $index => $url) {
+            $gambarArray[] = [
+                'id' => $idGambars[$index] ?? null,
+                'url' => $url,
+            ];
+        }
+
+        // Return view with data
+        return view('penyuluh/data/detail', compact('userData', 'dataPertanian', 'gambarArray'));
+    }
+
 
 
     public function delete(Request $request, $id)
