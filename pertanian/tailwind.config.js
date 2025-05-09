@@ -1,4 +1,4 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -14,7 +14,10 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            spacing: {
+                header: '64px', // ✅ add this line with your intended value
+            },
         },
     },
     plugins: [],
-};
+}

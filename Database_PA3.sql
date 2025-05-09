@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 08/05/2025 11:41:49
+ Date: 09/05/2025 08:15:41
 */
 
 SET NAMES utf8mb4;
@@ -56,17 +56,18 @@ CREATE TABLE `berita`  (
   PRIMARY KEY (`idBerita`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `berita_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of berita
 -- ----------------------------
-INSERT INTO `berita` VALUES (1, 'Tes', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta nulla repellat eligendi officiis quam consequuntur esse quidem tempora aperiam minima!', '1745288712_11422046_MingguKe12.jpg', 1, '2025-04-22 09:25:12', '2025-04-24 13:30:18', 0);
-INSERT INTO `berita` VALUES (2, 'asd', 'asdsa', '1745977331_ERD.jpg', 1, '2025-04-30 08:42:11', NULL, 0);
-INSERT INTO `berita` VALUES (3, 'asd', 'asd', '1745977434_background.jpg', 1, '2025-04-30 08:43:54', NULL, 0);
-INSERT INTO `berita` VALUES (4, 'asd', 'asdasdads', '1745977601_Dashboard-Admin.png', 1, '2025-04-30 08:46:41', '2025-04-30 08:46:57', 0);
-INSERT INTO `berita` VALUES (5, 'asd', 'asd', '1746277987_Dashboard-Admin.png', 1, '2025-05-03 20:13:07', NULL, 0);
-INSERT INTO `berita` VALUES (6, 'asd', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae debitis corrupti, repudiandae rem minima maiores voluptas fugiat distinctio reiciendis molestiae obcaecati numquam laboriosam quibusdam error reprehenderit eius in animi! Aspernatur amet nemo placeat cumque soluta aliquam iusto, illum reiciendis labore at, quisquam animi ipsa molestiae. Ullam debitis dolorum rerum voluptatem veniam perspiciatis obcaecati eveniet fugiat enim veritatis ab quibusdam unde dicta pariatur, tempora amet, fugit accusamus ex? Laudantium nam nostrum exercitationem mollitia voluptate! Ullam, maxime veritatis quae nihil officiis autem totam nemo illo porro labore consectetur dolore dolorum possimus quos, expedita delectus! Libero ad impedit, dolorum mollitia harum neque maxime hic fugiat vitae consequuntur voluptates quaerat rem nobis molestias aliquid odio sunt vero numquam repellendus? Ipsa atque eos vitae corrupti tempore quas, molestiae et perferendis. Praesentium temporibus ea quasi illum! Vel est error id rerum provident, laboriosam aliquid sapiente iure fugiat voluptate iste hic, magni cupiditate accusantium? Culpa, necessitatibus aliquid ea, dolorum reprehenderit mollitia autem animi suscipit laudantium, deserunt incidunt. Ipsa officiis ullam tempora dolor facilis optio asperiores quo dicta quas modi harum deserunt exercitationem dolores sapiente id, quos, laudantium voluptatem, minima delectus a beatae. Dicta dolore corporis nemo modi reiciendis, debitis odit voluptate pariatur, a exercitationem temporibus sint obcaecati?\r\n\r\nLorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus dignissimos ipsam voluptate expedita nulla et inventore, laudantium, voluptatibus rerum suscipit officia at in numquam eveniet necessitatibus culpa doloremque quos cumque maxime ab? Illum rerum consequatur commodi. Qui sint repudiandae atque. Vel dignissimos et cum dolor reiciendis voluptate facere, blanditiis aliquid repellendus neque recusandae animi unde libero eos nulla accusamus illo quidem impedit nemo. Quaerat deserunt voluptas dolorem, explicabo ea illo voluptate, vel dolores sapiente praesentium id ut. Ducimus quaerat, aut sint facilis aperiam doloremque blanditiis veritatis ullam repellendus atque sunt minus distinctio suscipit placeat minima id ex nostrum dolorum perferendis?', '1746279310_Dashboard-Admin.png', 1, '2025-05-03 20:35:10', '2025-05-05 19:30:13', 0);
+INSERT INTO `berita` VALUES (1, 'Tes', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta nulla repellat eligendi officiis quam consequuntur esse quidem tempora aperiam minima!', '1745288712_11422046_MingguKe12.jpg', 1, '2025-04-22 09:25:12', '2025-05-08 13:47:34', 1);
+INSERT INTO `berita` VALUES (2, 'Bu Andien Diduga Menghancurkan Sawah: Kontroversi di Desa', 'Desa setempat dikejutkan oleh insiden yang melibatkan seorang wanita bernama Bu Andien, yang diduga telah menghancurkan sawah milik petani. Kejadian ini memicu perdebatan di kalangan warga desa mengenai kondisi mental dan tindakan yang diambil.', '1746686830_th (4).jpeg', 1, '2025-04-30 08:42:11', '2025-05-08 13:48:14', 0);
+INSERT INTO `berita` VALUES (3, 'Ancaman Kucing Liar: Ladang Pertanian di Desa Ynnoj Terancam', 'Desa Ynnoj kini menghadapi masalah serius akibat serangan kucing liar yang merusak ladang pertanian. Para petani melaporkan bahwa kucing-kucing tersebut telah mengganggu tanaman mereka, menyebabkan kerugian yang signifikan.', '1746686135_th (3).jpeg', 1, '2025-04-30 08:43:54', '2025-05-08 13:35:35', 0);
+INSERT INTO `berita` VALUES (4, 'Harga Tomat Diperkirakan Naik di Pasar Sidoal: Apa Penyebabnya?', 'Pasar Sidoal diperkirakan akan mengalami kenaikan harga tomat dalam beberapa minggu ke depan. Para pedagang dan petani setempat mengindikasikan bahwa beberapa faktor telah berkontribusi terhadap tren ini, yang dapat memengaruhi konsumen dan rantai pasok', '1746685953_th (2).jpeg', 1, '2025-04-30 08:46:41', '2025-05-08 13:32:33', 0);
+INSERT INTO `berita` VALUES (5, 'Gagal Panen padi di desa Simare mare', 'Desa Simare Mare baru-baru ini mengalami gagal panen padi yang mengkhawatirkan, mengakibatkan dampak serius bagi para petani dan ekonomi lokal. Banyak petani yang telah bekerja keras selama musim tanam ini terpaksa menghadapi kenyataan pahit akibat cuaca ekstrem dan serangan hama', '1746685813_th (1).jpeg', 1, '2025-05-03 20:13:07', '2025-05-08 13:30:13', 0);
+INSERT INTO `berita` VALUES (6, 'Jagung Murah di Pasar Dolok', 'Seorang petani lokal, Budi Santoso, menyatakan, \"Kami senang dengan harga jagung yang lebih murah. Ini membantu kami menjangkau lebih banyak konsumen dan meningkatkan penjualan kami.\"\r\n\r\nDengan tren ini, diharapkan harga jagung akan terus stabil dalam beberapa bulan ke depan, memberikan manfaat bagi semua pihak yang terlibat dalam rantai pasok jagung', '1746685703_th.jpeg', 1, '2025-05-03 20:35:10', '2025-05-08 13:28:23', 0);
+INSERT INTO `berita` VALUES (7, 'tes', 'tes', '1746686995_th (3).jpeg', 1, '2025-05-08 13:49:55', '2025-05-08 13:50:23', 1);
 
 -- ----------------------------
 -- Table structure for bidang

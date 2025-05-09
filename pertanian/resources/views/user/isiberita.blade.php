@@ -41,7 +41,7 @@
         /* .ftco-navbar-light.scrolled .navbar-brand {
             color: #000000 !important;
         } */
-        .ftco-navbar-light .navbar-nav>.nav-item>.nav-link {
+        /* .ftco-navbar-light .navbar-nav>.nav-item>.nav-link {
             color: #000 !important;
 
         }
@@ -61,7 +61,7 @@
                 color: #fff !important;
             }
         }
-
+ */
 
     </style>
 
