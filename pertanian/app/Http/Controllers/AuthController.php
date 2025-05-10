@@ -16,16 +16,20 @@ class AuthController extends Controller
 
     public function proses_login(Request $request)
     {
-        request()->validate(
-            [
-                'username' => 'required|string|max:16',
-                'password' => ['required', 'regex:/^[a-zA-Z0-9]+$/'],
-            ]
-        );
+        // Validasi form input
+        $request->validate([
+            'username' => 'required|string|max:16',
+            'password' => ['required', 'regex:/^[a-zA-Z0-9]+$/'],
+        ]);
 
+        // Ambil inputan
         $credential = $request->only('username', 'password');
 
-        if (Auth::attempt($credential)) {
+        // Cek apakah username ada di database
+        $user = DB::table('users')->where('username', $request->username)->first();
+
+        // Cek kredensial menggunakan Auth::attempt
+        if ($user && Auth::attempt($credential)) {
             $user = Auth::user();
             $userRole = $user->roles->role_name; // Ambil role dari user yang sedang login
 
@@ -35,9 +39,7 @@ class AuthController extends Controller
                 ->where('users.user_id', $user->user_id)
                 ->first();
 
-            // Simpan data user ke session
             session(['userData' => $userData]);
-
 
             if ($userRole == 'Admin') {
                 return redirect()->route('admin.dashboard');
@@ -45,14 +47,26 @@ class AuthController extends Controller
                 return redirect()->route('penyuluh.dashboard');
             }
 
-
             return redirect()->intended('/');
         }
 
+        // Jika user tidak ditemukan atau kredensial salah
+        if (!$user) {
+            return redirect('login')
+                ->withInput()
+                ->withErrors(['login_gagal' => 'Username yang Anda masukkan tidak terdaftar.']);
+        } elseif (!Auth::attempt($credential)) {
+            return redirect('login')
+                ->withInput()
+                ->withErrors(['login_gagal' => 'Password yang Anda masukkan salah.']);
+        }
+
+        // Jika error tidak diketahui
         return redirect('login')
             ->withInput()
-            ->withErrors(['login_gagal' => 'Username atau Password Anda Salah!']);
+            ->withErrors(['login_gagal' => 'Terjadi kesalahan saat mencoba login.']);
     }
+
 
     public function logout(Request $request)
     {

@@ -1271,7 +1271,7 @@ class AdminController extends Controller
         $request->validate([
             'fileFoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        dd($request->fileFoto);
+        // dd($request->fileFoto);
         // Jika ada file baru di-upload
         if ($request->hasFile('fileFoto')) {
             // Hapus foto lama jika bukan default atau tidak kosong

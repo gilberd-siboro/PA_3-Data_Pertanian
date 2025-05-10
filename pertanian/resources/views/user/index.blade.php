@@ -6,23 +6,73 @@
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center" data-scrollax-parent="true">
             <div class="col-md-7 ftco-animate">
-                <span class="subheading">Selamat Datang di Sipotani</span>
+                <span class="subheading">Selamat Datang di Tubalian</span>
                 <h1 class="mb-4">Bersama Kembangkan Pertanian <span>Tapanuli Utara</span> </h1>
             </div>
         </div>
     </div>
 </div>
+
+<marquee style="background-color: #14532d; color: white; padding: 8px;">
+Selamat datang di Tubalian, platform digital pertanian yang membantu petani Indonesia mengelola usaha tani secara modern! Dapatkan informasi harga komoditas terkini, catat data pertanian Anda dengan mudah, dan ikuti perkembangan pasar berbasis data real-time yang akurat dan terpercaya.
+</marquee>
+
 <section class="ftco-section">
     <div class="container">
-        <div class="row d-flex">
-            <div class="col-md-6 order-md-last heading-section ftco-animate d-flex align-items-center">
+        <div class="row d-flex justify-content-center mb-4">
+            <div class="order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
                 <div class="w-100">
-                    <span class="subheading">Selamat Datang di Sipotani</span>
+                    <h2 class="mb-4">Kabupaten Tapanuli Utara</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="col-md-6 pl-md-5 py-5">
+                <div class="row justify-content-start pb-3">
+                    <div class="col-md-12 heading-section ftco-animate ">
+                        <img src="images/pimpinan2530.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pl-md-5 py-5">
+                <div class="row justify-content-start pb-3">
+                    <div class="col-md-12 heading-section ftco-animate">
+                        <h2 class="mb-4">VISI</h2>
+                        <p>Tapanuli Utara sebagai Lumbung Pangan dan Lumbung Sumberdaya Manusia yang Berkualitas serta daerah tujuan wisata.</p>
+                        <h2 class="mb-4">MISI</h2>
+                        <ul>
+                            <li>Meningkatkan ketahanan pangan dan kesejahteraan petani melalui perlindungan petani dan lahan pertanian berkelanjutan.</li>
+                            <li>Pengembangan komoditi dan produk unggulan daerah berbasis pertanian dan sumber daya lokal.</li>
+                            <li>Meningkatkan kualitas layanan pendidikan dan kesehatan.</li>
+                            <li>Meningkatkan kualitas dan daya saing SDM melalui pelatihan tenaga kerja, pemanfaatan IPTEK, dan pengembangan jiwa kewirausahaan.</li>
+                            <li>Meningkatkan destinasi wisata melalui pengembangan kawasan wisata alam dan budaya, rohani, dan agrowisata.</li>
+                            <li>Meningkatkan kualitas infrastruktur yang terintegrasi dengan mengacu pada penataan ruang/wilayah, perlindungan sumber daya alam, dan pelestarian lingkungan hidup.</li>
+                            <li>Meningkatkan kapasitas desa menuju desa mandiri.</li>
+                            <li>Meningkatkan kualitas pelayanan publik dengan sistem e-government.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section">
+    <div class="container" style="margin-top: -100px">
+        <div class="row d-flex justify-content-center mb-4">
+            <div class="order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
+                <div class="w-100">
+                    <h2 class="mb-4">Selamat Datang di Tubalian</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex ">
+            <div class="col-md-6 order-md-last heading-section ftco-animate d-flex align-items-center ">
+                <div class="w-100">
                     <h2 class="mb-4">Mari mulai Kembangkan Pertanian </h2>
                     <p>Agromob adalah platform digital pertanian yang menyajikan informasi harga komoditas, data hasil tani, dan tren pasar untuk mendukung kemajuan pertanian Indonesia.</p>
                     <p>Agromob juga menyediakan fitur pencatatan data pertanian milik petani, sehingga mereka dapat mengelola usaha taninya secara lebih modern dan terstruktur. Dari data luas lahan, jenis komoditas, hingga hasil panen, semua dapat dicatat dan diakses dengan mudah. Selain itu, pengguna dapat membandingkan harga antar daerah, melihat grafik perkembangan harga, serta memperoleh rekomendasi berdasarkan data real-time yang akurat dan terpercaya.
                     </p>
-                    <p><a href="/tentang" class="btn btn-primary py-3 px-4">Lihat Selengkapnya</a></p>
+                    <p><a href="/komoditas-kecamatan" class="btn btn-primary py-3 px-4">Lihat Selengkapnya</a></p>
                 </div>
             </div>
             <div class="col-md-6">
@@ -116,6 +166,7 @@
 
 <section class="ftco-section">
     <div class="container ftco-animate">
+
         <div class="row d-flex justify-content-center mb-4">
             <div class="order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
                 <div class="w-100">

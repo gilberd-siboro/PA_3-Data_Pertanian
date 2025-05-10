@@ -108,7 +108,7 @@
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
                     <div class="xl:col-span-12">
                         <label for="estimasi_panen" class="inline-block mb-2 text-base font-medium">Estimasi Panen</label>
-                        <input type="text" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="estimasi_panen" name="estimasi_panen" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="hari">
+                        <input type="text" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="estimasi_panen" name="estimasi_panen" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Hari">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">

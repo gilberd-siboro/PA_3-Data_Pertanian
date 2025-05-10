@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Sipotani - Dinas Pertanian</title>
+    <title>Tubalian - Dinas Pertanian</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
 
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
 
@@ -29,7 +31,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="/">Sipotani<span>Dinas Pertanian</span></a>
+            <a class="navbar-brand" href="/">Tubalian<span>Dinas Pertanian</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
             </button>
@@ -38,9 +40,6 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item {{ \Request::is('/') ? 'active' : '' }}">
                         <a href="/" class="nav-link">Beranda</a>
-                    </li>
-                    <li class="nav-item {{ \Request::is('tentang') ? 'active' : '' }}">
-                        <a href="/tentang" class="nav-link">Tentang</a>
                     </li>
                     <li class="nav-item {{ \Request::is('berita') ? 'active' : '' }}">
                         <a href="/berita" class="nav-link">Berita</a>
@@ -58,6 +57,9 @@
                             <a class="dropdown-item {{ \Request::is('tren-harga') ? 'active' : '' }}" href="/tren-harga">Tren Harga</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link">Login</a>
+                    </li>
                 </ul>
             </div>
 
@@ -74,7 +76,6 @@
                         <h2 class="ftco-heading-2">Informasi</h2>
                         <ul class="list-unstyled">
                             <li><a href="/" class="py-2 d-block">Beranda</a></li>
-                            <li><a href="/tentang" class="py-2 d-block">Tentang</a></li>
                             <li><a href="/komoditas-kecamatan" class="py-2 d-block">Komoditas Kecamatan</a></li>
                             <li><a href="/persebaran-komoditas" class="py-2 d-block">Persebaran Komoditas</a></li>
                             <li><a href="/harga-komoditas" class="py-2 d-block">Harga Komoditas</a></li>
@@ -108,7 +109,7 @@
                 <div class="col-md pt-5 border-left">
                     <div class="ftco-footer-widget pt-md-5 mb-4 text-center">
                         <h2 class="ftco-heading-2">Dinas Pertanian Tapanuli Utara</h2>
-                        <img src="{{ asset('images/logo_dinas.png') }}" alt="Logo Dinas" class="img-fluid mt-3" style="max-width: 200px;">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo Dinas" class="img-fluid mt-3" style="max-width: 200px;">
                     </div>
                 </div>
             </div>

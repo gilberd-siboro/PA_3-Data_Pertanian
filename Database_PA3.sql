@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 09/05/2025 08:15:41
+ Date: 09/05/2025 15:56:23
 */
 
 SET NAMES utf8mb4;
@@ -22,41 +22,42 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `bantuan`;
 CREATE TABLE `bantuan`  (
-  `id_bantuan` int NOT NULL AUTO_INCREMENT,
-  `jenis_bantuan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `tanggal` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `id_kelompok_tani` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `id_bantuan` INT NOT NULL AUTO_INCREMENT,
+  `jenis_bantuan` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tanggal` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_kelompok_tani` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_bantuan`) USING BTREE,
   INDEX `id_kelompok_tani`(`id_kelompok_tani` ASC) USING BTREE,
   CONSTRAINT `bantuan_ibfk_1` FOREIGN KEY (`id_kelompok_tani`) REFERENCES `kelompok_tani` (`id_kelompok_tani`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of bantuan
 -- ----------------------------
 INSERT INTO `bantuan` VALUES (1, 'asd', '02 Apr, 2025', 3, '2025-04-24 14:43:07', '2025-04-24 14:50:28', 1);
 INSERT INTO `bantuan` VALUES (2, 'asd', '02 Apr, 2025', 2, '2025-04-30 08:15:44', '2025-04-30 08:15:49', 1);
+INSERT INTO `bantuan` VALUES (3, 'jhbnm', '07 May, 2025', 3, '2025-05-09 11:12:46', '2025-05-09 11:12:53', 1);
 
 -- ----------------------------
 -- Table structure for berita
 -- ----------------------------
 DROP TABLE IF EXISTS `berita`;
 CREATE TABLE `berita`  (
-  `idBerita` int NOT NULL AUTO_INCREMENT,
-  `judul` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `deskripsi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
-  `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `user_id` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `idBerita` INT NOT NULL AUTO_INCREMENT,
+  `judul` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `deskripsi` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `foto` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `user_id` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`idBerita`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `berita_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of berita
@@ -66,7 +67,7 @@ INSERT INTO `berita` VALUES (2, 'Bu Andien Diduga Menghancurkan Sawah: Kontrover
 INSERT INTO `berita` VALUES (3, 'Ancaman Kucing Liar: Ladang Pertanian di Desa Ynnoj Terancam', 'Desa Ynnoj kini menghadapi masalah serius akibat serangan kucing liar yang merusak ladang pertanian. Para petani melaporkan bahwa kucing-kucing tersebut telah mengganggu tanaman mereka, menyebabkan kerugian yang signifikan.', '1746686135_th (3).jpeg', 1, '2025-04-30 08:43:54', '2025-05-08 13:35:35', 0);
 INSERT INTO `berita` VALUES (4, 'Harga Tomat Diperkirakan Naik di Pasar Sidoal: Apa Penyebabnya?', 'Pasar Sidoal diperkirakan akan mengalami kenaikan harga tomat dalam beberapa minggu ke depan. Para pedagang dan petani setempat mengindikasikan bahwa beberapa faktor telah berkontribusi terhadap tren ini, yang dapat memengaruhi konsumen dan rantai pasok', '1746685953_th (2).jpeg', 1, '2025-04-30 08:46:41', '2025-05-08 13:32:33', 0);
 INSERT INTO `berita` VALUES (5, 'Gagal Panen padi di desa Simare mare', 'Desa Simare Mare baru-baru ini mengalami gagal panen padi yang mengkhawatirkan, mengakibatkan dampak serius bagi para petani dan ekonomi lokal. Banyak petani yang telah bekerja keras selama musim tanam ini terpaksa menghadapi kenyataan pahit akibat cuaca ekstrem dan serangan hama', '1746685813_th (1).jpeg', 1, '2025-05-03 20:13:07', '2025-05-08 13:30:13', 0);
-INSERT INTO `berita` VALUES (6, 'Jagung Murah di Pasar Dolok', 'Seorang petani lokal, Budi Santoso, menyatakan, \"Kami senang dengan harga jagung yang lebih murah. Ini membantu kami menjangkau lebih banyak konsumen dan meningkatkan penjualan kami.\"\r\n\r\nDengan tren ini, diharapkan harga jagung akan terus stabil dalam beberapa bulan ke depan, memberikan manfaat bagi semua pihak yang terlibat dalam rantai pasok jagung', '1746685703_th.jpeg', 1, '2025-05-03 20:35:10', '2025-05-08 13:28:23', 0);
+INSERT INTO `berita` VALUES (6, 'Jagung Murah di Pasar Dolok', 'Seorang petani lokal, Budi Santoso, menyatakan, \"Kami senang dengan harga jagung yang lebih murah. Ini membantu kami menjangkau lebih banyak konsumen dan meningkatkan penjualan kami.\"\r\n\r\nDengan tren ini, diharapkan harga jagung akan terus stabil dalam beberapa bulan ke depan, memberikan manfaat bagi semua pihak yang terlibat dalam rantai pasok jagung', '1746685703_th.jpeg', 1, '2025-05-03 20:35:10', '2025-05-09 11:12:30', 0);
 INSERT INTO `berita` VALUES (7, 'tes', 'tes', '1746686995_th (3).jpeg', 1, '2025-05-08 13:49:55', '2025-05-08 13:50:23', 1);
 
 -- ----------------------------
@@ -74,23 +75,23 @@ INSERT INTO `berita` VALUES (7, 'tes', 'tes', '1746686995_th (3).jpeg', 1, '2025
 -- ----------------------------
 DROP TABLE IF EXISTS `bidang`;
 CREATE TABLE `bidang`  (
-  `id_bidang` int NOT NULL AUTO_INCREMENT,
-  `idDepartemen` int NULL DEFAULT NULL,
-  `parent_bidang` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `nama_bidang` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keterangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_bidang` INT NOT NULL AUTO_INCREMENT,
+  `idDepartemen` INT NULL DEFAULT NULL,
+  `parent_bidang` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nama_bidang` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `keterangan` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_bidang`) USING BTREE,
   INDEX `fk_idDepartemen`(`idDepartemen` ASC) USING BTREE,
   CONSTRAINT `fk_idDepartemen` FOREIGN KEY (`idDepartemen`) REFERENCES `departemen` (`idDepartemen`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of bidang
 -- ----------------------------
-INSERT INTO `bidang` VALUES (1, 1, NULL, 'Dinas', 'Mengelola dinas pertanian Tapanuli Utara', NULL, '2025-04-01 14:01:15', 0);
+INSERT INTO `bidang` VALUES (1, 1, NULL, 'Dinas', 'Mengelola dinas pertanian Tapanuli Utara', NULL, '2025-05-09 11:02:52', 0);
 INSERT INTO `bidang` VALUES (2, 1, NULL, 'UPT', 'Lembaga yang menjalankan sebagian fungsi teknis operasional dari suatu instansi atau lembaga induk', NULL, NULL, 0);
 INSERT INTO `bidang` VALUES (3, 1, NULL, 'Tanaman Pangan', 'Mengelola tanaman pangan', NULL, NULL, 0);
 INSERT INTO `bidang` VALUES (4, 1, NULL, 'Hortikultura', 'Mengelola tanaman hortikultura', NULL, NULL, 0);
@@ -105,13 +106,13 @@ INSERT INTO `bidang` VALUES (9, 1, NULL, 'Kesekretariatan', 'Bertanggung jawab a
 -- ----------------------------
 DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities`  (
-  `city_id` int NOT NULL AUTO_INCREMENT,
-  `city_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `prov_id` int NULL DEFAULT NULL,
+  `city_id` INT NOT NULL AUTO_INCREMENT,
+  `city_name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prov_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`city_id`) USING BTREE,
   INDEX `prov_id`(`prov_id` ASC) USING BTREE,
   CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`prov_id`) REFERENCES `provinces` (`prov_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cities
@@ -123,21 +124,21 @@ INSERT INTO `cities` VALUES (1, 'Tapanuli Utara', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `data_pertanian`;
 CREATE TABLE `data_pertanian`  (
-  `id_data_pertanian` int NOT NULL AUTO_INCREMENT,
-  `id_petani` int NULL DEFAULT NULL,
-  `id_lahan` int NULL DEFAULT NULL,
-  `id_komoditas` int NULL DEFAULT NULL,
-  `luas_lahan` decimal(10, 2) NULL DEFAULT NULL,
-  `subdis_id` int NULL DEFAULT NULL,
-  `tanggal_tanam` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `tanggal_pencatatan` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `user_id` int NULL DEFAULT NULL,
-  `alamat_lengkap` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `latitude` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `longitude` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_data_pertanian` INT NOT NULL AUTO_INCREMENT,
+  `id_petani` INT NULL DEFAULT NULL,
+  `id_lahan` INT NULL DEFAULT NULL,
+  `id_komoditas` INT NULL DEFAULT NULL,
+  `luas_lahan` DECIMAL(10, 2) NULL DEFAULT NULL,
+  `subdis_id` INT NULL DEFAULT NULL,
+  `tanggal_tanam` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tanggal_pencatatan` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `user_id` INT NULL DEFAULT NULL,
+  `alamat_lengkap` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `latitude` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `longitude` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_data_pertanian`) USING BTREE,
   INDEX `id_petani`(`id_petani` ASC) USING BTREE,
   INDEX `id_lahan`(`id_lahan` ASC) USING BTREE,
@@ -149,7 +150,7 @@ CREATE TABLE `data_pertanian`  (
   CONSTRAINT `data_pertanian_ibfk_3` FOREIGN KEY (`id_komoditas`) REFERENCES `komoditas` (`id_komoditas`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `data_pertanian_ibfk_4` FOREIGN KEY (`subdis_id`) REFERENCES `subdistricts` (`subdis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `data_pertanian_ibfk_5` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of data_pertanian
@@ -166,19 +167,19 @@ INSERT INTO `data_pertanian` VALUES (14, 2, 3, 3, 12312.00, 2, '07 May, 2025', '
 -- ----------------------------
 DROP TABLE IF EXISTS `departemen`;
 CREATE TABLE `departemen`  (
-  `idDepartemen` int NOT NULL AUTO_INCREMENT,
-  `namaDepartmen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keterangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `createAt` datetime NULL DEFAULT NULL,
-  `updateAt` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `idDepartemen` INT NOT NULL AUTO_INCREMENT,
+  `namaDepartmen` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `keterangan` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `createAt` DATETIME NULL DEFAULT NULL,
+  `updateAt` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`idDepartemen`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of departemen
 -- ----------------------------
-INSERT INTO `departemen` VALUES (1, 'Dinas Pertanian Tapanuli Utara', 'Instansi pemerintah daerah yang menangani pertanian', NULL, '2025-03-27 16:30:49', 0);
+INSERT INTO `departemen` VALUES (1, 'Dinas Pertanian Tapanuli Utara', 'Instansi pemerintah daerah yang menangani pertanian', NULL, '2025-05-09 11:02:27', 0);
 INSERT INTO `departemen` VALUES (2, 'Non Departemen', 'Tidak tergabung dalam departemen apapun', NULL, '2025-04-01 13:58:05', 0);
 
 -- ----------------------------
@@ -186,15 +187,15 @@ INSERT INTO `departemen` VALUES (2, 'Non Departemen', 'Tidak tergabung dalam dep
 -- ----------------------------
 DROP TABLE IF EXISTS `districts`;
 CREATE TABLE `districts`  (
-  `dis_id` int NOT NULL AUTO_INCREMENT,
-  `dis_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `city_id` int NULL DEFAULT 1,
-  PRIMARY KEY (`dis_id`, `dis_name`) USING BTREE,
+  `dis_id` INT NOT NULL AUTO_INCREMENT,
+  `dis_name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city_id` INT NULL DEFAULT 1,
+  PRIMARY KEY (`dis_id`) USING BTREE,
   UNIQUE INDEX `unique_dis_name`(`dis_name` ASC) USING BTREE,
   INDEX `city_id`(`city_id` ASC) USING BTREE,
   INDEX `dis_id`(`dis_id` ASC) USING BTREE,
   CONSTRAINT `districts_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`city_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of districts
@@ -211,13 +212,13 @@ INSERT INTO `districts` VALUES (6, 'Siallagan', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `gambar_lahan`;
 CREATE TABLE `gambar_lahan`  (
-  `id_gambar` int NOT NULL AUTO_INCREMENT,
-  `url_gambar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `id_data_pertanian` int NULL DEFAULT NULL,
+  `id_gambar` INT NOT NULL AUTO_INCREMENT,
+  `url_gambar` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_data_pertanian` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id_gambar`) USING BTREE,
   INDEX `id_data_pertanian`(`id_data_pertanian` ASC) USING BTREE,
   CONSTRAINT `gambar_lahan_ibfk_1` FOREIGN KEY (`id_data_pertanian`) REFERENCES `data_pertanian` (`id_data_pertanian`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 58 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gambar_lahan
@@ -231,15 +232,15 @@ INSERT INTO `gambar_lahan` VALUES (31, '1746669332_fed.jpg', 3);
 -- ----------------------------
 DROP TABLE IF EXISTS `golonganpangkat`;
 CREATE TABLE `golonganpangkat`  (
-  `idGolonganPangkat` int NOT NULL AUTO_INCREMENT,
-  `golongan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `pangkat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
-  `createdAt` datetime NULL DEFAULT NULL,
-  `updatedAt` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `idGolonganPangkat` INT NOT NULL AUTO_INCREMENT,
+  `golongan` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `pangkat` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `keterangan` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `createdAt` DATETIME NULL DEFAULT NULL,
+  `updatedAt` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`idGolonganPangkat`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of golonganpangkat
@@ -255,25 +256,25 @@ INSERT INTO `golonganpangkat` VALUES (5, 'III/c', 'Penata', 'Jabatan dalam fungs
 -- ----------------------------
 DROP TABLE IF EXISTS `harga_komoditas`;
 CREATE TABLE `harga_komoditas`  (
-  `id_harga` int NOT NULL AUTO_INCREMENT,
-  `harga` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `tanggal` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `id_pasar` int NULL DEFAULT NULL,
-  `id_komoditas` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `id_harga` INT NOT NULL AUTO_INCREMENT,
+  `harga` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tanggal` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_pasar` INT NULL DEFAULT NULL,
+  `id_komoditas` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_harga`) USING BTREE,
   INDEX `id_pasar`(`id_pasar` ASC) USING BTREE,
   INDEX `id_komoditas`(`id_komoditas` ASC) USING BTREE,
   CONSTRAINT `harga_komoditas_ibfk_1` FOREIGN KEY (`id_pasar`) REFERENCES `pasar` (`id_pasar`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `harga_komoditas_ibfk_2` FOREIGN KEY (`id_komoditas`) REFERENCES `komoditas` (`id_komoditas`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of harga_komoditas
 -- ----------------------------
-INSERT INTO `harga_komoditas` VALUES (1, '10570', '03 Feb, 2025', 1, 3, '2025-04-09 10:37:40', '2025-04-10 09:27:56', 0);
+INSERT INTO `harga_komoditas` VALUES (1, '10570', '03 Feb, 2025', 1, 3, '2025-04-09 10:37:40', '2025-05-09 11:12:16', 0);
 INSERT INTO `harga_komoditas` VALUES (3, '20000', '09 Mar, 2025', 1, 3, '2025-04-10 08:21:42', '2025-04-10 08:59:32', 0);
 INSERT INTO `harga_komoditas` VALUES (4, '25000', '03 Jan, 2024', 1, 4, '2025-04-10 08:23:19', NULL, 0);
 INSERT INTO `harga_komoditas` VALUES (5, '20000', '06 Mar, 2024', 1, 4, '2025-04-10 08:23:46', NULL, 0);
@@ -293,19 +294,19 @@ INSERT INTO `harga_komoditas` VALUES (15, '12000', '28 May, 2025', 2, 3, '2025-0
 -- ----------------------------
 DROP TABLE IF EXISTS `jabatan`;
 CREATE TABLE `jabatan`  (
-  `idJabatan` int NOT NULL AUTO_INCREMENT,
-  `jabatan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `idJabatan` INT NOT NULL AUTO_INCREMENT,
+  `jabatan` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `keterangan` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`idJabatan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jabatan
 -- ----------------------------
-INSERT INTO `jabatan` VALUES (1, 'Kepala', 'Jabatan tertinggi dalam struktur organisasi', NULL, '2025-04-01 14:04:54', 0);
+INSERT INTO `jabatan` VALUES (1, 'Kepala', 'Jabatan tertinggi dalam struktur organisasi', NULL, '2025-05-09 11:03:05', 0);
 INSERT INTO `jabatan` VALUES (2, 'Staff', 'Mendukung perencanaan, pelaksanaan, administrasi, serta monitoring program dan kebijakan pertanian', NULL, NULL, 0);
 INSERT INTO `jabatan` VALUES (3, 'Fungsional', 'Jabatan dalam pemerintahan yang berisi tugas dan fungsi tertentu berdasarkan keahlian dan keterampilan', NULL, NULL, 0);
 INSERT INTO `jabatan` VALUES (4, 'KASUBBAG', 'Jabatan struktural yang bertanggung jawab mengkoordinasikan, mengawasi, dan melaksanakan tugas administrasi, kepegawaian, keuangan, serta penyusunan laporan dalam suatu unit kerja untuk mendukung kelancaran operasional instansi.', NULL, NULL, 0);
@@ -315,13 +316,13 @@ INSERT INTO `jabatan` VALUES (4, 'KASUBBAG', 'Jabatan struktural yang bertanggun
 -- ----------------------------
 DROP TABLE IF EXISTS `jabatan_petani`;
 CREATE TABLE `jabatan_petani`  (
-  `id_jabatan_petani` int NOT NULL AUTO_INCREMENT,
-  `idJabatanBidang` int NULL DEFAULT NULL,
-  `id_kelompok_tani` int NULL DEFAULT NULL,
-  `id_petani` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `id_jabatan_petani` INT NOT NULL AUTO_INCREMENT,
+  `idJabatanBidang` INT NULL DEFAULT NULL,
+  `id_kelompok_tani` INT NULL DEFAULT NULL,
+  `id_petani` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_jabatan_petani`) USING BTREE,
   INDEX `idJabatanBidang`(`idJabatanBidang` ASC) USING BTREE,
   INDEX `id_kelompok_tani`(`id_kelompok_tani` ASC) USING BTREE,
@@ -329,12 +330,12 @@ CREATE TABLE `jabatan_petani`  (
   CONSTRAINT `jabatan_petani_ibfk_1` FOREIGN KEY (`idJabatanBidang`) REFERENCES `jabatanbidang` (`idJabatanBidang`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `jabatan_petani_ibfk_2` FOREIGN KEY (`id_kelompok_tani`) REFERENCES `kelompok_tani` (`id_kelompok_tani`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `jabatan_petani_ibfk_3` FOREIGN KEY (`id_petani`) REFERENCES `petani` (`id_petani`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jabatan_petani
 -- ----------------------------
-INSERT INTO `jabatan_petani` VALUES (3, 18, 2, 1, '2025-03-23 19:40:43', '2025-03-31 18:25:50', 0);
+INSERT INTO `jabatan_petani` VALUES (3, 18, 2, 1, '2025-03-23 19:40:43', '2025-05-09 11:08:31', 0);
 INSERT INTO `jabatan_petani` VALUES (7, 18, 3, 2, '2025-03-23 20:14:58', NULL, 0);
 INSERT INTO `jabatan_petani` VALUES (8, 18, 4, 3, '2025-03-23 20:20:57', NULL, 0);
 INSERT INTO `jabatan_petani` VALUES (9, 18, 5, 4, '2025-03-31 12:37:44', NULL, 0);
@@ -348,20 +349,20 @@ INSERT INTO `jabatan_petani` VALUES (13, 18, 9, 9, '2025-04-04 11:36:28', NULL, 
 -- ----------------------------
 DROP TABLE IF EXISTS `jabatanbidang`;
 CREATE TABLE `jabatanbidang`  (
-  `idJabatanBidang` int NOT NULL AUTO_INCREMENT,
-  `idJabatan` int NULL DEFAULT NULL,
-  `id_bidang` int NULL DEFAULT NULL,
-  `namaJabatanBidang` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `idJabatanBidang` INT NOT NULL AUTO_INCREMENT,
+  `idJabatan` INT NULL DEFAULT NULL,
+  `id_bidang` INT NULL DEFAULT NULL,
+  `namaJabatanBidang` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `keterangan` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`idJabatanBidang`) USING BTREE,
   INDEX `idJabatan`(`idJabatan` ASC) USING BTREE,
   INDEX `fk_idBidang`(`id_bidang` ASC) USING BTREE,
   CONSTRAINT `fk_idBidang` FOREIGN KEY (`id_bidang`) REFERENCES `bidang` (`id_bidang`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `jabatanbidang_ibfk_1` FOREIGN KEY (`idJabatan`) REFERENCES `jabatan` (`idJabatan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jabatanbidang
@@ -381,13 +382,13 @@ INSERT INTO `jabatanbidang` VALUES (18, 1, 8, 'Kepala Kelompok Tani', 'Pemimpin 
 -- ----------------------------
 DROP TABLE IF EXISTS `jenis_komoditas`;
 CREATE TABLE `jenis_komoditas`  (
-  `id_jenis_komoditas` int NOT NULL AUTO_INCREMENT,
-  `nama_jenis_komoditas` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_jenis_komoditas` INT NOT NULL AUTO_INCREMENT,
+  `nama_jenis_komoditas` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_jenis_komoditas`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jenis_komoditas
@@ -401,13 +402,13 @@ INSERT INTO `jenis_komoditas` VALUES (5, 'Perkebunan', '2025-04-04 11:10:23', NU
 -- ----------------------------
 DROP TABLE IF EXISTS `jenis_lahan`;
 CREATE TABLE `jenis_lahan`  (
-  `id_jenis_lahan` int NOT NULL AUTO_INCREMENT,
-  `nama_jenis_lahan` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_jenis_lahan` INT NOT NULL AUTO_INCREMENT,
+  `nama_jenis_lahan` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_jenis_lahan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jenis_lahan
@@ -420,22 +421,22 @@ INSERT INTO `jenis_lahan` VALUES (2, 'Lahan Kering', '2025-04-04 11:20:43', NULL
 -- ----------------------------
 DROP TABLE IF EXISTS `kelompok_tani`;
 CREATE TABLE `kelompok_tani`  (
-  `id_kelompok_tani` int NOT NULL AUTO_INCREMENT,
-  `nama_kelompok_tani` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `alamat_sekretariat` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `dis_id` int NOT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_kelompok_tani` INT NOT NULL AUTO_INCREMENT,
+  `nama_kelompok_tani` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alamat_sekretariat` VARCHAR(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `dis_id` INT NOT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_kelompok_tani`) USING BTREE,
   INDEX `dis_id`(`dis_id` ASC) USING BTREE,
   CONSTRAINT `kelompok_tani_ibfk_1` FOREIGN KEY (`dis_id`) REFERENCES `districts` (`dis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of kelompok_tani
 -- ----------------------------
-INSERT INTO `kelompok_tani` VALUES (2, 'Sejahtera', 'Lumban Jaean', 3, NULL, '2025-03-31 17:51:22', 0);
+INSERT INTO `kelompok_tani` VALUES (2, 'Sejahtera', 'Lumban Jaean', 3, NULL, '2025-05-09 11:11:22', 0);
 INSERT INTO `kelompok_tani` VALUES (3, 'Setia', 'Lumban Jaean', 3, NULL, NULL, 0);
 INSERT INTO `kelompok_tani` VALUES (4, 'DOSROHA LUMBAN JAEAN', 'Lumban Jaean', 3, NULL, NULL, 0);
 INSERT INTO `kelompok_tani` VALUES (5, 'Maju Bersama', 'Lumban Jaean', 3, NULL, '2025-04-01 14:35:47', 0);
@@ -449,18 +450,18 @@ INSERT INTO `kelompok_tani` VALUES (9, 'Bersama Untuk Maju', 'Simanampang', 3, '
 -- ----------------------------
 DROP TABLE IF EXISTS `komoditas`;
 CREATE TABLE `komoditas`  (
-  `id_komoditas` int NOT NULL AUTO_INCREMENT,
-  `nama_komoditas` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `id_jenis_komoditas` int NULL DEFAULT NULL,
-  `estimasi_panen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `gambar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_komoditas` INT NOT NULL AUTO_INCREMENT,
+  `nama_komoditas` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_jenis_komoditas` INT NULL DEFAULT NULL,
+  `estimasi_panen` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `gambar` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_komoditas`) USING BTREE,
   INDEX `id_jenis_komoditas`(`id_jenis_komoditas` ASC) USING BTREE,
   CONSTRAINT `komoditas_ibfk_1` FOREIGN KEY (`id_jenis_komoditas`) REFERENCES `jenis_komoditas` (`id_jenis_komoditas`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of komoditas
@@ -478,16 +479,16 @@ INSERT INTO `komoditas` VALUES (8, 'asd', 1, '123', '1746583682_asd.jpg', '2025-
 -- ----------------------------
 DROP TABLE IF EXISTS `lahan`;
 CREATE TABLE `lahan`  (
-  `id_lahan` int NOT NULL AUTO_INCREMENT,
-  `nama_lahan` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `id_jenis_lahan` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_lahan` INT NOT NULL AUTO_INCREMENT,
+  `nama_lahan` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_jenis_lahan` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_lahan`) USING BTREE,
   INDEX `id_jenis_lahan`(`id_jenis_lahan` ASC) USING BTREE,
   CONSTRAINT `lahan_ibfk_1` FOREIGN KEY (`id_jenis_lahan`) REFERENCES `jenis_lahan` (`id_jenis_lahan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of lahan
@@ -501,21 +502,21 @@ INSERT INTO `lahan` VALUES (3, 'Tegalan', 2, '2025-04-04 11:28:40', NULL, 0);
 -- ----------------------------
 DROP TABLE IF EXISTS `pasar`;
 CREATE TABLE `pasar`  (
-  `id_pasar` int NOT NULL AUTO_INCREMENT,
-  `nama_pasar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `subdis_id` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `id_pasar` INT NOT NULL AUTO_INCREMENT,
+  `nama_pasar` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `subdis_id` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_pasar`) USING BTREE,
   INDEX `subdis_id`(`subdis_id` ASC) USING BTREE,
   CONSTRAINT `pasar_ibfk_1` FOREIGN KEY (`subdis_id`) REFERENCES `subdistricts` (`subdis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pasar
 -- ----------------------------
-INSERT INTO `pasar` VALUES (1, 'Pasar Sipoholon', 18, '2025-04-07 19:28:15', NULL, 0);
+INSERT INTO `pasar` VALUES (1, 'Pasar Sipoholon', 18, '2025-04-07 19:28:15', '2025-05-09 11:11:47', 0);
 INSERT INTO `pasar` VALUES (2, 'Pasar Baru Sipahutar', 19, '2025-04-10 09:14:37', NULL, 0);
 
 -- ----------------------------
@@ -523,19 +524,19 @@ INSERT INTO `pasar` VALUES (2, 'Pasar Baru Sipahutar', 19, '2025-04-10 09:14:37'
 -- ----------------------------
 DROP TABLE IF EXISTS `pegawai`;
 CREATE TABLE `pegawai`  (
-  `idPegawai` int NOT NULL AUTO_INCREMENT,
-  `nip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `namaPegawai` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `idGolonganPangkat` int NULL DEFAULT NULL,
-  `idJabatanBidang` int NULL DEFAULT NULL,
-  `subdis_id` int NULL DEFAULT NULL,
-  `alamat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `noPonsel` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `noWA` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `fileFoto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT 0,
+  `idPegawai` INT NOT NULL AUTO_INCREMENT,
+  `nip` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `namaPegawai` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `idGolonganPangkat` INT NULL DEFAULT NULL,
+  `idJabatanBidang` INT NULL DEFAULT NULL,
+  `subdis_id` INT NULL DEFAULT NULL,
+  `alamat` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `noPonsel` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `noWA` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `fileFoto` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`idPegawai`) USING BTREE,
   INDEX `idGolonganPangkat`(`idGolonganPangkat` ASC) USING BTREE,
   INDEX `fk_idJabatanBidang`(`idJabatanBidang` ASC) USING BTREE,
@@ -543,12 +544,12 @@ CREATE TABLE `pegawai`  (
   CONSTRAINT `fk_idJabatanBidang` FOREIGN KEY (`idJabatanBidang`) REFERENCES `jabatanbidang` (`idJabatanBidang`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pegawai_ibfk_1` FOREIGN KEY (`idGolonganPangkat`) REFERENCES `golonganpangkat` (`idGolonganPangkat`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pegawai_ibfk_2` FOREIGN KEY (`subdis_id`) REFERENCES `subdistricts` (`subdis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pegawai
 -- ----------------------------
-INSERT INTO `pegawai` VALUES (1, '123123123', 'Gilberd Siboro', 2, 9, 1, 'IT Del', '081260951690', '877381928382', '1743481512_gil.jpg', NULL, '2025-04-04 13:26:35', 0);
+INSERT INTO `pegawai` VALUES (1, '123123123', 'Gilberd Siboro', 2, 9, 1, 'IT Del', '081260951690', '0877381928382', '1743481512_gil.jpg', NULL, '2025-05-09 11:07:53', 0);
 INSERT INTO `pegawai` VALUES (2, '123981238', 'Erichson Berutu', 4, 16, 1, 'Tarutung', '088238192', '231231423', 'reza.jpg', NULL, NULL, 0);
 
 -- ----------------------------
@@ -556,23 +557,23 @@ INSERT INTO `pegawai` VALUES (2, '123981238', 'Erichson Berutu', 4, 16, 1, 'Taru
 -- ----------------------------
 DROP TABLE IF EXISTS `petani`;
 CREATE TABLE `petani`  (
-  `id_petani` int NOT NULL AUTO_INCREMENT,
-  `nama_depan` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `nama_belakang` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `alamat_rumah` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `id_kelompok_tani` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `id_petani` INT NOT NULL AUTO_INCREMENT,
+  `nama_depan` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_belakang` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alamat_rumah` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_kelompok_tani` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id_petani`) USING BTREE,
   INDEX `id_kelompok_tani`(`id_kelompok_tani` ASC) USING BTREE,
   CONSTRAINT `petani_ibfk_1` FOREIGN KEY (`id_kelompok_tani`) REFERENCES `kelompok_tani` (`id_kelompok_tani`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of petani
 -- ----------------------------
-INSERT INTO `petani` VALUES (1, 'Erichson', 'Berutu', 'Lumban Jaean', 2, NULL, '2025-03-31 17:29:22', 0);
+INSERT INTO `petani` VALUES (1, 'Erichson', 'Berutu', 'Lumban Jaean', 2, NULL, '2025-05-09 11:11:36', 0);
 INSERT INTO `petani` VALUES (2, 'Volwin', 'Sitompul', 'Lumban Jaean', 3, NULL, NULL, 0);
 INSERT INTO `petani` VALUES (3, 'Yanti', 'Sitompul', 'Lumban Jaean', 4, NULL, NULL, 0);
 INSERT INTO `petani` VALUES (4, 'Erika', 'Magdalena Simanungkalit', 'Lumban Jaean', 5, NULL, NULL, 0);
@@ -587,12 +588,12 @@ INSERT INTO `petani` VALUES (9, 'Rismauli', 'Tumanggor', 'Simanampang', 9, '2025
 -- ----------------------------
 DROP TABLE IF EXISTS `provinces`;
 CREATE TABLE `provinces`  (
-  `prov_id` int NOT NULL AUTO_INCREMENT,
-  `prov_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `location_id` int NULL DEFAULT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `prov_id` INT NOT NULL AUTO_INCREMENT,
+  `prov_name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location_id` INT NULL DEFAULT NULL,
+  `status` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`prov_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of provinces
@@ -604,14 +605,14 @@ INSERT INTO `provinces` VALUES (1, 'Sumatera Utara', NULL, NULL);
 -- ----------------------------
 DROP TABLE IF EXISTS `subdistricts`;
 CREATE TABLE `subdistricts`  (
-  `subdis_id` int NOT NULL AUTO_INCREMENT,
-  `subdis_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `dis_id` int NULL DEFAULT NULL,
+  `subdis_id` INT NOT NULL AUTO_INCREMENT,
+  `subdis_name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dis_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`subdis_id`) USING BTREE,
   UNIQUE INDEX `unique_subdis_name`(`subdis_name` ASC) USING BTREE,
   INDEX `dis_id`(`dis_id` ASC) USING BTREE,
   CONSTRAINT `subdistricts_ibfk_1` FOREIGN KEY (`dis_id`) REFERENCES `districts` (`dis_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subdistricts
@@ -641,14 +642,14 @@ INSERT INTO `subdistricts` VALUES (19, 'Sipahutar I', 5);
 -- ----------------------------
 DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE `user_roles`  (
-  `role_id` int NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `DESCRIPTION` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `isDeleted` tinyint(1) NULL DEFAULT NULL,
+  `role_id` INT NOT NULL AUTO_INCREMENT,
+  `role_name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `DESCRIPTION` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_roles
@@ -661,14 +662,14 @@ INSERT INTO `user_roles` VALUES (2, 'Penyuluh', 'Akses untuk melakukan penyuluha
 -- ----------------------------
 DROP TABLE IF EXISTS `user_types`;
 CREATE TABLE `user_types`  (
-  `user_type_id` int NOT NULL AUTO_INCREMENT,
-  `user_type_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `DESCRIPTION` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `user_type_id` INT NOT NULL AUTO_INCREMENT,
+  `user_type_name` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `DESCRIPTION` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`user_type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_types
@@ -680,28 +681,28 @@ INSERT INTO `user_types` VALUES (1, 'pegawai', 'Pengguna dalam sistem yang memil
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
-  `user_id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `personal_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `user_type_id` int NULL DEFAULT NULL,
-  `token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `role_id` int NULL DEFAULT NULL,
-  `created_at` datetime NULL DEFAULT NULL,
-  `updated_at` datetime NULL DEFAULT NULL,
-  `is_deleted` tinyint(1) NULL DEFAULT 0,
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_id` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `user_type_id` INT NULL DEFAULT NULL,
+  `token` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `password` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `role_id` INT NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT NULL,
+  `updated_at` DATETIME NULL DEFAULT NULL,
+  `is_deleted` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`user_id`) USING BTREE,
   INDEX `user_type_id`(`user_type_id` ASC) USING BTREE,
   INDEX `role_id`(`role_id` ASC) USING BTREE,
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type_id`) REFERENCES `user_types` (`user_type_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `user_roles` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = INNODB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'pertanian', '1', 1, NULL, '$2y$12$c8roUKWHlDDuaRxREfJm9.9WxdZiDVc9w9CbhdLZTgS7mEek9Km8a', 'asdasd@gmail.com', 1, NULL, '2025-04-16 21:08:36', 0);
+INSERT INTO `users` VALUES (1, 'pertanian', '1', 1, NULL, '$2y$12$c8roUKWHlDDuaRxREfJm9.9WxdZiDVc9w9CbhdLZTgS7mEek9Km8a', 'asdasd@gmail.com', 1, NULL, '2025-05-09 10:59:18', 0);
 INSERT INTO `users` VALUES (2, 'penyuluh', '1', 1, NULL, '$2y$12$xWUr9RuFuOnEMH7rpdkAcOS1CnsrJkWXOqTfbBUctPyxz6B6.4dqi', 'asd@gmail.com', 2, NULL, '2025-03-26 08:27:24', 0);
 INSERT INTO `users` VALUES (4, 'eric', '2', 1, NULL, '$2y$12$IREI7ZXob3wVDBFhYOSCQujRi0CoZt1UmmX1ajvXa0OOxVnR/OBk.', 'eric@gmail.com', 1, '2025-03-18 10:07:06', '2025-03-24 11:11:44', 1);
 
